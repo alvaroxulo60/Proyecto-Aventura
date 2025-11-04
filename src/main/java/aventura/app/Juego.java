@@ -81,11 +81,9 @@ public class Juego {
                     ;
                 case "coger objeto":
                     ;
-                case "combinar":
+                case "ayuda":
                     ;
                 case "mirar":
-                    ;
-                case "ayuda":
                     ;
                 case "salir":
                     jugando=false;
