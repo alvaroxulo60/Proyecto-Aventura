@@ -47,7 +47,6 @@ public class Juego {
 
     public static void main(String[] args) {
         // Puedes utilizar la clase MiEntradaSalida, que viviría en el paquete io
-        Scanner scanner = new Scanner(System.in);
         boolean jugando = true;
 
         System.out.println("¡Bienvenido a 'TU PROPIA AVENTURA'!");
@@ -73,11 +72,31 @@ public class Juego {
              "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
              */
 
+            switch (comando.toLowerCase()){
+                case "ir derecha":
+                    ;
+                case "ir izquierda":
+                    ;
+                case "inventario":
+                    ;
+                case "coger objeto":
+                    ;
+                case "combinar":
+                    ;
+                case "mirar":
+                    ;
+                case "ayuda":
+                    ;
+                case "salir":
+                    jugando=false;
+                case "":
+                    ;
+            }
 
         }
 
         System.out.println("¡Gracias por jugar!");
-        scanner.close();
+
     }
 
     /*
