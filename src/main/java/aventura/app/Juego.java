@@ -69,7 +69,24 @@ public class Juego {
              Debe gestionar como mínimo: "ayuda", "mirar", "inventario",
              "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
              */
-
+            switch (comando){
+                case "ir derecha":
+                    ;
+                case "ir izquierda":
+                    ;
+                case "coger objeto":
+                    ;
+                case "mirar":
+                    ;
+                case "inventario":
+                    ;
+                case "combinar":
+                    ;
+                case "ayuda":
+                    ;
+                case "salir":
+                    jugando=false;
+            }
 
         }
 
@@ -84,4 +101,6 @@ public class Juego {
     private static void procesarComandoCoger(String comando) { ... }
     private static void mostrarInfoHabitacion() { ... }
     */
+
+
 }
