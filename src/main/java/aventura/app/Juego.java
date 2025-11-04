@@ -12,16 +12,19 @@ public class Juego {
     // --- NÚCLEO: Definición de Datos (FASE 1) ---
     // Esta parte os la damos HECHA. Es el "contrato" del núcleo.
 
-    private static String descripcionJuego = "No sabes qué ha pasado. Justo cuando terminabas las clases te quedaste el último como siempre recogiendo tus cosas. " +
-            "Pero algo pasó. Lo último que recuerdas es que sentiste mucho frío y todo se volvió oscuro. Ahora estás en tu clase, pero es de noche y el instituto está cerrado." +
-            "¿Nadie te ha visto? ¿Por qué las limpiadoras no te han despertado?";
+    private static String descripcionJuego = "Empiezas en una aldea tranquila, Kael el Comerciante, el cual conoces muy bien, muy amable te ofrece sin coste una poción misteriosa, según él esa poción te volverá el mejor alumno de la academia de la luz y la sombra, te llevas la poción con gusto y mientras das un paseo te la tomas para volverte el mejor de todos.\n" +
+            "A los segundos después de tomarla te empiezas a sentir mareado y se te nubla la vista hasta que finalmente te desplomas en el suelo.\n" +
+            "Te despiertas en un lugar familiar, no sabes como llegaste a ahí, ni cuánto tiempo llevas ahí.\n";
 
     // El mapa de habitaciones.
     // TODO: (Skin) ¡Rellenad esto con vuestras descripciones!
     private static String[] habitaciones = {
-            "Estás en tu aula, el aula 103. Hay una puerta a la DERECHA.",  // Posición 0
-            "Estás en el pasillo principal. Hay puertas a la DERECHA y a la IZQUIDA.", // Posición 1
-            "Estás en el aula 105. Hay una puerta a la IZQUIERDA y has visto una 'llave' en una mesa.", // Posición 2
+            "Miras alrededor y te das cuenta de que es tu habitación pero a la vez que vas mirando más a detalle te das cuenta que hay cosas que no deberían estar ahí como un libro algo desgastado en tu estantería que no recuerdas haber comprado. \n" +
+                    "Hay una puerta a la derecha.\n",  // Posición 0
+            "Tambíen te resulta familiar, es el aula donde los alumnos de mayor grado dan sus clases de hechizos, pero lo extraño es que el aula esta del reves.\n" +
+                    "En una de las estanterías que llega a tu altura notas una figurilla de Kitsune bastante llamativa. En esta sala hay una puerta a la derecha y otra a la izquierda.\n", // Posición 1
+            "Llegas a un sótano donde apenas hay luz, no te suena de nada este sitio.\n" +
+                    "Al mirar alrededor no ves nada de importancia pero a tu derecha ves unas escaleras que supones que es la salida de esta sala. Hay una puerta a la izquierda y las escaleras a la derecha\n", // Posición 2
             // Borra las habitaciones y escribe las tuyas
     };
 
@@ -51,9 +54,9 @@ public class Juego {
         System.out.println("------------------------------------------");
 
         // TODO 1a: Muestra la descripción general del juego
-
+        System.out.println(descripcionJuego);
         // TODO 1b: Muestra la descripción de la primera habitación
-        // Pista: System.out.println(habitaciones[...]);
+        System.out.println(habitaciones[habitacionActual]);
 
 
         // TODO 2: Iniciar el bucle principal del juego (game loop)
@@ -61,7 +64,7 @@ public class Juego {
 
             // TODO 3: Leer el comando del usuario por teclado
             System.out.print("\n> ");
-            //String comando = ...;
+            String comando = MiEntradaSalida.leerTexto("¿Qué quieres hacer a continuación?");
 
             /*
             TODO 4: Crear un 'switch' o una estructura 'if-else if'
@@ -69,26 +72,7 @@ public class Juego {
              Debe gestionar como mínimo: "ayuda", "mirar", "inventario",
              "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
              */
-            switch (comando){
-                case "ir derecha":
-                    ;
-                case "ir izquierda":
-                    ;
-                case "coger objeto":
-                    ;
-                case "mirar":
-                    ;
-                case "inventario":
-                    ;
-                case "combinar":
-                    ;
-                case "ayuda":
-                    ;
-                case "salir":
-                    jugando=false;
-                case "":
-                    ;
-            }
+
 
         }
 
@@ -103,6 +87,4 @@ public class Juego {
     private static void procesarComandoCoger(String comando) { ... }
     private static void mostrarInfoHabitacion() { ... }
     */
-
-
 }
