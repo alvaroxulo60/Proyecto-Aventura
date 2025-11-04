@@ -86,6 +86,8 @@ public class Juego {
                     ;
                 case "salir":
                     jugando=false;
+                case "":
+                    ;
             }
 
         }
