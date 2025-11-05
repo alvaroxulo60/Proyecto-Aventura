@@ -70,7 +70,7 @@ public class Juego {
 
             // TODO 3: Leer el comando del usuario por teclado
             System.out.print("\n> ");
-            String comando = MiEntradaSalida.leerTexto("¿Qué quieres hacer a continuación?");
+            String comando = MiEntradaSalida.leerLinea("¿Qué quieres hacer a continuación?: ");
 
             /*
             TODO 4: Crear un 'switch' o una estructura 'if-else if'
@@ -128,7 +128,7 @@ public class Juego {
     }
 
     private static void irIzquierda() {
-        if (habitacionActual - 1 < habitaciones.length) {
+        if (habitacionActual - 1 < 0) {
             System.out.println("No es posible ir a la izquierda");
         } else
             habitacionActual -= 1;
@@ -151,7 +151,7 @@ public class Juego {
                 System.out.println(objetosMapa[habitacionActual][i] + ",");
             }
         }
-        String objeto = MiEntradaSalida.leerTexto("¿Cual objeto quieres coger? \n");
+        String objeto = MiEntradaSalida.leerLinea("¿Cual objeto quieres coger? \n");
         for (int i = 0; i < objetosMapa[habitacionActual].length; i++) {
             if (objeto.equals(objetosMapa[habitacionActual][i])) {
                 for (String s : inventario) {

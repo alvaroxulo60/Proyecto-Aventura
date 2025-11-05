@@ -160,4 +160,14 @@ public class MiEntradaSalida {
             System.out.println();
         }
     }
+
+    /**
+     * Leer linea de texto
+     * @param mensaje mensaje a mostar
+     * @return mensaje introducido
+     */
+    public static String leerLinea(String mensaje) {
+        System.out.print(mensaje);
+        return sc.nextLine();
+    }
 }
