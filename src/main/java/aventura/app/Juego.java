@@ -101,7 +101,7 @@ public class Juego {
                 case "salir":
                     jugando = false;
                     break;
-                case "":
+                default:
                     ayuda();
                     break;
             }
