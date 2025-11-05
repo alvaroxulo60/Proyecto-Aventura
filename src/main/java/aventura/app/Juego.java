@@ -36,7 +36,7 @@ public class Juego {
             {null, null},      // Objetos en Sótano
     };
 
-    private static String[][] descripcionObjeto = {{"Un libro algo desgastado, parece importante pero está cerrado. Al examinarlo con cuidado notas una especie de hueco donde parece ir una figura", null} //Cuarto
+    private static String[][] descripcionObjeto = {{"Un libro algo desgastado, parece importante pero está cerrado. Al examinarlo con cuidado notas una especie de hueco donde parece ir una figura.", null} //Cuarto
             , {"Una figura de un zorro con 9 colas parece que se puede poner en algún lugar.", null} //Aula B1
             , {null, null}}; //Sótano
 
@@ -81,20 +81,28 @@ public class Juego {
             switch (comando.toLowerCase()) {
                 case "ir derecha":
                     irDerecha();
+                    break;
                 case "ir izquierda":
                     irIzquierda();
+                    break;
                 case "inventario":
                     verInventario();
+                    break;
                 case "coger objeto":
-                    ;
+                    cogerObjeto();
+                    break;
                 case "ayuda":
                     ;
+                    break;
                 case "mirar":
-                    ;
+                    mirarObjeto();
+                    break;
                 case "salir":
                     jugando = false;
+                    break;
                 case "":
                     ;
+                    break;
             }
 
         }
@@ -156,7 +164,13 @@ public class Juego {
                }
            }
         }
+    }
+    private static void mirarObjeto(){
+        for (int i = 0; i < descripcionObjeto[habitacionActual].length; i++) {
+            if (descripcionObjeto[habitacionActual][i] != null) {
+                System.out.println(descripcionObjeto[habitacionActual][i]);
+            }
 
-
+        }
     }
 }
