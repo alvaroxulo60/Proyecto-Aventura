@@ -20,20 +20,20 @@ public class Juego {
     // TODO: (Skin) ¡Rellenad esto con vuestras descripciones!
     private static String[] habitaciones = {
             "Miras alrededor y te das cuenta de que es tu habitación pero a la vez que vas mirando más a detalle te das cuenta que hay cosas que no deberían estar ahí como un libro algo desgastado en tu estantería que no recuerdas haber comprado. \n" +
-                    "Hay una puerta a la derecha.\n",  // Posición 0
+                    "Hay una puerta a la derecha.\n",  // Cuarto
             "Tambíen te resulta familiar, es el aula donde los alumnos de mayor grado dan sus clases de hechizos, pero lo extraño es que el aula esta del reves.\n" +
-                    "En una de las estanterías que llega a tu altura notas una figurilla de Kitsune bastante llamativa. En esta sala hay una puerta a la derecha y otra a la izquierda.\n", // Posición 1
+                    "En una de las estanterías que llega a tu altura notas una figurilla de Kitsune bastante llamativa. En esta sala hay una puerta a la derecha y otra a la izquierda.\n", // Aula B1
             "Llegas a un sótano donde apenas hay luz, no te suena de nada este sitio.\n" +
-                    "Al mirar alrededor no ves nada de importancia pero a tu derecha ves unas escaleras que supones que es la salida de esta sala. Hay una puerta a la izquierda y las escaleras a la derecha\n", // Posición 2
+                    "Al mirar alrededor no ves nada de importancia pero a tu derecha ves unas escaleras que supones que es la salida de esta sala. Hay una puerta a la izquierda y las escaleras a la derecha\n", // Sótano
             // Borra las habitaciones y escribe las tuyas
     };
 
     // Los objetos que hay en cada habitación.
     // TODO: (Skin) Rellenad esto con vuestros objetos
     private static String[][] objetosMapa = {
-            {null, null},           // Objetos en Habitación 0
-            {null, null},           // Objetos en Habitación 1
-            {"llave", "nota"},      // Objetos en Habitación 2
+            {"El tomo de las sombras", null},           // Objetos del Cuarto
+            {"Llave kitsune", null},           // Objetos del Aula B1
+            {null, null},      // Objetos del Sótano
     };
 
     // El inventario del jugador. Tamaño fijo.
