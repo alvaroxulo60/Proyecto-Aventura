@@ -1,6 +1,5 @@
 package aventura.app;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -36,6 +35,11 @@ public class Juego {
             {"Llave kitsune", null},           // Objetos en Aula B1
             {null, null},      // Objetos en Sótano
     };
+
+    private static String[][] descripcionObjeto = {{"Un libro algo desgastado, parece importante pero está cerrado. Al examinarlo con cuidado notas una especie de hueco donde parece ir una figura.", null} //Cuarto
+            , {"Una figura de un zorro con 9 colas parece que se puede poner en algún lugar.", null} //Aula B1
+            , {null, null}}; //Sótano
+
 
     // El inventario del jugador. Tamaño fijo.
     private static String[] inventario = new String[5];
@@ -74,23 +78,31 @@ public class Juego {
              "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
              */
 
-            switch (comando.toLowerCase()){
+            switch (comando.toLowerCase()) {
                 case "ir derecha":
                     irDerecha();
+                    break;
                 case "ir izquierda":
                     irIzquierda();
+                    break;
                 case "inventario":
                     verInventario();
+                    break;
                 case "coger objeto":
-                    ;
+                    cogerObjeto();
+                    break;
                 case "ayuda":
                     ;
+                    break;
                 case "mirar":
-                    ;
+                    mirarObjeto();
+                    break;
                 case "salir":
-                    jugando=false;
+                    jugando = false;
+                    break;
                 case "":
                     ;
+                    break;
             }
 
         }
@@ -106,24 +118,23 @@ public class Juego {
     private static void procesarComandoCoger(String comando) { ... }
     private static void mostrarInfoHabitacion() { ... }
     */
-    private static void irDerecha(){
-        if (habitacionActual+1 > habitaciones.length){
+    private static void irDerecha() {
+        if (habitacionActual + 1 > habitaciones.length) {
             System.out.println("No es posible ir a la derecha");
-        }
-        else
-            habitacionActual+=1;
+        } else
+            habitacionActual += 1;
         System.out.println(habitaciones[habitacionActual]);
     }
 
-    private static void irIzquierda(){
-        if (habitacionActual-1 < habitaciones.length){
+    private static void irIzquierda() {
+        if (habitacionActual - 1 < habitaciones.length) {
             System.out.println("No es posible ir a la izquierda");
-        }
-        else
-            habitacionActual-=1;
+        } else
+            habitacionActual -= 1;
         System.out.println(habitaciones[habitacionActual]);
     }
-    private static void verInventario(){
+
+    private static void verInventario() {
         for (String s : inventario) {
             if (s != null) {
                 System.out.println(s + ",");
@@ -153,7 +164,13 @@ public class Juego {
                }
            }
         }
+    }
+    private static void mirarObjeto(){
+        for (int i = 0; i < descripcionObjeto[habitacionActual].length; i++) {
+            if (descripcionObjeto[habitacionActual][i] != null) {
+                System.out.println(descripcionObjeto[habitacionActual][i]);
+            }
 
-
+        }
     }
 }
