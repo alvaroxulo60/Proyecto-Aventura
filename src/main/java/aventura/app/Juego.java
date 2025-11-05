@@ -75,11 +75,11 @@ public class Juego {
 
             switch (comando.toLowerCase()){
                 case "ir derecha":
-                    ;
+                    irDerecha();
                 case "ir izquierda":
-                    ;
+                    irIzquierda();
                 case "inventario":
-                    ;
+                    verInventario();
                 case "coger objeto":
                     ;
                 case "ayuda":
@@ -121,5 +121,12 @@ public class Juego {
         else
             habitacionActual-=1;
         System.out.println(habitaciones[habitacionActual]);
+    }
+    private static void verInventario(){
+        for (String s : inventario) {
+            if (s != null) {
+                System.out.println(s + ",");
+            }
+        }
     }
 }
