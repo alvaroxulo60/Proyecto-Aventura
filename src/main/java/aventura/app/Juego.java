@@ -1,5 +1,6 @@
 package aventura.app;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -78,7 +79,7 @@ public class Juego {
              "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
              */
 
-            switch (comando.toLowerCase()) {
+            switch (comando.toLowerCase()){
                 case "ir derecha":
                     irDerecha();
                     break;
@@ -92,7 +93,7 @@ public class Juego {
                     cogerObjeto();
                     break;
                 case "ayuda":
-                    ;
+                    ayuda();
                     break;
                 case "mirar":
                     mirarObjeto();
@@ -101,7 +102,7 @@ public class Juego {
                     jugando = false;
                     break;
                 case "":
-                    ;
+                    ayuda();
                     break;
             }
 
@@ -141,28 +142,28 @@ public class Juego {
             }
         }
     }
-    private static void cogerObjeto(){
+
+    private static void cogerObjeto() {
         System.out.print("Objetos en la sala: ");
-        for (int i = 0; i < objetosMapa.length; i++) {
-            if (objetosMapa[habitacionActual][i]==null) continue;
+        for (int i = 0; i < objetosMapa[habitacionActual].length; i++) {
+            if (objetosMapa[habitacionActual][i] == null) continue;
             else {
                 System.out.println(objetosMapa[habitacionActual][i] + ",");
             }
         }
-        String objeto=MiEntradaSalida.leerTexto("¿Cual objeto quieres coger? \n");
-        for (int i = 0; i < objetosMapa.length; i++) {
-           if (objeto.equals(objetosMapa[habitacionActual][i])){
-               for (String s : inventario) {
-                   if (s == null) {
+        String objeto = MiEntradaSalida.leerTexto("¿Cual objeto quieres coger? \n");
+        for (int i = 0; i < objetosMapa[habitacionActual].length; i++) {
+            if (objeto.equals(objetosMapa[habitacionActual][i])) {
+                for (String s : inventario) {
+                    if (s == null) {
                         s = objetosMapa[habitacionActual][i];
-                       objetosMapa[habitacionActual][i]=null;
-                       return;
-                   }
-                   else {
-                       System.out.println("No tienes espacio en el inventario");
-                   }
-               }
-           }
+                        objetosMapa[habitacionActual][i] = null;
+                        return;
+                    } else {
+                        System.out.println("No tienes espacio en el inventario");
+                    }
+                }
+            }
         }
     }
     private static void mirarObjeto(){
@@ -172,5 +173,17 @@ public class Juego {
             }
 
         }
+    }
+    private static void ayuda(){
+        System.out.print("====================AYUDA====================\n");
+        System.out.print("\n> ");
+        System.out.print(">ir derecha \n ");
+        System.out.print(">ir izquierda \n ");
+        System.out.print(">mirar \n ");
+        System.out.print(">coger objeto \n ");
+        System.out.print(">inventario \n ");
+        System.out.print(">salir \n ");
+        System.out.print("\n> ");
+        System.out.print("=============================================\n");
     }
 }
