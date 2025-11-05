@@ -136,9 +136,10 @@ public class Juego {
     }
 
     private static void verInventario() {
-        for (String s : inventario) {
-            if (s != null) {
-                System.out.println(s + ",");
+        for (int i = 0; i <inventario.length ; i++) {
+            if (inventario[i]!= null){
+                System.out.println(inventario[i] + ",");
+
             }
         }
     }
@@ -151,17 +152,20 @@ public class Juego {
                 System.out.println(objetosMapa[habitacionActual][i] + ",");
             }
         }
-        String objeto = MiEntradaSalida.leerLinea("¿Cual objeto quieres coger? \n");
+        String objeto = MiEntradaSalida.leerLinea("¿Qué objeto quieres coger? \n");
         for (int i = 0; i < objetosMapa[habitacionActual].length; i++) {
             if (objeto.equals(objetosMapa[habitacionActual][i])) {
-                for (String s : inventario) {
-                    if (s == null) {
-                        s = objetosMapa[habitacionActual][i];
+                for (int j = 0; j < inventario.length; j++) {
+                    if (inventario[j] == null) {
+                        inventario[j] = objetosMapa[habitacionActual][i];
                         objetosMapa[habitacionActual][i] = null;
+                        descripcionObjeto[habitacionActual][i]= null;
                         return;
                     } else {
                         System.out.println("No tienes espacio en el inventario");
                     }
+
+
                 }
             }
         }
@@ -170,6 +174,10 @@ public class Juego {
         for (int i = 0; i < descripcionObjeto[habitacionActual].length; i++) {
             if (descripcionObjeto[habitacionActual][i] != null) {
                 System.out.println(descripcionObjeto[habitacionActual][i]);
+                return;
+            }
+            else if (descripcionObjeto[habitacionActual][i] == null){
+                System.out.print("No hay ningún objeto de importancia en la habitación.\n");
             }
 
         }
