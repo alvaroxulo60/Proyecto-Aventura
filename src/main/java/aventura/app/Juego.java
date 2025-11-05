@@ -176,14 +176,12 @@ public class Juego {
     }
     private static void ayuda(){
         System.out.print("====================AYUDA====================\n");
-        System.out.print("\n> ");
         System.out.print(">ir derecha \n ");
         System.out.print(">ir izquierda \n ");
         System.out.print(">mirar \n ");
         System.out.print(">coger objeto \n ");
         System.out.print(">inventario \n ");
         System.out.print(">salir \n ");
-        System.out.print("\n> ");
         System.out.print("=============================================\n");
     }
 }
