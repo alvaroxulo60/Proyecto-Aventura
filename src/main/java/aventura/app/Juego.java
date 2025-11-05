@@ -178,6 +178,7 @@ public class Juego {
             }
             else if (descripcionObjeto[habitacionActual][i] == null){
                 System.out.print("No hay ningún objeto de importancia en la habitación.\n");
+                return;
             }
 
         }
