@@ -47,6 +47,7 @@ public class Juego {
 
     public static void main(String[] args) {
         // Puedes utilizar la clase MiEntradaSalida, que viviría en el paquete io
+        Scanner scanner = new Scanner(System.in);
         boolean jugando = true;
 
         System.out.println("¡Bienvenido a 'TU PROPIA AVENTURA'!");
@@ -104,4 +105,21 @@ public class Juego {
     private static void procesarComandoCoger(String comando) { ... }
     private static void mostrarInfoHabitacion() { ... }
     */
+    private static void irDerecha(){
+        if (habitacionActual+1 > habitaciones.length){
+            System.out.println("No es posible ir a la derecha");
+        }
+        else
+            habitacionActual+=1;
+        System.out.println(habitaciones[habitacionActual]);
+    }
+
+    private static void irIzquierda(){
+        if (habitacionActual-1 < habitaciones.length){
+            System.out.println("No es posible ir a la izquierda");
+        }
+        else
+            habitacionActual-=1;
+        System.out.println(habitaciones[habitacionActual]);
+    }
 }
