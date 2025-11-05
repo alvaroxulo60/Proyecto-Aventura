@@ -133,25 +133,30 @@ public class Juego {
             }
         }
     }
+    private static void cogerObjeto(){
+        System.out.print("Objetos en la sala: ");
+        for (int i = 0; i < objetosMapa.length; i++) {
+            if (objetosMapa[habitacionActual][i]==null) continue;
+            else {
+                System.out.println(objetosMapa[habitacionActual][i] + ",");
+            }
+        }
+        String objeto=MiEntradaSalida.leerTexto("¿Cual objeto quieres coger? \n");
+        for (int i = 0; i < objetosMapa.length; i++) {
+           if (objeto.equals(objetosMapa[habitacionActual][i])){
+               for (String s : inventario) {
+                   if (s == null) {
+                        s = objetosMapa[habitacionActual][i];
+                       objetosMapa[habitacionActual][i]=null;
+                       return;
+                   }
+                   else {
+                       System.out.println("No tienes espacio en el inventario");
+                   }
+               }
+           }
+        }
 
+
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
