@@ -36,6 +36,11 @@ public class Juego {
             {null, null},      // Objetos en Sótano
     };
 
+    private static String[][] descripcionObjeto = {{"Un libro algo desgastado, parece importante pero está cerrado. Al examinarlo con cuidado notas una especie de hueco donde parece ir una figura", null} //Cuarto
+            , {"Una figura de un zorro con 9 colas parece que se puede poner en algún lugar.", null} //Aula B1
+            , {null, null}}; //Sótano
+
+
     // El inventario del jugador. Tamaño fijo.
     private static String[] inventario = new String[5];
 
@@ -73,7 +78,7 @@ public class Juego {
              "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
              */
 
-            switch (comando.toLowerCase()){
+            switch (comando.toLowerCase()) {
                 case "ir derecha":
                     irDerecha();
                 case "ir izquierda":
@@ -87,7 +92,7 @@ public class Juego {
                 case "mirar":
                     ;
                 case "salir":
-                    jugando=false;
+                    jugando = false;
                 case "":
                     ;
             }
@@ -105,28 +110,48 @@ public class Juego {
     private static void procesarComandoCoger(String comando) { ... }
     private static void mostrarInfoHabitacion() { ... }
     */
-    private static void irDerecha(){
-        if (habitacionActual+1 > habitaciones.length){
+    private static void irDerecha() {
+        if (habitacionActual + 1 > habitaciones.length) {
             System.out.println("No es posible ir a la derecha");
-        }
-        else
-            habitacionActual+=1;
+        } else
+            habitacionActual += 1;
         System.out.println(habitaciones[habitacionActual]);
     }
 
-    private static void irIzquierda(){
-        if (habitacionActual-1 < habitaciones.length){
+    private static void irIzquierda() {
+        if (habitacionActual - 1 < habitaciones.length) {
             System.out.println("No es posible ir a la izquierda");
-        }
-        else
-            habitacionActual-=1;
+        } else
+            habitacionActual -= 1;
         System.out.println(habitaciones[habitacionActual]);
     }
-    private static void verInventario(){
+
+    private static void verInventario() {
         for (String s : inventario) {
             if (s != null) {
                 System.out.println(s + ",");
             }
         }
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
