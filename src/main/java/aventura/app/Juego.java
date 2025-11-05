@@ -175,7 +175,7 @@ public class Juego {
         }
     }
     private static void ayuda(){
-        System.out.print("====================AYUDA====================\n");
+        System.out.print("====================AYUDA====================\n ");
         System.out.print(">ir derecha \n ");
         System.out.print(">ir izquierda \n ");
         System.out.print(">mirar \n ");
