@@ -171,6 +171,13 @@ public class Juego {
         }
     }
 
+    /**
+     * Creamos un contador para que guarde el número de descripciones de objetos que haya en la habitación actual.
+     * Recorre la matriz descripcionObjeto de la habitación que te encuentres en ese momento.
+     * si la descripcionObjeto es distinto de null suma uno al contador.
+     * Cuando haya terminado el recorrido, el contador tendrá el número de descripciones que hay esa habitación.
+     * imprimo por pantalla en una lista las descripciones haya.
+     */
     private static void mirarObjeto() {
         int contador = 0;
         for (int i = 0; i < descripcionObjeto[habitacionActual].length; i++) {
