@@ -161,7 +161,7 @@ public class Juego {
                 objetosMapa[habitacionActual][indiceObjeto] = null;
                 descripcionObjeto[habitacionActual][indiceObjeto] = null;
                 return;
-            } else {
+            } else if (inventario[j]!=null){
                 System.out.println("No tienes espacio en el inventario");
             }
 
