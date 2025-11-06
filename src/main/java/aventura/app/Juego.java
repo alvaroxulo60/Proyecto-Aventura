@@ -1,6 +1,6 @@
 package aventura.app;
 
-import java.util.Objects;
+
 import java.util.Scanner;
 
 /**
@@ -79,7 +79,7 @@ public class Juego {
              "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
              */
 
-            switch (comando.toLowerCase()){
+            switch (comando.toLowerCase()) {
                 case "ir derecha":
                     irDerecha();
                     break;
@@ -120,7 +120,7 @@ public class Juego {
     private static void mostrarInfoHabitacion() { ... }
     */
     private static void irDerecha() {
-        if (habitacionActual + 1 > habitaciones.length) {
+        if (habitacionActual + 1 == habitaciones.length) {
             System.out.println("No es posible ir a la derecha");
         } else
             habitacionActual += 1;
@@ -136,8 +136,8 @@ public class Juego {
     }
 
     private static void verInventario() {
-        for (int i = 0; i <inventario.length ; i++) {
-            if (inventario[i]!= null){
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i] != null) {
                 System.out.println(inventario[i] + ",");
 
             }
@@ -159,7 +159,7 @@ public class Juego {
                     if (inventario[j] == null) {
                         inventario[j] = objetosMapa[habitacionActual][i];
                         objetosMapa[habitacionActual][i] = null;
-                        descripcionObjeto[habitacionActual][i]= null;
+                        descripcionObjeto[habitacionActual][i] = null;
                         return;
                     } else {
                         System.out.println("No tienes espacio en el inventario");
@@ -170,20 +170,21 @@ public class Juego {
             }
         }
     }
-    private static void mirarObjeto(){
+
+    private static void mirarObjeto() {
         for (int i = 0; i < descripcionObjeto[habitacionActual].length; i++) {
             if (descripcionObjeto[habitacionActual][i] != null) {
                 System.out.println(descripcionObjeto[habitacionActual][i]);
                 return;
-            }
-            else if (descripcionObjeto[habitacionActual][i] == null){
+            } else if (descripcionObjeto[habitacionActual][i] == null) {
                 System.out.print("No hay ningún objeto de importancia en la habitación.\n");
                 return;
             }
 
         }
     }
-    private static void ayuda(){
+
+    private static void ayuda() {
         System.out.print("====================AYUDA====================\n ");
         System.out.print(">ir derecha \n ");
         System.out.print(">ir izquierda \n ");
