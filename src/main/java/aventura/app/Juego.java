@@ -172,15 +172,14 @@ public class Juego {
     }
 
     private static void mirarObjeto() {
+        int contador = 0;
         for (int i = 0; i < descripcionObjeto[habitacionActual].length; i++) {
-            if (descripcionObjeto[habitacionActual][i] != null) {
-                System.out.println(descripcionObjeto[habitacionActual][i]);
-                return;
-            } else if (descripcionObjeto[habitacionActual][i] == null) {
-                System.out.print("No hay ningún objeto de importancia en la habitación.\n");
-                return;
+            if(descripcionObjeto[habitacionActual][i] != null){
+                contador += 1;
             }
-
+        }
+        for (int i = 0; i < contador; i++) {
+            System.out.println(i + 1 + ": " + descripcionObjeto[habitacionActual][i]);
         }
     }
 
