@@ -178,9 +178,10 @@ public class MiEntradaSalida {
      */
     public static void mostrarOpcionesSinNulos( String mensaje, String[] array){
         System.out.println(mensaje);
+        int posicion =1;
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
-                System.out.println(i+1+"."+" "+array[i]);
+                System.out.println(posicion+++"."+" "+array[i]);
             }
         }
         System.out.println();

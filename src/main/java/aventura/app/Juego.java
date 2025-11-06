@@ -152,23 +152,43 @@ public class Juego {
      */
     private static void cogerObjeto() {
         MiEntradaSalida.mostrarOpcionesSinNulos("Objetos en la sala: ", objetosMapa[habitacionActual]);
-        int objeto = MiEntradaSalida.leerEnteroRango("Introduce el número correspodiente: ", 1, objetosMapa[habitacionActual].length);
-        for (int i = 0; i < objetosMapa[habitacionActual].length; i++) {
-            if (objeto - 1 == i) {
-                for (int j = 0; j < inventario.length; j++) {
-                    if (inventario[j] == null) {
-                        inventario[j] = objetosMapa[habitacionActual][i];
-                        objetosMapa[habitacionActual][i] = null;
-                        descripcionObjeto[habitacionActual][i] = null;
-                        return;
-                    } else {
-                        System.out.println("No tienes espacio en el inventario");
-                    }
+        int objeto = MiEntradaSalida.leerEnteroRango("Introduce el número correspodiente: ", 1, contarObjetosHabitacion(habitacionActual));
+
+        int indiceObjeto = indiceObjetoNoNuloNumeroX(habitacionActual, objeto);
+
+        for (int j = 0; j < inventario.length; j++) {
+            if (inventario[j] == null) {
+                inventario[j] = objetosMapa[habitacionActual][indiceObjeto];
+                objetosMapa[habitacionActual][indiceObjeto] = null;
+                descripcionObjeto[habitacionActual][indiceObjeto] = null;
+                return;
+            } else {
+                System.out.println("No tienes espacio en el inventario");
+            }
 
 
+        }
+    }
+
+    /**
+     * Coger indice verdadero del objeto en la habitación
+     * @param habitacion habitacion a ver
+     * @param x posicion del objeto
+     * @return posicion del objeto en el array
+     */
+    private static int indiceObjetoNoNuloNumeroX(int habitacion, int x) {
+        int numObjetosNoNulos = 0;
+        for (int i = 0; i < objetosMapa[habitacion].length; i++) {
+            if (objetosMapa[habitacion][i] != null) {
+                numObjetosNoNulos++;
+
+                if (x == numObjetosNoNulos) {
+                    return i;
                 }
             }
         }
+
+        return -1;
     }
 
     private static void mirarObjeto() {
@@ -195,9 +215,19 @@ public class Juego {
         System.out.print("=============================================\n");
     }
 
-    private static int contarObjetosHabitacion(int habitacion){
+    /**
+     * Contar objetos de la habitacion
+     *
+     * @param habitacion habitacion a mirar
+     * @return objetos en la habitación
+     */
+    private static int contarObjetosHabitacion(int habitacion) {
+        int contador = 0;
         for (int i = 0; i < objetosMapa[habitacion].length; i++) {
-
+            if (objetosMapa[habitacion][i] != null) {
+                contador++;
+            }
         }
+        return contador;
     }
 }
