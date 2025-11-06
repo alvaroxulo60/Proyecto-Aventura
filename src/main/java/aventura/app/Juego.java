@@ -172,8 +172,9 @@ public class Juego {
 
     /**
      * Coger indice verdadero del objeto en la habitación
+     *
      * @param habitacion habitacion a ver
-     * @param x posicion del objeto
+     * @param x          posicion del objeto
      * @return posicion del objeto en el array
      */
     private static int indiceObjetoNoNuloNumeroX(int habitacion, int x) {

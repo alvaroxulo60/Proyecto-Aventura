@@ -163,6 +163,7 @@ public class MiEntradaSalida {
 
     /**
      * Leer linea de texto
+     *
      * @param mensaje mensaje a mostar
      * @return mensaje introducido
      */
@@ -173,15 +174,16 @@ public class MiEntradaSalida {
 
     /**
      * Mostrar opciones
+     *
      * @param mensaje mensaje a mostrar
-     * @param array lista a recorrer
+     * @param array   lista a recorrer
      */
-    public static void mostrarOpcionesSinNulos( String mensaje, String[] array){
+    public static void mostrarOpcionesSinNulos(String mensaje, String[] array) {
         System.out.println(mensaje);
-        int posicion =1;
+        int posicion = 1;
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
-                System.out.println(posicion+++"."+" "+array[i]);
+                System.out.println(posicion++ + "." + " " + array[i]);
             }
         }
         System.out.println();
