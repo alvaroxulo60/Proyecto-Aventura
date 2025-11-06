@@ -15,7 +15,7 @@ public class MiEntradaSalida {
      */
     public static int leerEntero(String mensaje) {
         System.out.print(mensaje);
-        return sc.nextInt();
+        return Integer.parseInt(sc.nextLine());
     }
 
     /**
@@ -169,5 +169,20 @@ public class MiEntradaSalida {
     public static String leerLinea(String mensaje) {
         System.out.print(mensaje);
         return sc.nextLine();
+    }
+
+    /**
+     * Mostrar opciones
+     * @param mensaje mensaje a mostrar
+     * @param array lista a recorrer
+     */
+    public static void mostrarOpcionesSinNulos( String mensaje, String[] array){
+        System.out.println(mensaje);
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null) {
+                System.out.println(i+1+"."+" "+array[i]);
+            }
+        }
+        System.out.println();
     }
 }

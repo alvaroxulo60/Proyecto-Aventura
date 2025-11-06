@@ -79,7 +79,7 @@ public class Juego {
              "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
              */
 
-            switch (comando.toLowerCase()){
+            switch (comando.toLowerCase()) {
                 case "ir derecha":
                     irDerecha();
                     break;
@@ -135,31 +135,31 @@ public class Juego {
         System.out.println(habitaciones[habitacionActual]);
     }
 
+    /**
+     * Ver tus objetos numerados en el inventario.
+     */
     private static void verInventario() {
-        for (int i = 0; i <inventario.length ; i++) {
-            if (inventario[i]!= null){
-                System.out.println(inventario[i] + ",");
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i] != null) {
+                System.out.println(i + 1 + ": " + inventario[i] + "\n");
 
             }
         }
     }
 
+    /**
+     * Metodo para recoger objetos de la habitación en la que estas.
+     */
     private static void cogerObjeto() {
-        System.out.print("Objetos en la sala: ");
+        MiEntradaSalida.mostrarOpcionesSinNulos("Objetos en la sala: ", objetosMapa[habitacionActual]);
+        int objeto = MiEntradaSalida.leerEnteroRango("Introduce el número correspodiente: ", 1, objetosMapa[habitacionActual].length);
         for (int i = 0; i < objetosMapa[habitacionActual].length; i++) {
-            if (objetosMapa[habitacionActual][i] == null) continue;
-            else {
-                System.out.println(objetosMapa[habitacionActual][i] + ",");
-            }
-        }
-        String objeto = MiEntradaSalida.leerLinea("¿Qué objeto quieres coger? \n");
-        for (int i = 0; i < objetosMapa[habitacionActual].length; i++) {
-            if (objeto.equals(objetosMapa[habitacionActual][i])) {
+            if (objeto - 1 == i) {
                 for (int j = 0; j < inventario.length; j++) {
                     if (inventario[j] == null) {
                         inventario[j] = objetosMapa[habitacionActual][i];
                         objetosMapa[habitacionActual][i] = null;
-                        descripcionObjeto[habitacionActual][i]= null;
+                        descripcionObjeto[habitacionActual][i] = null;
                         return;
                     } else {
                         System.out.println("No tienes espacio en el inventario");
@@ -170,20 +170,21 @@ public class Juego {
             }
         }
     }
-    private static void mirarObjeto(){
+
+    private static void mirarObjeto() {
         for (int i = 0; i < descripcionObjeto[habitacionActual].length; i++) {
             if (descripcionObjeto[habitacionActual][i] != null) {
                 System.out.println(descripcionObjeto[habitacionActual][i]);
                 return;
-            }
-            else if (descripcionObjeto[habitacionActual][i] == null){
+            } else if (descripcionObjeto[habitacionActual][i] == null) {
                 System.out.print("No hay ningún objeto de importancia en la habitación.\n");
                 return;
             }
 
         }
     }
-    private static void ayuda(){
+
+    private static void ayuda() {
         System.out.print("====================AYUDA====================\n ");
         System.out.print(">ir derecha \n ");
         System.out.print(">ir izquierda \n ");
@@ -192,5 +193,11 @@ public class Juego {
         System.out.print(">inventario \n ");
         System.out.print(">salir \n ");
         System.out.print("=============================================\n");
+    }
+
+    private static int contarObjetosHabitacion(int habitacion){
+        for (int i = 0; i < objetosMapa[habitacion].length; i++) {
+
+        }
     }
 }
