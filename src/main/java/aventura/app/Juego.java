@@ -155,17 +155,28 @@ public class Juego {
 
         int indiceObjeto = indiceObjetoNoNuloNumeroX(habitacionActual, objeto);
 
-        for (int j = 0; j < inventario.length; j++) {
-            if (inventario[j] == null) {
-                inventario[j] = objetosMapa[habitacionActual][indiceObjeto];
+       guardarEnInventario(indiceObjeto);
+    }
+
+    private static void guardarEnInventario(int indiceObjeto){
+        int ocupados = 0;
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i]!=null)ocupados++;
+        }
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i]== null){
+                inventario[i] = objetosMapa[habitacionActual][indiceObjeto];
                 objetosMapa[habitacionActual][indiceObjeto] = null;
                 descripcionObjeto[habitacionActual][indiceObjeto] = null;
+                System.out.println("¡Objeto guardado!\n");
                 return;
-            } else if (inventario[j]!=null){
-                System.out.println("No tienes espacio en el inventario");
+            } else if (inventario[i]!= null) {
+                if (ocupados==inventario.length) {
+                    System.out.println("No tienes espacio en el inventario");
+                    return;
+                }
+                continue;
             }
-
-
         }
     }
 
