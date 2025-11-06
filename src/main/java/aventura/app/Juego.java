@@ -177,16 +177,19 @@ public class Juego {
      * si la descripcionObjeto es distinto de null suma uno al contador.
      * Cuando haya terminado el recorrido, el contador tendrá el número de descripciones que hay esa habitación.
      * imprimo por pantalla en una lista las descripciones haya.
+     * Si no hay objetos en la sala e intentas ver las descripciones de los objetos, no podras y te dira que no hay objetos
      */
     private static void mirarObjeto() {
         int contador = 0;
         for (int i = 0; i < descripcionObjeto[habitacionActual].length; i++) {
             if(descripcionObjeto[habitacionActual][i] != null){
                 contador += 1;
+                System.out.println(i + 1 + ": " + descripcionObjeto[habitacionActual][i]);
             }
         }
-        for (int i = 0; i < contador; i++) {
-            System.out.println(i + 1 + ": " + descripcionObjeto[habitacionActual][i]);
+
+        if (contador == 0){
+            System.out.println("No hay objetos en esta habitación");
         }
     }
 
