@@ -150,12 +150,15 @@ public class Juego {
      * Metodo para recoger objetos de la habitación en la que estas.
      */
     private static void cogerObjeto() {
-        MiEntradaSalida.mostrarOpcionesSinNulos("Objetos en la sala: ", objetosMapa[habitacionActual]);
-        int objeto = MiEntradaSalida.leerEnteroRango("Introduce el número correspodiente: ", 1, contarObjetosHabitacion(habitacionActual));
+        if (contarObjetosHabitacion(habitacionActual)>0) {
+            MiEntradaSalida.mostrarOpcionesSinNulos("Objetos en la sala: ", objetosMapa[habitacionActual]);
+            int objeto = MiEntradaSalida.leerEnteroRango("Introduce el número correspodiente: ", 1, contarObjetosHabitacion(habitacionActual));
 
-        int indiceObjeto = indiceObjetoNoNuloNumeroX(habitacionActual, objeto);
+            int indiceObjeto = indiceObjetoNoNuloNumeroX(habitacionActual, objeto);
 
-       guardarEnInventario(indiceObjeto);
+            guardarEnInventario(indiceObjeto);
+        }
+        else System.out.println("No queda ningún objeto en la sala de importancia.\n");
     }
 
     private static void guardarEnInventario(int indiceObjeto){
