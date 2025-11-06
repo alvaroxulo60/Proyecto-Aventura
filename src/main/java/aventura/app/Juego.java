@@ -1,6 +1,6 @@
 package aventura.app;
 
-import java.util.Objects;
+
 import java.util.Scanner;
 
 /**
@@ -120,7 +120,7 @@ public class Juego {
     private static void mostrarInfoHabitacion() { ... }
     */
     private static void irDerecha() {
-        if (habitacionActual + 1 > habitaciones.length) {
+        if (habitacionActual + 1 == habitaciones.length) {
             System.out.println("No es posible ir a la derecha");
         } else
             habitacionActual += 1;
@@ -188,19 +188,24 @@ public class Juego {
                 }
             }
         }
-
-        return -1;
     }
 
+    /**
+     * Creamos un contador para que guarde el número de descripciones de objetos que haya en la habitación actual.
+     * Recorre la matriz descripcionObjeto de la habitación que te encuentres en ese momento.
+     * si la descripcionObjeto es distinto de null suma uno al contador.
+     * Cuando haya terminado el recorrido, el contador tendrá el número de descripciones que hay esa habitación.
+     * imprimo por pantalla en una lista las descripciones haya.
+     * Si no hay objetos en la sala e intentas ver las descripciones de los objetos, no podras y te dira que no hay objetos
+     */
     private static void mirarObjeto() {
+        int contador = 0;
         for (int i = 0; i < descripcionObjeto[habitacionActual].length; i++) {
-            if (descripcionObjeto[habitacionActual][i] != null) {
-                System.out.println(descripcionObjeto[habitacionActual][i]);
-                return;
-            } else if (descripcionObjeto[habitacionActual][i] == null) {
-                System.out.print("No hay ningún objeto de importancia en la habitación.\n");
-                return;
+            if(descripcionObjeto[habitacionActual][i] != null){
+                contador += 1;
+                System.out.println(i + 1 + ": " + descripcionObjeto[habitacionActual][i]);
             }
+        }
 
         }
     }
