@@ -187,6 +187,7 @@ public class Juego {
                 }
             }
         }
+        return -1;
     }
 
     /**
@@ -204,8 +205,6 @@ public class Juego {
                 contador += 1;
                 System.out.println(i + 1 + ": " + descripcionObjeto[habitacionActual][i]);
             }
-        }
-
         }
     }
 
