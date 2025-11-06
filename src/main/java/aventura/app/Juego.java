@@ -201,10 +201,14 @@ public class Juego {
     private static void mirarObjeto() {
         int contador = 0;
         for (int i = 0; i < descripcionObjeto[habitacionActual].length; i++) {
-            if(descripcionObjeto[habitacionActual][i] != null){
+            if (descripcionObjeto[habitacionActual][i] != null) {
                 contador += 1;
                 System.out.println(i + 1 + ": " + descripcionObjeto[habitacionActual][i]);
             }
+        }
+
+        if (contador == 0) {
+            System.out.println("No hay objetos en esta habitacion.");
         }
     }
 
