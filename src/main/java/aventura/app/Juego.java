@@ -2,7 +2,7 @@ package aventura.app;
 
 import java.util.Scanner;
 
-/**
+/*
  * Clase principal del juego "Tu Propia Aventura".
  * Esqueleto para la Misión 1 (UD1-UD3).
  * VUESTRO TRABAJO es rellenar todos los TODO
@@ -12,12 +12,16 @@ public class Juego {
     // --- NÚCLEO: Definición de Datos (FASE 1) ---
     // Esta parte os la damos HECHA. Es el "contrato" del núcleo.
 
-    private static String descripcionJuego = "Empiezas en una aldea tranquila, Kael el Comerciante, el cual conoces muy bien, muy amable te ofrece sin coste una poción misteriosa, según él esa poción te volverá el mejor alumno de la academia de la luz y la sombra, te llevas la poción con gusto y mientras das un paseo te la tomas para volverte el mejor de todos.\n" +
+    //Creo un String para darle una introducción al usuario de la historia del juego
+
+    private static String descripcionJuego = "Empiezas en una aldea tranquila, Kael el Comerciante, el cual conoces muy bien, muy amablemente te ofrece sin coste una poción misteriosa, según él esa poción te volverá el mejor alumno de la academia de la luz y la sombra, te llevas la poción con gusto y mientras das un paseo te la tomas para volverte el mejor de todos.\n" +
             "A los segundos después de tomarla te empiezas a sentir mareado y se te nubla la vista hasta que finalmente te desplomas en el suelo.\n" +
             "Te despiertas en un lugar familiar, no sabes como llegaste a ahí, ni cuánto tiempo llevas ahí.\n";
 
     // El mapa de habitaciones.
     // TODO: (Skin) ¡Rellenad esto con vuestras descripciones!
+
+    //Creo un array habitaciones con las descripciones de cada habitación
     private static String[] habitaciones = {
             "Miras alrededor y te das cuenta de que es tu habitación pero a la vez que vas mirando más a detalle te das cuenta que hay cosas que no deberían estar ahí como un libro algo desgastado en tu estantería que no recuerdas haber comprado. \n" +
                     "Hay una puerta a la derecha.\n",  // Cuarto
@@ -30,12 +34,15 @@ public class Juego {
 
     // Los objetos que hay en cada habitación.
     // TODO: (Skin) Rellenad esto con vuestros objetos
+
+    //Creo una matriz objetosMapa, donde se introducen los objetos que hay que cada habitación
     private static String[][] objetosMapa = {
             {"El tomo de las sombras", null},           // Objetos en Cuarto
             {"Llave kitsune", null},           // Objetos en Aula B1
             {null, null},      // Objetos en Sótano
     };
 
+    //Creo una matriz descricionObjeto, donde se introducen las descripciones de cada objeto
     private static String[][] descripcionObjeto = {{"Un libro algo desgastado, parece importante pero está cerrado. Al examinarlo con cuidado notas una especie de hueco donde parece ir una figura.", null} //Cuarto
             , {"Una figura de un zorro con 9 colas parece que se puede poner en algún lugar.", null} //Aula B1
             , {null, null}}; //Sótano
@@ -43,6 +50,7 @@ public class Juego {
 
     // El inventario del jugador. Tamaño fijo.
     private static String[] inventario = new String[5];
+
 
     // Variable que guarda la posición actual del jugador
     private static int habitacionActual = 0; // Empezamos en la primera habitación
@@ -58,21 +66,21 @@ public class Juego {
         System.out.println("¡Bienvenido a 'TU PROPIA AVENTURA'!");
         System.out.println("------------------------------------------");
 
-        // TODO 1a: Muestra la descripción general del juego
+        //Muestra la descripción general del juego
         System.out.println(descripcionJuego);
-        // TODO 1b: Muestra la descripción de la primera habitación
+        //Muestra la descripción de la primera habitación
         System.out.println(habitaciones[habitacionActual]);
 
 
-        // TODO 2: Iniciar el bucle principal del juego (game loop)
+        //Iniciar el bucle principal del juego (game loop)
         while (jugando) {
 
-            // TODO 3: Leer el comando del usuario por teclado
+            //Leer el comando del usuario por teclado
             System.out.print("\n> ");
             String comando = MiEntradaSalida.leerLinea("¿Qué quieres hacer a continuación?: ");
 
             /*
-            TODO 4: Crear un 'switch' o una estructura 'if-else if'
+            Crear un 'switch' o una estructura 'if-else if'
              para procesar el 'comando' del usuario.
              Debe gestionar como mínimo: "ayuda", "mirar", "inventario",
              "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
@@ -118,6 +126,10 @@ public class Juego {
     private static void procesarComandoCoger(String comando) { ... }
     private static void mostrarInfoHabitacion() { ... }
     */
+
+    /**
+     * Métod0 para ir a la habitación de la derecha
+     */
     private static void irDerecha() {
         if (habitacionActual + 1 == habitaciones.length) {
             System.out.println("No es posible ir a la derecha");
@@ -126,6 +138,9 @@ public class Juego {
         System.out.println(habitaciones[habitacionActual]);
     }
 
+    /**
+     * Métod0 para ir a la habitación de la izquierda
+     */
     private static void irIzquierda() {
         if (habitacionActual - 1 < 0) {
             System.out.println("No es posible ir a la izquierda");
@@ -150,31 +165,35 @@ public class Juego {
      * Metodo para recoger objetos de la habitación en la que estas.
      */
     private static void cogerObjeto() {
-        if (contarObjetosHabitacion(habitacionActual)>0) {
+        if (contarObjetosHabitacion(habitacionActual) > 0) {
             MiEntradaSalida.mostrarOpcionesSinNulos("Objetos en la sala: ", objetosMapa[habitacionActual]);
             int objeto = MiEntradaSalida.leerEnteroRango("Introduce el número correspodiente: ", 1, contarObjetosHabitacion(habitacionActual));
 
             int indiceObjeto = indiceObjetoNoNuloNumeroX(habitacionActual, objeto);
 
             guardarEnInventario(indiceObjeto);
-        }
-        else System.out.println("No queda ningún objeto en la sala de importancia.\n");
+        } else System.out.println("No queda ningún objeto en la sala de importancia.\n");
     }
 
-    private static void guardarEnInventario(int indiceObjeto){
+    /**
+     * Metoodo para guardar objetos en el inventario
+     *
+     * @param indiceObjeto indice del objeto en el array
+     */
+    private static void guardarEnInventario(int indiceObjeto) {
         int ocupados = 0;
         for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i]!=null)ocupados++;
+            if (inventario[i] != null) ocupados++;
         }
         for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i]== null){
+            if (inventario[i] == null) {
                 inventario[i] = objetosMapa[habitacionActual][indiceObjeto];
                 objetosMapa[habitacionActual][indiceObjeto] = null;
                 descripcionObjeto[habitacionActual][indiceObjeto] = null;
                 System.out.println("¡Objeto guardado!\n");
                 return;
-            } else if (inventario[i]!= null) {
-                if (ocupados==inventario.length) {
+            } else if (inventario[i] != null) {
+                if (ocupados == inventario.length) {
                     System.out.println("No tienes espacio en el inventario");
                     return;
                 }
@@ -205,12 +224,7 @@ public class Juego {
     }
 
     /**
-     * Creamos un contador para que guarde el número de descripciones de objetos que haya en la habitación actual.
-     * Recorre la matriz descripcionObjeto de la habitación que te encuentres en ese momento.
-     * si la descripcionObjeto es distinto de null suma uno al contador.
-     * Cuando haya terminado el recorrido, el contador tendrá el número de descripciones que hay esa habitación.
-     * imprimo por pantalla en una lista las descripciones haya.
-     * Si no hay objetos en la sala e intentas ver las descripciones de los objetos, no podras y te dira que no hay objetos
+     * Mirar objeto que haya en la habitación y mostrar su descripción
      */
     private static void mirarObjeto() {
         int contador = 0;
@@ -222,10 +236,13 @@ public class Juego {
         }
 
         if (contador == 0) {
-            System.out.println("No hay objetos en esta habitacion.");
+            System.out.println("No hay objetos en esta habitación.");
         }
     }
 
+    /**
+     * Mostrar los posibles comandos mientras el juego esta en uso
+     */
     private static void ayuda() {
         System.out.print("====================AYUDA====================\n ");
         System.out.print(">ir derecha \n ");
