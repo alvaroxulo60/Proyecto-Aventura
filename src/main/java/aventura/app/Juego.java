@@ -44,7 +44,7 @@ public class Juego {
 
     //Creo una matriz descricionObjeto, donde se introducen las descripciones de cada objeto
     private static String[][] descripcionObjeto = {{"Un libro algo desgastado, parece importante pero está cerrado. Al examinarlo con cuidado notas una especie de hueco donde parece ir una figura.", null} //Cuarto
-            , {"Una figura de un zorro con 9 colas parece que se puede poner en algún lugar.", null} //Aula B1
+            , {"Una figura de un zorro con 9 colas, parece que se puede poner en algún lugar.", null} //Aula B1
             , {null, null}}; //Sótano
 
 
