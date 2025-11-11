@@ -131,22 +131,22 @@ public class Juego {
      * Métod0 para ir a la habitación de la derecha
      */
     private static void irDerecha() {
-        if (habitacionActual + 1 == habitaciones.length) {
-            System.out.println("No es posible ir a la derecha");
-        } else
+        if (habitacionActual + 1 != habitaciones.length) {
             habitacionActual += 1;
-        System.out.println(habitaciones[habitacionActual]);
+            System.out.println(habitaciones[habitacionActual]);
+        } else
+            System.out.println("No es posible ir a la derecha");
     }
 
     /**
      * Métod0 para ir a la habitación de la izquierda
      */
     private static void irIzquierda() {
-        if (habitacionActual - 1 < 0) {
-            System.out.println("No es posible ir a la izquierda");
-        } else
+        if (habitacionActual - 1 > 0) {
             habitacionActual -= 1;
-        System.out.println(habitaciones[habitacionActual]);
+            System.out.println(habitaciones[habitacionActual]);
+        } else
+            System.out.println("No es posible ir a la izquierda");
     }
 
     /**
