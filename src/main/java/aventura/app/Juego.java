@@ -153,10 +153,20 @@ public class Juego {
      * Ver tus objetos numerados en el inventario.
      */
     private static void verInventario() {
+        int contador = 0;
         for (int i = 0; i < inventario.length; i++) {
             if (inventario[i] != null) {
-                System.out.println(i + 1 + ": " + inventario[i] + "\n");
+                contador++;
+            }
+        }
+        if (contador == 0) {
+            System.out.println("No tienes ningún objeto en el inventario.");
+        } else {
+            for (int i = 0; i < inventario.length; i++) {
+                if (inventario[i] != null) {
+                    System.out.println(i + 1 + ": " + inventario[i] + "\n");
 
+                }
             }
         }
     }
