@@ -1,4 +1,6 @@
-package aventura.app;
+package aventura.app.main;
+
+import aventura.app.io.MiEntradaSalida;
 
 import java.util.Scanner;
 
