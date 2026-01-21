@@ -6,12 +6,35 @@ public class Habitacion {
     private final static int TAMAÑO_ARRAY_OBJETOS = 8;
     private Objeto[] objetos;
 
-    public Habitacion(String DESCRIPCION, Objeto[] objetos) {
+    public Habitacion(String DESCRIPCION) {
         this.DESCRIPCION = DESCRIPCION;
-        this.objetos = objetos;
+        this.objetos = new Objeto[TAMAÑO_ARRAY_OBJETOS];
     }
 
     public String getDESCRIPCION() {
         return DESCRIPCION;
+    }
+
+    public Objeto[] getObjetos() {
+        return objetos;
+    }
+
+    public void añadirObjetosHabitacion(Objeto objeto){
+        for (int i = 0; i < objetos.length; i++) {
+            if (objetos[i]==null){
+                objetos[i]=objeto;
+            }
+        }
+    }
+
+    public Objeto buscarObjetoHabitacion(Objeto o){
+        for (int i = 0; i < objetos.length; i++) {
+            if (objetos[i]!= null){
+                if (objetos[i].equals(o)){
+                    return objetos[i];
+                }
+            }
+        }
+        return null;
     }
 }

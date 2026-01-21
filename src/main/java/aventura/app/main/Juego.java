@@ -3,6 +3,7 @@ package aventura.app.main;
 import aventura.app.io.*;
 import aventura.app.models.Habitacion;
 import aventura.app.models.Jugador;
+import aventura.app.models.Objeto;
 
 import java.util.Scanner;
 
@@ -19,7 +20,7 @@ public class Juego {
     Jugador jugador = new Jugador();
 
     public Juego() {
-        habitaciones = new Habitacion[habitaciones];
+        habitaciones = new Habitacion[NUM_HABITACIONES];
         preparacionJuego();
 
     }
@@ -48,7 +49,7 @@ public class Juego {
         if (jugador.getPosicionJugador() + 1 != habitaciones.length) {
             jugador.setPosicionJugador(jugador.getPosicionJugador() + 1);
             System.out.println("Te has movido a la derecha...\n");
-            System.out.println(habitaciones[jugador.getPosicionJugador()].getDESCRIPCION());
+            mostrarInfo();
         } else
             System.out.println("No es posible ir a la derecha");
     }
@@ -60,13 +61,60 @@ public class Juego {
         if (jugador.getPosicionJugador() - 1 > 0) {
             jugador.setPosicionJugador(jugador.getPosicionJugador() + 1);
             System.out.println("Te has movido a la izquierda...\n");
-            System.out.println(habitaciones[jugador.getPosicionJugador()].getDESCRIPCION());
+            mostrarInfo();
         } else
             System.out.println("No es posible ir a la izquierda");
     }
 
     public void mostrarInfo(){
+        mirar();
+    }
 
+    public void mirar(){
+        System.out.println(getHabitacionActual().getDESCRIPCION());
+        MiEntradaSalida.mostrarOpcionesSinNulos("En la habitación encuentras los siguientes objetos: ", getHabitacionActual().getObjetos());
+    }
+
+    public void examinar(){
+        mostrarObjetos();
+        Objeto obj = new Objeto(MiEntradaSalida.leerLinea("Introduce el nombre del objeto que quieras examinar:  \n"),null,true);
+        Objeto aux = buscar(obj);
+        if (aux == null){
+            System.out.println("Ese objeto no se encuentra en tu inventario");
+        }
+        else
+            System.out.println(aux.getDescripcion());
+    }
+
+    public Objeto buscar(Objeto o){
+        //Buscamos primero si está el objeto en la habitación
+        Objeto aux = getHabitacionActual().buscarObjetoHabitacion(o);
+        if (aux != null){
+            return aux;
+        }
+        //Si no lo está buscamos en el inventario
+        return jugador.buscarObjetoInventario(o);
+    }
+
+    public Habitacion getHabitacionActual(){
+        return habitaciones[jugador.getPosicionJugador()];
+    }
+
+    public void mostrarObjetos(){
+        int contador = 0;
+        System.out.println("Objetos en la habitacion: ");
+        for (int i = 0; i <getHabitacionActual().getObjetos().length ; i++) {
+            if (getHabitacionActual().getObjetos()[i]!=null){
+                System.out.println(contador++ +". "+ getHabitacionActual().getObjetos()[i].getNombre());
+            }
+        }
+        contador = 0;
+        System.out.println("Objetos en tu inventario: ");
+        for (int i = 0; i <jugador.getInventario().length ; i++) {
+            if (jugador.getInventario()[i]!= null){
+                System.out.println(contador++ +". "+ jugador.getInventario()[i].getNombre());
+            }
+        }
     }
 
     public void iniciarJuego(){

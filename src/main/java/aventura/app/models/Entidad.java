@@ -17,4 +17,17 @@ public abstract class Entidad {
     public String getNombre() {
         return nombre;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Entidad entidad = (Entidad) o;
+        return nombre.equals(entidad.nombre);
+    }
+
+    @Override
+    public int hashCode() {
+        return nombre.hashCode();
+    }
 }
