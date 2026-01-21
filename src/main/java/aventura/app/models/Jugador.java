@@ -17,7 +17,22 @@ public class Jugador extends Personaje{
         return posicionJugador;
     }
 
+    public Objeto[] getInventario() {
+        return inventario;
+    }
+
     public void setPosicionJugador(int posicionJugador) {
         this.posicionJugador = posicionJugador;
+    }
+
+    public Objeto buscarObjetoInventario(Objeto objeto){
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i] != null){
+                if (inventario[i].equals(objeto)){
+                    return inventario[i];
+                }
+            }
+        }
+        return null;
     }
 }

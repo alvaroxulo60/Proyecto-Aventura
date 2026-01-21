@@ -7,4 +7,6 @@ public class Objeto extends Entidad{
         super(nombre, descripcion);
         this.visible = visible;
     }
+
+
 }

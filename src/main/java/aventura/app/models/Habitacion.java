@@ -26,4 +26,15 @@ public class Habitacion {
             }
         }
     }
+
+    public Objeto buscarObjetoHabitacion(Objeto o){
+        for (int i = 0; i < objetos.length; i++) {
+            if (objetos[i]!= null){
+                if (objetos[i].equals(o)){
+                    return objetos[i];
+                }
+            }
+        }
+        return null;
+    }
 }
