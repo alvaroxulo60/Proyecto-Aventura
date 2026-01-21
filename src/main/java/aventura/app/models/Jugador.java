@@ -13,6 +13,10 @@ public class Jugador extends Personaje{
         inventario = new Objeto[TAM_INV];
     }
 
+    public int getPosicionJugador() {
+        return posicionJugador;
+    }
+
     public void setPosicionJugador(int posicionJugador) {
         this.posicionJugador = posicionJugador;
     }
