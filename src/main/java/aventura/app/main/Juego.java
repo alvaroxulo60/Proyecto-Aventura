@@ -19,7 +19,7 @@ public class Juego {
     Jugador jugador = new Jugador();
 
     public Juego() {
-        habitaciones = new Habitacion[habitaciones];
+        habitaciones = new Habitacion[NUM_HABITACIONES];
         preparacionJuego();
 
     }
@@ -48,7 +48,7 @@ public class Juego {
         if (jugador.getPosicionJugador() + 1 != habitaciones.length) {
             jugador.setPosicionJugador(jugador.getPosicionJugador() + 1);
             System.out.println("Te has movido a la derecha...\n");
-            System.out.println(habitaciones[jugador.getPosicionJugador()].getDESCRIPCION());
+            mostrarInfo();
         } else
             System.out.println("No es posible ir a la derecha");
     }
@@ -60,13 +60,22 @@ public class Juego {
         if (jugador.getPosicionJugador() - 1 > 0) {
             jugador.setPosicionJugador(jugador.getPosicionJugador() + 1);
             System.out.println("Te has movido a la izquierda...\n");
-            System.out.println(habitaciones[jugador.getPosicionJugador()].getDESCRIPCION());
+            mostrarInfo();
         } else
             System.out.println("No es posible ir a la izquierda");
     }
 
     public void mostrarInfo(){
+        mirar();
+    }
 
+    public void mirar(){
+        System.out.println(getHabitacionActual().getDESCRIPCION());
+        MiEntradaSalida.mostrarOpcionesSinNulos("En la habitación encuentras los siguientes objetos: ", getHabitacionActual().getObjetos());
+    }
+
+    public Habitacion getHabitacionActual(){
+        return habitaciones[jugador.getPosicionJugador()];
     }
 
     public void iniciarJuego(){
