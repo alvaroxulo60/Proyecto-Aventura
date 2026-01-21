@@ -1,6 +1,6 @@
-package utils;
+package aventura.app.io;
 
-import exceptions.MiEntradaSalidaException;
+import aventura.app.exceptions.MiEntrdadaSalidaException;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -171,10 +171,10 @@ public class MiEntradaSalida {
      * @param max     valor máximo incluido
      * @return Numero leido por teclado
      */
-    public static int leerEnteroRango(String mensaje, int min, int max) throws MiEntradaSalidaException {
+    public static int leerEnteroRango(String mensaje, int min, int max) throws MiEntrdadaSalidaException {
         if (min > max) {
             //Mostrar error
-            throw new MiEntradaSalidaException("El mínimo es mayor que el máximo");
+            throw new MiEntrdadaSalidaException("El mínimo es mayor que el máximo");
         }
         int a;
         do {
@@ -260,21 +260,21 @@ public class MiEntradaSalida {
         System.out.println();
     }
 
-    public static LocalDate fecha(String mensaje) throws MiEntradaSalidaException {
+    public static LocalDate fecha(String mensaje) throws MiEntrdadaSalidaException {
         int año =  leerEnteroPositivo("Introduce el año: ",true);
         int mes =  leerEnteroPositivo("Introduce el mes: ",true);
         int dia =  leerEnteroPositivo("Introduce el dia: ",true);
         try {
             return LocalDate.of(año,mes,dia);
         }catch (DateTimeException e){
-            throw new MiEntradaSalidaException("Fecha no valida.");
+            throw new MiEntrdadaSalidaException("Fecha no valida.");
         }
 
     }
 
-    public static char leerChar(String mensaje) throws MiEntradaSalidaException {
+    public static char leerChar(String mensaje) throws MiEntrdadaSalidaException{
         String texto = leerTexto(mensaje);
-        if (texto.length() != 1) {throw new MiEntradaSalidaException("Debes introducir un caracter.");}
+        if (texto.length() != 1) {throw new MiEntrdadaSalidaException("Debes introducir un caracter.");}
         return texto.charAt(0);
     }
 
