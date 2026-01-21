@@ -11,4 +11,7 @@ public class Habitacion {
         this.objetos = objetos;
     }
 
+    public String getDESCRIPCION() {
+        return DESCRIPCION;
+    }
 }

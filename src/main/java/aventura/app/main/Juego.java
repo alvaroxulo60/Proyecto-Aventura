@@ -1,6 +1,8 @@
 package aventura.app.main;
 
 import aventura.app.io.*;
+import aventura.app.models.Habitacion;
+import aventura.app.models.Jugador;
 
 import java.util.Scanner;
 
@@ -11,6 +13,22 @@ import java.util.Scanner;
  */
 public class Juego {
 
+    private final static int NUM_HABITACIONES = 6;
+
+    private Habitacion[] habitaciones;
+    Jugador jugador = new Jugador();
+
+    public Juego() {
+        habitaciones = new Habitacion[habitaciones];
+        preparacionJuego();
+
+    }
+
+    private void preparacionJuego(){
+
+
+    }
+
     // --- NÚCLEO: Definición de Datos (FASE 1) ---
     // Esta parte os la damos HECHA. Es el "contrato" del núcleo.
 
@@ -20,49 +38,38 @@ public class Juego {
             "A los segundos después de tomarla te empiezas a sentir mareado y se te nubla la vista hasta que finalmente te desplomas en el suelo.\n" +
             "Te despiertas en un lugar familiar, no sabes como llegaste a ahí, ni cuánto tiempo llevas ahí.\n";
 
-    // El mapa de habitaciones.
-    // TODO: (Skin) ¡Rellenad esto con vuestras descripciones!
-
-    //Creo un array habitaciones con las descripciones de cada habitación
-    private static String[] habitaciones = {
-            "Miras alrededor y te das cuenta de que es tu habitación pero a la vez que vas mirando más a detalle te das cuenta que hay cosas que no deberían estar ahí como un libro algo desgastado en tu estantería que no recuerdas haber comprado. \n" +
-                    "Hay una puerta a la derecha.\n",  // Cuarto
-            "Tambíen te resulta familiar, es el aula donde los alumnos de mayor grado dan sus clases de hechizos, pero lo extraño es que el aula esta del reves.\n" +
-                    "En una de las estanterías que llega a tu altura notas una figurilla de Kitsune bastante llamativa. En esta sala hay una puerta a la derecha y otra a la izquierda.\n", // Aula B1
-            "Llegas a un sótano donde apenas hay luz, no te suena de nada este sitio.\n" +
-                    "Al mirar alrededor no ves nada de importancia pero a tu derecha ves unas escaleras que supones que es la salida de esta sala. Hay una puerta a la izquierda y las escaleras a la derecha\n", // Sótano
-            // Borra las habitaciones y escribe las tuyas
-    };
-
-    // Los objetos que hay en cada habitación.
-    // TODO: (Skin) Rellenad esto con vuestros objetos
-
-    //Creo una matriz objetosMapa, donde se introducen los objetos que hay que cada habitación
-    private static String[][] objetosMapa = {
-            {"El tomo de las sombras", null},           // Objetos en Cuarto
-            {"Llave kitsune", null},           // Objetos en Aula B1
-            {null, null},      // Objetos en Sótano
-    };
-
-    //Creo una matriz descricionObjeto, donde se introducen las descripciones de cada objeto
-    private static String[][] descripcionObjeto = {{"Un libro algo desgastado, parece importante pero está cerrado. Al examinarlo con cuidado notas una especie de hueco donde parece ir una figura.", null} //Cuarto
-            , {"Una figura de un zorro con 9 colas, parece que se puede poner en algún lugar.", null} //Aula B1
-            , {null, null}}; //Sótano
-
-
-    // El inventario del jugador. Tamaño fijo.
-    private static String[] inventario = new String[5];
-
-
-    // Variable que guarda la posición actual del jugador
-    private static int habitacionActual = 0; // Empezamos en la primera habitación
 
     // --- FIN DE LA DEFINICIÓN DE DATOS ---
 
+    /**
+     * Métod0 para ir a la habitación de la derecha
+     */
+    private void irDerecha() {
+        if (jugador.getPosicionJugador() + 1 != habitaciones.length) {
+            jugador.setPosicionJugador(jugador.getPosicionJugador() + 1);
+            System.out.println("Te has movido a la derecha...\n");
+            System.out.println(habitaciones[jugador.getPosicionJugador()].getDESCRIPCION());
+        } else
+            System.out.println("No es posible ir a la derecha");
+    }
 
-    public static void main(String[] args) {
-        // Puedes utilizar la clase MiEntradaSalida, que viviría en el paquete io
-        Scanner scanner = new Scanner(System.in);
+    /**
+     * Métod0 para ir a la habitación de la izquierda
+     */
+    private void irIzquierda() {
+        if (jugador.getPosicionJugador() - 1 > 0) {
+            jugador.setPosicionJugador(jugador.getPosicionJugador() + 1);
+            System.out.println("Te has movido a la izquierda...\n");
+            System.out.println(habitaciones[jugador.getPosicionJugador()].getDESCRIPCION());
+        } else
+            System.out.println("No es posible ir a la izquierda");
+    }
+
+    public void mostrarInfo(){
+
+    }
+
+    public void iniciarJuego(){
         boolean jugando = true;
 
         System.out.println("¡Bienvenido a 'TU PROPIA AVENTURA'!");
@@ -70,8 +77,7 @@ public class Juego {
 
         //Muestra la descripción general del juego
         System.out.println(descripcionJuego);
-        //Muestra la descripción de la primera habitación
-        System.out.println(habitaciones[habitacionActual]);
+
 
 
         //Iniciar el bucle principal del juego (game loop)
@@ -116,7 +122,13 @@ public class Juego {
             }
 
         }
+    }
 
+    public static void main(String[] args) {
+
+        Juego j = new Juego();
+        j.preparacionJuego();
+        j.iniciarJuego();
         System.out.println("¡Gracias por jugar!");
 
     }
@@ -129,27 +141,6 @@ public class Juego {
     private static void mostrarInfoHabitacion() { ... }
     */
 
-    /**
-     * Métod0 para ir a la habitación de la derecha
-     */
-    private static void irDerecha() {
-        if (habitacionActual + 1 != habitaciones.length) {
-            habitacionActual += 1;
-            System.out.println(habitaciones[habitacionActual]);
-        } else
-            System.out.println("No es posible ir a la derecha");
-    }
-
-    /**
-     * Métod0 para ir a la habitación de la izquierda
-     */
-    private static void irIzquierda() {
-        if (habitacionActual - 1 > 0) {
-            habitacionActual -= 1;
-            System.out.println(habitaciones[habitacionActual]);
-        } else
-            System.out.println("No es posible ir a la izquierda");
-    }
 
     /**
      * Ver tus objetos numerados en el inventario.
@@ -251,6 +242,8 @@ public class Juego {
             System.out.println("No hay objetos en esta habitación.");
         }
     }
+
+
 
     /**
      * Mostrar los posibles comandos mientras el juego esta en uso
