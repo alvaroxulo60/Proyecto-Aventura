@@ -10,4 +10,8 @@ public class Llave extends Objeto implements Inventariable {
         super(nombre, descripcion, visible);
         this.CODIGO_SEGURIDAD = CODIGO_SEGURIDAD;
     }
+
+    public String getCODIGO_SEGURIDAD() {
+        return CODIGO_SEGURIDAD;
+    }
 }

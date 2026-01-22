@@ -1,5 +1,6 @@
 package aventura.app.interfaces;
 
+import aventura.app.models.Llave;
 import aventura.app.records.RespuestaAccion;
 
 public interface Abrible {
