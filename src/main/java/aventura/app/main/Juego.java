@@ -77,16 +77,16 @@ public class Juego {
 
     public void examinar(){
         mostrarObjetos();
-        Objeto obj = new Objeto(MiEntradaSalida.leerLinea("Introduce el nombre del objeto que quieras examinar:  \n"),null,true);
-        Objeto aux = buscar(obj);
+        String objeto = MiEntradaSalida.leerLinea("Introduce el nombre del objeto que quieras examinar:  \n");
+        Objeto aux = buscar(objeto);
         if (aux == null){
-            System.out.println("Ese objeto no se encuentra en tu inventario");
+            System.out.println("Ese objeto no se encuentra en el inventario o habitación");
         }
         else
             System.out.println(aux.getDescripcion());
     }
 
-    public Objeto buscar(Objeto o){
+    public Objeto buscar(String o){
         //Buscamos primero si está el objeto en la habitación
         Objeto aux = getHabitacionActual().buscarObjetoHabitacion(o);
         if (aux != null){

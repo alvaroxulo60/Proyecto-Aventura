@@ -27,10 +27,10 @@ public class Habitacion {
         }
     }
 
-    public Objeto buscarObjetoHabitacion(Objeto o){
+    public Objeto buscarObjetoHabitacion(String o){
         for (int i = 0; i < objetos.length; i++) {
             if (objetos[i]!= null){
-                if (objetos[i].equals(o)){
+                if (objetos[i].getNombre().equalsIgnoreCase(o)){
                     return objetos[i];
                 }
             }

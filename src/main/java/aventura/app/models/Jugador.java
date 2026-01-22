@@ -25,10 +25,10 @@ public class Jugador extends Personaje{
         this.posicionJugador = posicionJugador;
     }
 
-    public Objeto buscarObjetoInventario(Objeto objeto){
+    public Objeto buscarObjetoInventario(String  objeto){
         for (int i = 0; i < inventario.length; i++) {
             if (inventario[i] != null){
-                if (inventario[i].equals(objeto)){
+                if (inventario[i].getNombre().equalsIgnoreCase(objeto)){
                     return inventario[i];
                 }
             }
