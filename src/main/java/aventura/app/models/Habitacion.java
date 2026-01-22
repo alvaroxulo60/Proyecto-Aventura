@@ -37,4 +37,13 @@ public class Habitacion {
         }
         return null;
     }
+
+    public void quitarObjetoHabitacion(Objeto o){
+        for (int i = 0; i < objetos.length; i++) {
+            if (objetos[i].equals(o)){
+                objetos[i]= null;
+                return;
+            }
+        }
+    }
 }

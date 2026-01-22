@@ -35,4 +35,14 @@ public class Jugador extends Personaje{
         }
         return null;
     }
+
+    public boolean guardarInventario(Objeto o){
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i]== null){
+                inventario[i] = o;
+                return true;
+            }
+        }
+        return false;
+    }
 }
