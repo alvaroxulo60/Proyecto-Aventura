@@ -100,6 +100,7 @@ public class Juego {
         }
         //Si no lo está buscamos en el inventario
         return jugador.buscarObjetoInventario(o);
+        //cambio
     }
 
     /**
