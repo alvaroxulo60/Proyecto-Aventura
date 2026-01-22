@@ -73,6 +73,9 @@ public class Juego {
         MiEntradaSalida.mostrarOpcionesSinNulos("En la habitación encuentras los siguientes objetos: ", getHabitacionActual().getObjetos());
     }
 
+    /**
+     * Examinar algún objeto tanto de la habitacion como de tu inventario
+     */
     public void examinar(){
         mostrarObjetos();
         String objeto = MiEntradaSalida.leerLinea("Introduce el nombre del objeto que quieras examinar:  \n");
@@ -84,6 +87,11 @@ public class Juego {
             System.out.println(aux.getDescripcion());
     }
 
+    /**
+     * Buscar los objetos en la habitación o en el inventario llamando a sus respectivos metodos
+     * @param o Nombre del objeto a buscar
+     * @return devuelve el objeto si lo ha encontrado o en su contrario nulo
+     */
     public Objeto buscar(String o){
         //Buscamos primero si está el objeto en la habitación
         Objeto aux = getHabitacionActual().buscarObjetoHabitacion(o);
@@ -94,10 +102,17 @@ public class Juego {
         return jugador.buscarObjetoInventario(o);
     }
 
+    /**
+     * Coger la habitación actual del jugador
+     * @return la habitación actual
+     */
     public Habitacion getHabitacionActual(){
         return habitaciones[jugador.getPosicionJugador()];
     }
 
+    /**
+     * Mostrar los objetos tanto en tu inventario como en la habitación
+     */
     public void mostrarObjetos(){
         int contador = 0;
         System.out.println("Objetos en la habitacion: ");
@@ -192,22 +207,13 @@ public class Juego {
      * Ver tus objetos numerados en el inventario.
      */
     private  void verInventario() {
-        int contador = 0;
-        for (int i = 0; i < jugador.getInventario().length; i++) {
-            if (jugador.getInventario()[i] != null) {
-                contador++;
-            }
+        String inventario = jugador.verInventario();
+        if(inventario.isBlank()){
+            System.out.println("No tienes nada en el inventario");
+        }else {
+            System.out.println(inventario);
         }
-        if (contador == 0) {
-            System.out.println("No tienes ningún objeto en el inventario.");
-        } else {
-            for (int i = 0; i < jugador.getInventario().length; i++) {
-                if (jugador.getInventario()[i] != null) {
-                    System.out.println(i + 1 + ": " + jugador.getInventario()[i].getNombre() + "\n");
 
-                }
-            }
-        }
     }
 
     /**
@@ -245,7 +251,7 @@ public class Juego {
         System.out.print("====================AYUDA====================\n ");
         System.out.print(">ir derecha \n ");
         System.out.print(">ir izquierda \n ");
-        System.out.print(">mirar \n ");
+        System.out.print(">examinar \n ");
         System.out.print(">coger objeto \n ");
         System.out.print(">inventario \n ");
         System.out.print(">salir \n ");

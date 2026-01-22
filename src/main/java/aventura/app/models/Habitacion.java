@@ -38,6 +38,10 @@ public class Habitacion {
         return null;
     }
 
+    /**
+     * Quitar el objeto de la habitacion una vez guardado
+     * @param o objeto a eliminar
+     */
     public void quitarObjetoHabitacion(Objeto o){
         for (int i = 0; i < objetos.length; i++) {
             if (objetos[i].equals(o)){
