@@ -5,8 +5,6 @@ import aventura.app.models.Habitacion;
 import aventura.app.models.Jugador;
 import aventura.app.models.Objeto;
 
-import java.util.Scanner;
-
 /*
  * Clase principal del juego "Tu Propia Aventura".
  * Esqueleto para la Misión 1 (UD1-UD3).
@@ -75,6 +73,9 @@ public class Juego {
         MiEntradaSalida.mostrarOpcionesSinNulos("En la habitación encuentras los siguientes objetos: ", getHabitacionActual().getObjetos());
     }
 
+    /**
+     * Examinar algún objeto tanto de la habitacion como de tu inventario
+     */
     public void examinar(){
         mostrarObjetos();
         String objeto = MiEntradaSalida.leerLinea("Introduce el nombre del objeto que quieras examinar:  \n");
@@ -86,6 +87,11 @@ public class Juego {
             System.out.println(aux.getDescripcion());
     }
 
+    /**
+     * Buscar los objetos en la habitación o en el inventario llamando a sus respectivos metodos
+     * @param o Nombre del objeto a buscar
+     * @return devuelve el objeto si lo ha encontrado o en su contrario nulo
+     */
     public Objeto buscar(String o){
         //Buscamos primero si está el objeto en la habitación
         Objeto aux = getHabitacionActual().buscarObjetoHabitacion(o);
@@ -94,12 +100,20 @@ public class Juego {
         }
         //Si no lo está buscamos en el inventario
         return jugador.buscarObjetoInventario(o);
+        //cambio
     }
 
+    /**
+     * Coger la habitación actual del jugador
+     * @return la habitación actual
+     */
     public Habitacion getHabitacionActual(){
         return habitaciones[jugador.getPosicionJugador()];
     }
 
+    /**
+     * Mostrar los objetos tanto en tu inventario como en la habitación
+     */
     public void mostrarObjetos(){
         int contador = 0;
         System.out.println("Objetos en la habitacion: ");
@@ -158,8 +172,8 @@ public class Juego {
                 case "ayuda":
                     ayuda();
                     break;
-                case "mirar":
-                    mirarObjeto();
+                case "examinar":
+                    examinar();
                     break;
                 case "salir":
                     jugando = false;
@@ -193,114 +207,52 @@ public class Juego {
     /**
      * Ver tus objetos numerados en el inventario.
      */
-    private static void verInventario() {
-        int contador = 0;
-        for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i] != null) {
-                contador++;
-            }
+    private  void verInventario() {
+        String inventario = jugador.verInventario();
+        if(inventario.isBlank()){
+            System.out.println("No tienes nada en el inventario");
+        }else {
+            System.out.println(inventario);
         }
-        if (contador == 0) {
-            System.out.println("No tienes ningún objeto en el inventario.");
-        } else {
-            for (int i = 0; i < inventario.length; i++) {
-                if (inventario[i] != null) {
-                    System.out.println(i + 1 + ": " + inventario[i] + "\n");
 
-                }
-            }
-        }
     }
 
     /**
      * Metodo para recoger objetos de la habitación en la que estas.
      */
-    private static void cogerObjeto() {
-        if (contarObjetosHabitacion(habitacionActual) > 0) {
-            MiEntradaSalida.mostrarOpcionesSinNulos("Objetos en la sala: ", objetosMapa[habitacionActual]);
-            int objeto = MiEntradaSalida.leerEnteroRango("Introduce el número correspodiente: ", 1, contarObjetosHabitacion(habitacionActual));
-
-            int indiceObjeto = indiceObjetoNoNuloNumeroX(habitacionActual, objeto);
-
-            guardarEnInventario(indiceObjeto);
+    private  void cogerObjeto() {
+        if (contarObjetosHabitacion() > 0) {
+            MiEntradaSalida.mostrarOpcionesSinNulos("Objetos en la sala: ", getHabitacionActual().getObjetos());
+            String objeto = MiEntradaSalida.leerLinea("¿Que objeto quieres guardar?");
+            guardarEnInventario(objeto);
         } else System.out.println("No queda ningún objeto en la sala de importancia.\n");
     }
 
-    /**
-     * Metoodo para guardar objetos en el inventario
-     *
-     * @param indiceObjeto indice del objeto en el array
-     */
-    private static void guardarEnInventario(int indiceObjeto) {
-        int ocupados = 0;
-        for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i] != null) ocupados++;
-        }
-        for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i] == null) {
-                inventario[i] = objetosMapa[habitacionActual][indiceObjeto];
-                objetosMapa[habitacionActual][indiceObjeto] = null;
-                descripcionObjeto[habitacionActual][indiceObjeto] = null;
-                System.out.println("¡Objeto guardado!\n");
-                return;
-            } else if (inventario[i] != null) {
-                if (ocupados == inventario.length) {
-                    System.out.println("No tienes espacio en el inventario");
-                    return;
-                }
-                continue;
+
+    private  void guardarEnInventario(String o) {
+        Objeto aux = getHabitacionActual().buscarObjetoHabitacion(o);
+        if (aux != null){
+            if (jugador.guardarInventario(aux)){
+                getHabitacionActual().quitarObjetoHabitacion(aux);
+                System.out.println("¡Objeto guardado con éxito! \n");
+            }else {
+                System.out.println("No ha sido posible guardar el objeto...El inventario esta lleno");
             }
         }
-    }
-
-    /**
-     * Coger indice verdadero del objeto en la habitación
-     *
-     * @param habitacion habitacion a ver
-     * @param x          posicion del objeto
-     * @return posicion del objeto en el array
-     */
-    private static int indiceObjetoNoNuloNumeroX(int habitacion, int x) {
-        int numObjetosNoNulos = 0;
-        for (int i = 0; i < objetosMapa[habitacion].length; i++) {
-            if (objetosMapa[habitacion][i] != null) {
-                numObjetosNoNulos++;
-
-                if (x == numObjetosNoNulos) {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * Mirar objeto que haya en la habitación y mostrar su descripción
-     */
-    private static void mirarObjeto() {
-        int contador = 0;
-        for (int i = 0; i < descripcionObjeto[habitacionActual].length; i++) {
-            if (descripcionObjeto[habitacionActual][i] != null) {
-                contador += 1;
-                System.out.println(i + 1 + ": " + descripcionObjeto[habitacionActual][i]);
-            }
-        }
-
-        if (contador == 0) {
-            System.out.println("No hay objetos en esta habitación.");
+        else{
+            System.out.println("No se ha encontrado el objeto");
         }
     }
 
 
-
     /**
-     * Mostrar los posibles comandos mientras el juego esta en uso
+     * Mostrar los posibles comandos mientras el juego está en uso
      */
-    private static void ayuda() {
+    private void ayuda() {
         System.out.print("====================AYUDA====================\n ");
         System.out.print(">ir derecha \n ");
         System.out.print(">ir izquierda \n ");
-        System.out.print(">mirar \n ");
+        System.out.print(">examinar \n ");
         System.out.print(">coger objeto \n ");
         System.out.print(">inventario \n ");
         System.out.print(">salir \n ");
@@ -309,14 +261,12 @@ public class Juego {
 
     /**
      * Contar objetos de la habitacion
-     *
-     * @param habitacion habitacion a mirar
      * @return objetos en la habitación
      */
-    private static int contarObjetosHabitacion(int habitacion) {
+    private int contarObjetosHabitacion() {
         int contador = 0;
-        for (int i = 0; i < objetosMapa[habitacion].length; i++) {
-            if (objetosMapa[habitacion][i] != null) {
+        for (int i = 0; i < getHabitacionActual().getObjetos().length; i++) {
+            if (getHabitacionActual().getObjetos()[i] != null) {
                 contador++;
             }
         }
