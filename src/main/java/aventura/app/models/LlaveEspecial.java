@@ -1,5 +1,6 @@
 package aventura.app.models;
 
+import aventura.app.exceptions.CombinarException;
 import aventura.app.interfaces.Combinable;
 import aventura.app.interfaces.Inventariable;
 
@@ -10,9 +11,11 @@ public class LlaveEspecial extends Objeto implements Inventariable, Combinable {
     }
 
     @Override
-    public Objeto combinar(Objeto otro) {
-        if (otro instanceof LibroHechizos l){
-
+    public Objeto combinar(Objeto otro) throws CombinarException {
+        if (otro instanceof LibroHechizos){
+            return new TomoDeLasSombras("Tomo de las sombras","Un antiguo libro de hechizos ahora abierto después de haber utilizado la llave de kitsune en el..." +
+                    "Parece poderoso y que nos servira más adelante", true);
         }
+        throw new CombinarException("Estos objetos no son combinables...");
     }
 }
