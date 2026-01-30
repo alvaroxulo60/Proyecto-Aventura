@@ -19,6 +19,10 @@ public class Habitacion {
         return objetos;
     }
 
+    /**
+     * Metodo para añadir un objeto al array de objetos en la habitación
+     * @param objeto
+     */
     public void añadirObjetosHabitacion(Objeto objeto){
         for (int i = 0; i < objetos.length; i++) {
             if (objetos[i]==null){
@@ -27,6 +31,11 @@ public class Habitacion {
         }
     }
 
+    /**
+     * Buscar el objeto en la habitación
+     * @param o Nombre del objeto a buscar
+     * @return El propio objeto si lo ha encontrado o null si no
+     */
     public Objeto buscarObjetoHabitacion(String o){
         for (int i = 0; i < objetos.length; i++) {
             if (objetos[i]!= null){
@@ -39,7 +48,7 @@ public class Habitacion {
     }
 
     /**
-     * Quitar el objeto de la habitacion una vez guardado
+     * Quitar el objeto de la habitación una vez guardado
      * @param o objeto a eliminar
      */
     public void quitarObjetoHabitacion(Objeto o){
