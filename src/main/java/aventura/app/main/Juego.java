@@ -144,11 +144,9 @@ public class Juego {
 
         //Iniciar el bucle principal del juego (game loop)
         while (jugando) {
-            ayuda();
             //Leer el comando del usuario por teclado
             System.out.print("\n> ");
-            String comando = MiEntradaSalida.leerLinea("¿Qué quieres hacer a continuación?: ");
-            ;
+            String comando = MiEntradaSalida.leerLinea("¿Qué quieres hacer a continuación? (Escribe 'ayuda' para ver los comandos posibles): ");
 
             /*
             Crear un 'switch' o una estructura 'if-else if'
