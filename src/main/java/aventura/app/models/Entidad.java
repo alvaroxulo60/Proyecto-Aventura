@@ -19,6 +19,11 @@ public abstract class Entidad {
     }
 
     @Override
+    public String toString() {
+        return nombre;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -30,4 +35,6 @@ public abstract class Entidad {
     public int hashCode() {
         return nombre.hashCode();
     }
+
+
 }

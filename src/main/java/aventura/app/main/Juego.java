@@ -15,10 +15,11 @@ public class Juego {
     private final static int NUM_HABITACIONES = 6;
 
     private Habitacion[] habitaciones;
-    Jugador jugador = new Jugador();
+    Jugador jugador;
 
     public Juego() {
         habitaciones = new Habitacion[NUM_HABITACIONES];
+        jugador = new Jugador();
         preparacionJuego();
 
     }
@@ -185,14 +186,7 @@ public class Juego {
         }
     }
 
-    public static void main(String[] args) {
 
-        Juego j = new Juego();
-        j.preparacionJuego();
-        j.iniciarJuego();
-        System.out.println("¡Gracias por jugar!");
-
-    }
 
     /*
     (Opcional - Buenas Prácticas)
@@ -227,7 +221,10 @@ public class Juego {
         } else System.out.println("No queda ningún objeto en la sala de importancia.\n");
     }
 
-
+    /**
+     * Busca el objeto y llama al metodo del jugador para guardarlo en su inventario
+     * @param o Un String con el nombre del objeto a buscar
+     */
     private  void guardarEnInventario(String o) {
         Objeto aux = getHabitacionActual().buscarObjetoHabitacion(o);
         if (aux != null){
@@ -270,5 +267,14 @@ public class Juego {
             }
         }
         return contador;
+    }
+
+    public static void main(String[] args) {
+
+        Juego j = new Juego();
+        j.preparacionJuego();
+        j.iniciarJuego();
+        System.out.println("¡Gracias por jugar!");
+
     }
 }
