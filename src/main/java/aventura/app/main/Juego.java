@@ -1,5 +1,6 @@
 package aventura.app.main;
 
+import aventura.app.interfaces.Leible;
 import aventura.app.io.*;
 import aventura.app.models.Habitacion;
 import aventura.app.models.Jugador;
@@ -84,8 +85,14 @@ public class Juego {
         if (aux == null){
             System.out.println("Ese objeto no se encuentra en el inventario o habitación");
         }
-        else
+        else {
+            System.out.println("Descripción: \n");
             System.out.println(aux.getDescripcion());
+            if (aux instanceof Leible l) {
+                System.out.println("Contenido: \n");
+                l.leer();
+            }
+        }
     }
 
     /**
