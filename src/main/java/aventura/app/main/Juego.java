@@ -86,7 +86,7 @@ public class Juego {
             System.out.println("Ese objeto no se encuentra en el inventario o habitación");
         }
         else {
-            System.out.println("Descripcion: \n");
+            System.out.println("Descripción: \n");
             System.out.println(aux.getDescripcion());
             if (aux instanceof Leible l) {
                 System.out.println("Contenido: \n");
