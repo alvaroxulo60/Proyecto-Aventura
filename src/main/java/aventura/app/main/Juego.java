@@ -1,5 +1,6 @@
 package aventura.app.main;
 
+import aventura.app.interfaces.Leible;
 import aventura.app.io.*;
 import aventura.app.models.Habitacion;
 import aventura.app.models.Jugador;
@@ -86,6 +87,9 @@ public class Juego {
         }
         else
             System.out.println(aux.getDescripcion());
+        if (aux instanceof Leible l){
+            l.leer();
+        }
     }
 
     /**
