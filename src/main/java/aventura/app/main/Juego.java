@@ -189,6 +189,9 @@ public class Juego {
         int contador = 1;
         System.out.println("Objetos en la habitacion: ");
         for (int i = 0; i <getHabitacionActual().getObjetos().length ; i++) {
+            if (getHabitacionActual().contarObjetosHabitacion()==contador-1){
+                break;
+            }
             if (getHabitacionActual().getObjetos()[i]!=null){
                 System.out.println(contador++ +". "+ getHabitacionActual().getObjetos()[i].getNombre());
             }
@@ -196,6 +199,9 @@ public class Juego {
         contador = 1;
         System.out.println("Objetos en tu inventario: ");
         for (int i = 0; i <jugador.getInventario().length ; i++) {
+            if (jugador.contarObjetosInventario()==contador-1){
+                break;
+            }
             if (jugador.getInventario()[i]!= null){
                 System.out.println(contador++ +". "+ jugador.getInventario()[i].getNombre());
             }
