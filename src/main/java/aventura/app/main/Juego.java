@@ -1,5 +1,6 @@
 package aventura.app.main;
 
+import aventura.app.interfaces.Inventariable;
 import aventura.app.interfaces.Leible;
 import aventura.app.io.*;
 import aventura.app.models.*;
@@ -187,15 +188,18 @@ public class Juego {
      */
     public void mostrarObjetos(){
         int contador = 1;
-        System.out.println("Objetos en la habitacion: ");
-        for (int i = 0; i <getHabitacionActual().getObjetos().length ; i++) {
-            if (getHabitacionActual().contarObjetosHabitacion()==contador-1){
-                break;
-            }
-            if (getHabitacionActual().getObjetos()[i]!=null){
-                System.out.println(contador++ +". "+ getHabitacionActual().getObjetos()[i].getNombre());
+        if (getHabitacionActual().contarObjetosHabitacion()!= 0) {
+            System.out.println("Objetos en la habitacion: ");
+            for (int i = 0; i < getHabitacionActual().getObjetos().length; i++) {
+                if (getHabitacionActual().contarObjetosHabitacion() == contador - 1) {
+                    break;
+                }
+                if (getHabitacionActual().getObjetos()[i] != null) {
+                    System.out.println(contador++ + ". " + getHabitacionActual().getObjetos()[i].getNombre());
+                }
             }
         }
+        if (jugador.contarObjetosInventario() != 0){
         contador = 1;
         System.out.println("Objetos en tu inventario: ");
         for (int i = 0; i <jugador.getInventario().length ; i++) {
@@ -205,6 +209,7 @@ public class Juego {
             if (jugador.getInventario()[i]!= null){
                 System.out.println(contador++ +". "+ jugador.getInventario()[i].getNombre());
             }
+        }
         }
     }
 
@@ -251,6 +256,9 @@ public class Juego {
                 case "examinar":
                     examinar();
                     break;
+                case "abrir":
+                    abrirContenedor();
+                    break;
                 case "salir":
                     jugando = false;
                     break;
@@ -290,11 +298,27 @@ public class Juego {
      * Metodo para recoger objetos de la habitación en la que estas.
      */
     private  void cogerObjeto() {
-        if (contarObjetosHabitacion() > 0) {
-            MiEntradaSalida.mostrarOpcionesSinNulos("Objetos en la sala: ", getHabitacionActual().getObjetos());
+        if (getHabitacionActual().contarObjetosHabitacion() > 0) {
+            mostrarObjetosInventariables();
             String objeto = MiEntradaSalida.leerLinea("¿Que objeto quieres guardar?");
             guardarEnInventario(objeto);
         } else System.out.println("No queda ningún objeto en la sala de importancia.\n");
+    }
+
+    /**
+     *Metodo para mostrar los objetos inventariables
+     */
+    public void mostrarObjetosInventariables(){
+        int contador = 1;
+        System.out.println("Objetos en la habitacion: ");
+        for (int i = 0; i <getHabitacionActual().getObjetos().length ; i++) {
+            if (getHabitacionActual().contarObjetosHabitacion()==contador-1){
+                break;
+            }
+            if (getHabitacionActual().getObjetos()[i]!=null && getHabitacionActual().getObjetos()[i] instanceof Inventariable){
+                System.out.println(contador++ +". "+ getHabitacionActual().getObjetos()[i].getNombre());
+            }
+        }
     }
 
     /**
@@ -306,7 +330,7 @@ public class Juego {
         if (aux != null){
             if (jugador.guardarInventario(aux)){
                 getHabitacionActual().quitarObjetoHabitacion(aux);
-                System.out.println("¡Objeto guardado con éxito! \n");
+                System.out.println("¡Objeto guardado con éxito!");
             }else {
                 System.out.println("No ha sido posible guardar el objeto...El inventario esta lleno");
             }
@@ -327,22 +351,53 @@ public class Juego {
         System.out.print(">examinar \n ");
         System.out.print(">coger objeto \n ");
         System.out.print(">inventario \n ");
+        System.out.print(">abrir \n ");
         System.out.print(">salir \n ");
         System.out.print("=============================================\n");
     }
 
     /**
-     * Contar objetos de la habitacion
-     * @return objetos en la habitación
+     * Metodo para abrir los contenedores
      */
-    private int contarObjetosHabitacion() {
-        int contador = 0;
-        for (int i = 0; i < getHabitacionActual().getObjetos().length; i++) {
-            if (getHabitacionActual().getObjetos()[i] != null) {
-                contador++;
+    public void abrirContenedor(){
+        mostrarContenedores();
+        String contenedor = MiEntradaSalida.leerLinea("¿Que contenedor quieres abrir? \n");
+        Objeto aux = getHabitacionActual().buscarObjetoHabitacion(contenedor);
+        if (aux instanceof Contenedor c){
+            Llave l = jugador.buscarLlaveInventario(c.getCODIGO_SECRETO());
+            if (c.abrir(l).esExito()){
+                if (c.getElemento() != null) {
+                    System.out.println("Dentro encuentras: "+c.getElemento().getNombre());
+                    if (jugador.guardarInventario(c.getElemento())){
+                        c.eliminarObjeto();
+                        System.out.println("El objeto se ha guardado en el inventario");
+                    }
+                    else {
+                        System.err.println("No se ha podido guardar en el inventario");
+                        getHabitacionActual().añadirObjetosHabitacion(c.getElemento());
+                        c.eliminarObjeto();
+                    }
+                }
+                else
+                    System.out.println("No encuentras nada");
             }
         }
-        return contador;
+    }
+
+    /**
+     * Mostrar los contenedores de la habitación
+     */
+    public void mostrarContenedores(){
+        int contador = 1;
+        System.out.println("Objetos en la habitacion: ");
+        for (int i = 0; i <getHabitacionActual().getObjetos().length ; i++) {
+            if (getHabitacionActual().contarObjetosHabitacion()==contador-1){
+                break;
+            }
+            if (getHabitacionActual().getObjetos()[i]!=null && getHabitacionActual().getObjetos()[i] instanceof Contenedor){
+                System.out.println(contador++ +". "+ getHabitacionActual().getObjetos()[i].getNombre());
+            }
+        }
     }
 
     public static void main(String[] args) {
