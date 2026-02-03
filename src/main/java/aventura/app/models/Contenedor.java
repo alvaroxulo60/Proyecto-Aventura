@@ -44,6 +44,14 @@ public class Contenedor extends Objeto implements Abrible {
     public Objeto getElemento() {
         return elemento;
     }
+
+    public String getCODIGO_SECRETO() {
+        return CODIGO_SECRETO;
+    }
+
+    public void eliminarObjeto(){
+        this.elemento = null;
+    }
 }
 
 

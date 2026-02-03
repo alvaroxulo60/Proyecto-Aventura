@@ -42,6 +42,24 @@ public class Jugador extends Personaje{
     }
 
     /**
+     * Buscar la llave necesaria en el inventario
+     * @param codigo código de la llave a buscar
+     * @return  la respectiva llave
+     */
+    public Llave buscarLlaveInventario(String codigo){
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i]!= null){
+                if (inventario[i] instanceof Llave l){
+                    if (l.getCODIGO_SEGURIDAD()==codigo){
+                        return l;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Guardar un objeto nuevo en el inventario del jugador
      * @param o objeto a guardar
      * @return true o false dependiendo si se ha completado la acción o no
