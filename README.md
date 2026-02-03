@@ -1,20 +1,23 @@
-# 🚀 Proyecto: NIGHT CLASS
+# 🚀 Proyecto: The history of best witcher of the world
 
 **Miembros del Equipo:**
-* [Nombre Alumno/a 1]
-* [Nombre Alumno/a 2]
+* Álvaro Rodríguez Esparragosa
+* Carlos Simoes Sequera
 
 ---
 
-## 📖 Nuestra Historia (El "Skin")
+## 📖 Nuestra Historia
 
 **Temática del Juego:** Escape / Misterio en el Instituto.
 
 **Premisa:**
-> No sabes qué ha pasado. Justo cuando terminabas las clases te quedaste el último como siempre recogiendo tus cosas. Pero algo pasó. Lo último que recuerdas es que sentiste mucho frío y todo se volvió oscuro. Ahora estás en tu clase, pero es de noche y el instituto está cerrado. ¿Nadie te ha visto? ¿Por qué las limpiadoras no te han despertado?
+> Empiezas en una aldea tranquila, Kael el Comerciante, el cual conoces muy bien, muy amable te ofrece sin coste una poción misteriosa, según él esa poción te volverá el mejor alumno de la academia de la luz y la sombra, te llevas la poción con gusto y mientras das un paseo te la tomas para volverte el mejor de todos.
+A los segundos después de tomarla te empiezas a sentir mareado y se te nubla la vista hasta que finalmente te desplomas en el suelo.
+Te despiertas en un lugar familiar, no sabes como llegaste a ahí, ni cuánto tiempo llevas ahí.
+
 
 **Objetivo:**
-Descubrir qué ha pasado y encontrar una forma de salir del instituto.
+Descubrir la manera de salir de ese extraño lugar y descubir quien te ha hecho esto.
 
 ---
 
