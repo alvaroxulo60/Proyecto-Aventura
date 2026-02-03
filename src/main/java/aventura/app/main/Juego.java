@@ -25,7 +25,7 @@ public class Juego {
     private void preparacionJuego(){
         //* primera habitación
         Habitacion tuHabitacion = new Habitacion("Miras alrededor y te das cuenta de que es tu habitación pero a la vez que vas mirando más a detalle te das cuenta que hay cosas que no deberían estar ahí como un libro, algo desgastado en la estantería, tiene cerradura muy extraña, como  si fuera para introducir una llave… ¿Con forma de zorro? no recuerdas haber comprado algo así antes. Hay una puerta a la derecha.");
-        Mueble m1 = new Mueble("Cama", "Es tú cama, no parece que tenga algo importante", true);
+        Mueble m1 = new Mueble("Cama","Es tú cama, no parece que tenga algo importante", true);
         Mueble m2 = new Mueble("Escritorio","Aquí es donde sules leer y estudiar", true);
         Mueble m3 = new Mueble("Estantería", "Una estantería llena de libros, pero te llama la atención uno en concreto", true);
         Contenedor c1 = new Contenedor("Mesa de noche", "Es tu mesita de noche", true, null, null,false);
@@ -42,9 +42,9 @@ public class Juego {
         Mueble m5 = new Mueble("Mesa del profesor", "Es la mesa del profesor, ves que el cajon esta abierto", true);
         NotaRota notaRota1 = new NotaRota("Nota rota", "Es una nota a la que le falta una mitad...", true);
         Contenedor c2 = new Contenedor("Cajon del profesor", "Es el cajon donde los maestros suelen guardar el borrador, papeles, etc...", true,null, notaRota1,false);
-        tuHabitacion.añadirObjetosHabitacion(m4);
-        tuHabitacion.añadirObjetosHabitacion(m5);
-        tuHabitacion.añadirObjetosHabitacion(c2);
+        aula1ºB.añadirObjetosHabitacion(m4);
+        aula1ºB.añadirObjetosHabitacion(m5);
+        aula1ºB.añadirObjetosHabitacion(c2);
 
         //*tercera habitación
         Habitacion centroMedico = new Habitacion("Al cruzar la puerta apareces en una zona médica, entonces caes en que estás en el centró médico de tu aldea. Alrededor tuya ves muchos muebles con muchos frascos y varios muebles cerrados, en particular te fijas en un cajón de una mesa que tiene una cerradura con forma de estrella. No hay más puertas, solo por la que viniste.");
@@ -53,10 +53,10 @@ public class Juego {
         Nota nota = new Nota("Nota", "Es una nota doblada", true,"el cielo nocturno lleno de estrellas está, pero una sola desbloqueara la magia” busca en la habitación…" );
         LlaveEspecial llaveKitsune = new LlaveEspecial("Llave Kitsune", "Es una llave que tiene forma de zorro de 9 colas", true);
         Contenedor c3 = new Contenedor("Cajon", "Es una cajon que tiene una cerradura con forma de estrella", true, "Llave Estrella", llaveKitsune, false);
-        tuHabitacion.añadirObjetosHabitacion(nota);
-        tuHabitacion.añadirObjetosHabitacion(m6);
-        tuHabitacion.añadirObjetosHabitacion(m7);
-        tuHabitacion.añadirObjetosHabitacion(c3);
+        centroMedico.añadirObjetosHabitacion(nota);
+        centroMedico.añadirObjetosHabitacion(m6);
+        centroMedico.añadirObjetosHabitacion(m7);
+        centroMedico.añadirObjetosHabitacion(c3);
 
         //*cuarta habitación
         Habitacion sotano = new Habitacion("Llegas a un sótano donde apenas hay luz, no te suena de nada este sitio. Al mirar alrededor no ves nada de importancia pero a tu derecha ves unas escaleras que supones que es la salida de esta sala. Hay una puerta a la izquierda y las escaleras a la derecha.\n");
@@ -64,9 +64,9 @@ public class Juego {
         Mueble m9 = new Mueble("Armario","Es un armario de madera antiguo que esta vacio", true);
         Llave llaveEstrella = new Llave("Llave Estrella", "Es una llave que tiene forma de estrella", true, "Llave Estrella");
         Contenedor c4 = new Contenedor("Caja de Herramientas", "Es una caja de herramientas que contiene algo en su interior", true, null,llaveEstrella,true);
-        tuHabitacion.añadirObjetosHabitacion(m8);
-        tuHabitacion.añadirObjetosHabitacion(m9);
-        tuHabitacion.añadirObjetosHabitacion(c4);
+        sotano.añadirObjetosHabitacion(m8);
+        sotano.añadirObjetosHabitacion(m9);
+        sotano.añadirObjetosHabitacion(c4);
 
         //*quinta habitación
         Habitacion biblioteca = new Habitacion("Al subir las escaleras ahora apareces en la biblioteca de la aldea, todas las escaleras están vacías, pero investigando en la biblioteca te fijas que hay una escalera que te podría servir.");
@@ -75,20 +75,20 @@ public class Juego {
         Mueble m12 = new Mueble("Mesas y sillas", "Varias mesas y sillas para que puedas sentarte a leer tranquilo", true);
         Mueble m13 = new Mueble("Mesa de la recepción", "Es la mesa donde vas a que te den el sello y la fecha de devolución de libros", true);
         Contenedor c5 = new Contenedor("Cajón", "El cajón de la mesa de la recepción que parece estar abierto", true, null, null, true);
-        tuHabitacion.añadirObjetosHabitacion(m10);
-        tuHabitacion.añadirObjetosHabitacion(m11);
-        tuHabitacion.añadirObjetosHabitacion(m12);
-        tuHabitacion.añadirObjetosHabitacion(m13);
-        tuHabitacion.añadirObjetosHabitacion(c5);
+        biblioteca.añadirObjetosHabitacion(m10);
+        biblioteca.añadirObjetosHabitacion(m11);
+        biblioteca.añadirObjetosHabitacion(m12);
+        biblioteca.añadirObjetosHabitacion(m13);
+        biblioteca.añadirObjetosHabitacion(c5);
 
         //*sexta y última habitación
         Habitacion mercado = new Habitacion("Al cruzar la puerta te das cuenta de un detalle importante, todo este tiempo lo que has ido viendo han sido ilusiones creadas por un hechizo, pero quién podría hacerte esto a tí… Bueno, al mirar alrededor ves que estás en una calle y es la del mercado, al final de calle ves una gran puerta que parece que necesita un conjuro para abrirse.");
         Mueble m14 = new Mueble("Puesto", "Varios puestos del mercado que venden frutas, verduras, escobas voladoras, etc...", true);
         Mueble m15 = new Mueble("Mesa", "Una mesa que contiene una nota", true);
         NotaRota notaRota2 = new NotaRota("Nota rota", "Es una nota a la que le falta una mitad...",true);
-        tuHabitacion.añadirObjetosHabitacion(notaRota2);
-        tuHabitacion.añadirObjetosHabitacion(m14);
-        tuHabitacion.añadirObjetosHabitacion(m15);
+        mercado.añadirObjetosHabitacion(notaRota2);
+        mercado.añadirObjetosHabitacion(m14);
+        mercado.añadirObjetosHabitacion(m15);
         //Añadimos las habitaciones al array
         habitaciones = new Habitacion[]{tuHabitacion, aula1ºB, centroMedico, sotano, biblioteca, mercado};
     }
@@ -149,7 +149,7 @@ public class Juego {
             System.out.println("Ese objeto no se encuentra en el inventario o habitación");
         }
         else {
-            System.out.println("Descripción: \n");
+            System.out.println("Descripción:");
             System.out.println(aux.getDescripcion());
             if (aux instanceof Leible l) {
                 System.out.println("Contenido: \n");
