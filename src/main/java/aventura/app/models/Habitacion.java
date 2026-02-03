@@ -27,6 +27,7 @@ public class Habitacion {
         for (int i = 0; i < objetos.length; i++) {
             if (objetos[i]==null){
                 objetos[i]=objeto;
+                break;
             }
         }
     }
@@ -58,5 +59,19 @@ public class Habitacion {
                 return;
             }
         }
+    }
+
+    /**
+     * Contar objetos en la habitación
+     * @return El número de objetos
+     */
+    public int contarObjetosHabitacion(){
+        int contador = 0;
+        for (int i = 0; i < objetos.length; i++) {
+            if (objetos[i]!= null){
+                contador++;
+            }
+        }
+        return contador;
     }
 }

@@ -70,4 +70,18 @@ public class Jugador extends Personaje{
         }
         return inv.toString();
     }
+
+    /**
+     * Contar objetos en el inventario
+     * @return El número de objetos
+     */
+    public int contarObjetosInventario(){
+        int contador = 0;
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i]!= null){
+                contador++;
+            }
+        }
+        return contador;
+    }
 }
