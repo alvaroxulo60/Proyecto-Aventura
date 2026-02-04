@@ -1,5 +1,7 @@
 package aventura.app.main;
 
+import aventura.app.exceptions.CombinarException;
+import aventura.app.interfaces.Combinable;
 import aventura.app.interfaces.Inventariable;
 import aventura.app.interfaces.Leible;
 import aventura.app.io.*;
@@ -42,7 +44,7 @@ public class Juego {
         Habitacion aula1ºB = new Habitacion("Tambíen te resulta familiar, es el aula donde los alumnos de mayor grado dan sus clases de hechizos, pero lo extraño es que el aula esta del reves. En la mesa del profesor hay un cajón. En esta sala hay una puerta a la derecha y otra a la izquierda.\n");
         Mueble m4 = new Mueble("Mesa de estudiantes", "Son las mesas que usan los alumnos de mayor grado", true);
         Mueble m5 = new Mueble("Mesa del profesor", "Es la mesa del profesor, ves que el cajon esta abierto", true);
-        NotaRota notaRota1 = new NotaRota("Nota rota", "Es una nota a la que le falta una mitad...", true);
+        NotaRota notaRota1 = new NotaRota("Nota rota 1", "Es una nota a la que le falta una mitad...", true);
         Contenedor c2 = new Contenedor("Cajon del profesor", "Es el cajon donde los maestros suelen guardar el borrador, papeles, etc...", true,null, notaRota1,false);
         aula1ºB.añadirObjetosHabitacion(m4);
         aula1ºB.añadirObjetosHabitacion(m5);
@@ -54,7 +56,7 @@ public class Juego {
         Mueble m7 = new Mueble("Camilla", "Es una camilla donde parecen que tuvieron que llevar alguine muy herido...", true);
         Nota nota = new Nota("Nota", "Es una nota doblada", true,"el cielo nocturno lleno de estrellas está, pero una sola desbloqueara la magia” busca en la habitación…" );
         LlaveEspecial llaveKitsune = new LlaveEspecial("Llave Kitsune", "Es una llave que tiene forma de zorro de 9 colas", true);
-        Contenedor c3 = new Contenedor("Cajon", "Es una cajon que tiene una cerradura con forma de estrella", true, "Llave Estrella", llaveKitsune, false);
+        Contenedor c3 = new Contenedor("Cajon", "Es una cajón que tiene una cerradura con forma de estrella", true, "Llave Estrella", llaveKitsune, false);
         centroMedico.añadirObjetosHabitacion(nota);
         centroMedico.añadirObjetosHabitacion(m6);
         centroMedico.añadirObjetosHabitacion(m7);
@@ -87,7 +89,7 @@ public class Juego {
         Habitacion mercado = new Habitacion("Al cruzar la puerta te das cuenta de un detalle importante, todo este tiempo lo que has ido viendo han sido ilusiones creadas por un hechizo, pero quién podría hacerte esto a tí… Bueno, al mirar alrededor ves que estás en una calle y es la del mercado, al final de calle ves una gran puerta que parece que necesita un conjuro para abrirse.");
         Mueble m14 = new Mueble("Puesto", "Varios puestos del mercado que venden frutas, verduras, escobas voladoras, etc...", true);
         Mueble m15 = new Mueble("Mesa", "Una mesa que contiene una nota", true);
-        NotaRota notaRota2 = new NotaRota("Nota rota", "Es una nota a la que le falta una mitad...",true);
+        NotaRota notaRota2 = new NotaRota("Nota rota 2", "Es una nota a la que le falta una mitad...",true);
         mercado.añadirObjetosHabitacion(notaRota2);
         mercado.añadirObjetosHabitacion(m14);
         mercado.añadirObjetosHabitacion(m15);
@@ -260,6 +262,9 @@ public class Juego {
                 case "abrir":
                     abrirContenedor();
                     break;
+                case "combinar":
+                    combinar();
+                    break;
                 case "salir":
                     jugando = false;
                     break;
@@ -353,6 +358,7 @@ public class Juego {
         System.out.print(">coger objeto \n ");
         System.out.print(">inventario \n ");
         System.out.print(">abrir \n ");
+        System.out.print(">combinar \n ");
         System.out.print(">salir \n ");
         System.out.print("=============================================\n");
     }
@@ -408,6 +414,39 @@ public class Juego {
                 System.out.println(contador++ +". "+ getHabitacionActual().getObjetos()[i].getNombre());
             }
         }
+    }
+
+    public void combinar(){
+        mostrarObjetos();
+        String objeto1 = MiEntradaSalida.leerLinea("¿Qué objeto quieres combinar?\n");
+        Objeto aux1 = buscar(objeto1);
+        String objeto2 = MiEntradaSalida.leerLinea("¿Qué objeto quieres combinar?");
+        Objeto aux2 = buscar(objeto2);
+        if (aux1!=null && aux2!=null){
+            if(!aux1.equals(aux2)){
+                if(aux1 instanceof Combinable c1){
+                    try {
+                        Objeto resultante = c1.combinar(aux2);
+                        borrarObjetos(aux1);
+                        borrarObjetos(aux2);
+                        jugador.guardarInventario(resultante);
+                    }catch (CombinarException e){
+                        System.out.println(e.getMessage());
+                    }
+                }else  {
+                    System.out.println("No se puede combinar el objeto.");
+                }
+            }else {
+                System.out.println("No se puede combinar el objeto consigo mismo.");
+            }
+        }else  {
+            System.out.println("Uno de los dos objetos no se ha encontrado.");
+        }
+    }
+
+    public void borrarObjetos(Objeto aux){
+        jugador.consumirObjetosInventario(aux);
+        getHabitacionActual().quitarObjetoHabitacion(aux);
     }
 
     public static void main(String[] args) {
