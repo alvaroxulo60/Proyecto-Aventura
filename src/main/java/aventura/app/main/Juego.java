@@ -4,6 +4,7 @@ import aventura.app.interfaces.Inventariable;
 import aventura.app.interfaces.Leible;
 import aventura.app.io.*;
 import aventura.app.models.*;
+import aventura.app.records.RespuestaAccion;
 
 /*
  * Clase principal del juego "Tu Propia Aventura".
@@ -64,7 +65,7 @@ public class Juego {
         Mueble m8 = new Mueble("Caldera", "Es la caldera que permite que salga agua caliente en casa, etc...",true);
         Mueble m9 = new Mueble("Armario","Es un armario de madera antiguo que esta vacio", true);
         Llave llaveEstrella = new Llave("Llave Estrella", "Es una llave que tiene forma de estrella", true, "Llave Estrella");
-        Contenedor c4 = new Contenedor("Caja de Herramientas", "Es una caja de herramientas que contiene algo en su interior", true, null,llaveEstrella,true);
+        Contenedor c4 = new Contenedor("Caja de Herramientas", "Es una caja de herramientas que contiene algo en su interior", true, null,llaveEstrella,false);
         sotano.añadirObjetosHabitacion(m8);
         sotano.añadirObjetosHabitacion(m9);
         sotano.añadirObjetosHabitacion(c4);
@@ -122,8 +123,8 @@ public class Juego {
      * Métod0 para ir a la habitación de la izquierda
      */
     private void irIzquierda() {
-        if (jugador.getPosicionJugador() - 1 > 0) {
-            jugador.setPosicionJugador(jugador.getPosicionJugador() + 1);
+        if (jugador.getPosicionJugador() - 1 >= 0) {
+            jugador.setPosicionJugador(jugador.getPosicionJugador() - 1);
             System.out.println("Te has movido a la izquierda...\n");
             mostrarInfo();
         } else
@@ -221,7 +222,7 @@ public class Juego {
 
         //Muestra la descripción general del juego
         System.out.println(descripcionJuego);
-
+        mirar();
 
 
         //Iniciar el bucle principal del juego (game loop)
@@ -300,7 +301,7 @@ public class Juego {
     private  void cogerObjeto() {
         if (getHabitacionActual().contarObjetosHabitacion() > 0) {
             mostrarObjetosInventariables();
-            String objeto = MiEntradaSalida.leerLinea("¿Que objeto quieres guardar?");
+            String objeto = MiEntradaSalida.leerLinea("¿Que objeto quieres guardar? ");
             guardarEnInventario(objeto);
         } else System.out.println("No queda ningún objeto en la sala de importancia.\n");
     }
@@ -365,7 +366,10 @@ public class Juego {
         Objeto aux = getHabitacionActual().buscarObjetoHabitacion(contenedor);
         if (aux instanceof Contenedor c){
             Llave l = jugador.buscarLlaveInventario(c.getCODIGO_SECRETO());
-            if (c.abrir(l).esExito()){
+            RespuestaAccion respuesta = c.abrir(l);
+            if (respuesta.esExito()){
+                System.out.println(respuesta.mensaje());
+                jugador.consumirObjetosInventario(l);
                 if (c.getElemento() != null) {
                     System.out.println("Dentro encuentras: "+c.getElemento().getNombre());
                     if (jugador.guardarInventario(c.getElemento())){
@@ -381,6 +385,12 @@ public class Juego {
                 else
                     System.out.println("No encuentras nada");
             }
+            else {
+                System.out.println(respuesta.mensaje());
+            }
+        }
+        else {
+            System.out.println("No se ha encontrado el contenedor");
         }
     }
 
@@ -389,7 +399,7 @@ public class Juego {
      */
     public void mostrarContenedores(){
         int contador = 1;
-        System.out.println("Objetos en la habitacion: ");
+        System.out.println("Objetos en la habitación: ");
         for (int i = 0; i <getHabitacionActual().getObjetos().length ; i++) {
             if (getHabitacionActual().contarObjetosHabitacion()==contador-1){
                 break;

@@ -102,4 +102,16 @@ public class Jugador extends Personaje{
         }
         return contador;
     }
+
+
+    public void consumirObjetosInventario(Objeto o){
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i]!= null){
+                if (inventario[i].equals(o)){
+                    inventario[i] = null;
+                    return;
+                }
+            }
+        }
+    }
 }
