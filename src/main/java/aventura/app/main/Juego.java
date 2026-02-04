@@ -389,6 +389,9 @@ public class Juego {
                 System.out.println(respuesta.mensaje());
             }
         }
+        else {
+            System.out.println("No se ha encontrado el contenedor");
+        }
     }
 
     /**
