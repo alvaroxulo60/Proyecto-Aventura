@@ -54,7 +54,7 @@ public class Habitacion {
      */
     public void quitarObjetoHabitacion(Objeto o){
         for (int i = 0; i < objetos.length; i++) {
-            if (objetos[i].equals(o)){
+            if (objetos[i] != null && objetos[i].equals(o)){
                 objetos[i]= null;
                 return;
             }

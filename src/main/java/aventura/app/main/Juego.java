@@ -30,7 +30,7 @@ public class Juego {
         //* primera habitación
         Habitacion tuHabitacion = new Habitacion("Miras alrededor y te das cuenta de que es tu habitación pero a la vez que vas mirando más a detalle te das cuenta que hay cosas que no deberían estar ahí como un libro, algo desgastado en la estantería, tiene cerradura muy extraña, como  si fuera para introducir una llave… ¿Con forma de zorro? no recuerdas haber comprado algo así antes. Hay una puerta a la derecha.");
         Mueble m1 = new Mueble("Cama","Es tú cama, no parece que tenga algo importante", true);
-        Mueble m2 = new Mueble("Escritorio","Aquí es donde sules leer y estudiar", true);
+        Mueble m2 = new Mueble("Escritorio","Aquí es donde sueles leer y estudiar", true);
         Mueble m3 = new Mueble("Estantería", "Una estantería llena de libros, pero te llama la atención uno en concreto", true);
         Contenedor c1 = new Contenedor("Mesa de noche", "Es tu mesita de noche", true, null, null,false);
         LibroHechizos libroHechizos = new LibroHechizos("Libro de hechizos", "Parece importante, pero esta desgastado... Además parece que para abrirlo se necesita una llave", true);
@@ -41,11 +41,11 @@ public class Juego {
         tuHabitacion.añadirObjetosHabitacion(c1);
 
         //*segunda habitación
-        Habitacion aula1ºB = new Habitacion("Tambíen te resulta familiar, es el aula donde los alumnos de mayor grado dan sus clases de hechizos, pero lo extraño es que el aula esta del reves. En la mesa del profesor hay un cajón. En esta sala hay una puerta a la derecha y otra a la izquierda.\n");
+        Habitacion aula1ºB = new Habitacion("También te resulta familiar, es el aula donde los alumnos de mayor grado dan sus clases de hechizos, pero lo extraño es que el aula esta del revés. En la mesa del profesor hay un cajón. En esta sala hay una puerta a la derecha y otra a la izquierda.\n");
         Mueble m4 = new Mueble("Mesa de estudiantes", "Son las mesas que usan los alumnos de mayor grado", true);
-        Mueble m5 = new Mueble("Mesa del profesor", "Es la mesa del profesor, ves que el cajon esta abierto", true);
+        Mueble m5 = new Mueble("Mesa del profesor", "Es la mesa del profesor, ves que el cajón esta abierto", true);
         NotaRota notaRota1 = new NotaRota("Nota rota 1", "Es una nota a la que le falta una mitad...", true);
-        Contenedor c2 = new Contenedor("Cajon del profesor", "Es el cajon donde los maestros suelen guardar el borrador, papeles, etc...", true,null, notaRota1,false);
+        Contenedor c2 = new Contenedor("Cajón del profesor", "Es el cajón donde los maestros suelen guardar el borrador, papeles, etc...", true,null, notaRota1,false);
         aula1ºB.añadirObjetosHabitacion(m4);
         aula1ºB.añadirObjetosHabitacion(m5);
         aula1ºB.añadirObjetosHabitacion(c2);
@@ -56,7 +56,7 @@ public class Juego {
         Mueble m7 = new Mueble("Camilla", "Es una camilla donde parecen que tuvieron que llevar alguine muy herido...", true);
         Nota nota = new Nota("Nota", "Es una nota doblada", true,"el cielo nocturno lleno de estrellas está, pero una sola desbloqueara la magia” busca en la habitación…" );
         LlaveEspecial llaveKitsune = new LlaveEspecial("Llave Kitsune", "Es una llave que tiene forma de zorro de 9 colas", true);
-        Contenedor c3 = new Contenedor("Cajon", "Es una cajón que tiene una cerradura con forma de estrella", true, "Llave Estrella", llaveKitsune, false);
+        Contenedor c3 = new Contenedor("Cajón", "Es una cajón que tiene una cerradura con forma de estrella", true, "Llave Estrella", llaveKitsune, false);
         centroMedico.añadirObjetosHabitacion(nota);
         centroMedico.añadirObjetosHabitacion(m6);
         centroMedico.añadirObjetosHabitacion(m7);
@@ -65,7 +65,7 @@ public class Juego {
         //*cuarta habitación
         Habitacion sotano = new Habitacion("Llegas a un sótano donde apenas hay luz, no te suena de nada este sitio. Al mirar alrededor no ves nada de importancia pero a tu derecha ves unas escaleras que supones que es la salida de esta sala. Hay una puerta a la izquierda y las escaleras a la derecha.\n");
         Mueble m8 = new Mueble("Caldera", "Es la caldera que permite que salga agua caliente en casa, etc...",true);
-        Mueble m9 = new Mueble("Armario","Es un armario de madera antiguo que esta vacio", true);
+        Mueble m9 = new Mueble("Armario","Es un armario de madera antiguo que esta vacío", true);
         Llave llaveEstrella = new Llave("Llave Estrella", "Es una llave que tiene forma de estrella", true, "Llave Estrella");
         Contenedor c4 = new Contenedor("Caja de Herramientas", "Es una caja de herramientas que contiene algo en su interior", true, null,llaveEstrella,false);
         sotano.añadirObjetosHabitacion(m8);
@@ -75,10 +75,10 @@ public class Juego {
         //*quinta habitación
         Habitacion biblioteca = new Habitacion("Al subir las escaleras ahora apareces en la biblioteca de la aldea, todas las escaleras están vacías, pero investigando en la biblioteca te fijas que hay una escalera que te podría servir.");
         Mueble m10 = new Mueble("Estantería", "Estanterías llenas y llenas de libros de brujería", true);
-        Mueble m11 = new Mueble("Carrito de libros", "Un carrito con libros devueltos esperando a ser puestos en las estanterias", true);
+        Mueble m11 = new Mueble("Carrito de libros", "Un carrito con libros devueltos esperando a ser puestos en las estanterías", true);
         Mueble m12 = new Mueble("Mesas y sillas", "Varias mesas y sillas para que puedas sentarte a leer tranquilo", true);
         Mueble m13 = new Mueble("Mesa de la recepción", "Es la mesa donde vas a que te den el sello y la fecha de devolución de libros", true);
-        Contenedor c5 = new Contenedor("Cajón", "El cajón de la mesa de la recepción que parece estar abierto", true, null, null, true);
+        Contenedor c5 = new Contenedor("Cajón", "El cajón de la mesa de la recepción que parece estar abierto", true, null, null, false);
         biblioteca.añadirObjetosHabitacion(m10);
         biblioteca.añadirObjetosHabitacion(m11);
         biblioteca.añadirObjetosHabitacion(m12);
@@ -192,7 +192,7 @@ public class Juego {
     public void mostrarObjetos(){
         int contador = 1;
         if (getHabitacionActual().contarObjetosHabitacion()!= 0) {
-            System.out.println("Objetos en la habitacion: ");
+            System.out.println("Objetos en la habitación: ");
             for (int i = 0; i < getHabitacionActual().getObjetos().length; i++) {
                 if (getHabitacionActual().contarObjetosHabitacion() == contador - 1) {
                     break;
@@ -240,7 +240,7 @@ public class Juego {
              "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
              */
 
-            switch (comando.toLowerCase()) {
+            switch (comando.toLowerCase().trim()) {
                 case "ir derecha":
                     irDerecha();
                     break;
@@ -420,7 +420,7 @@ public class Juego {
         mostrarObjetos();
         String objeto1 = MiEntradaSalida.leerLinea("¿Qué objeto quieres combinar?\n");
         Objeto aux1 = buscar(objeto1);
-        String objeto2 = MiEntradaSalida.leerLinea("¿Qué objeto quieres combinar?");
+        String objeto2 = MiEntradaSalida.leerLinea("¿ Con qué objeto lo quieres combinar?\n");
         Objeto aux2 = buscar(objeto2);
         if (aux1!=null && aux2!=null){
             if(!aux1.equals(aux2)){
@@ -430,6 +430,7 @@ public class Juego {
                         borrarObjetos(aux1);
                         borrarObjetos(aux2);
                         jugador.guardarInventario(resultante);
+                        System.out.println("Los objetos se han combinado y guardado en el inventario");
                     }catch (CombinarException e){
                         System.out.println(e.getMessage());
                     }
