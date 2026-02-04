@@ -2,8 +2,9 @@ package aventura.app.models;
 
 import aventura.app.exceptions.CombinarException;
 import aventura.app.interfaces.Combinable;
+import aventura.app.interfaces.Inventariable;
 
-public class NotaRota extends Objeto implements Combinable {
+public class NotaRota extends Objeto implements Combinable, Inventariable {
 
     public NotaRota(String nombre, String descripcion, boolean visible) {
         super(nombre, descripcion, visible);
