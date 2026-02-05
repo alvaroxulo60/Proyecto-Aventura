@@ -54,7 +54,7 @@ public class Juego {
         Habitacion centroMedico = new Habitacion("Al cruzar la puerta apareces en una zona médica, entonces caes en que estás en el centró médico de tu aldea. Alrededor tuya ves muchos muebles con muchos frascos y varios muebles cerrados, en particular te fijas en un cajón de una mesa que tiene una cerradura con forma de estrella. No hay más puertas, solo por la que viniste.");
         Mueble m6 = new Mueble("Muebles", "Ves varios muebles por toda la zona, todos están en mal estado y no parecen tener nada", true);
         Mueble m7 = new Mueble("Camilla", "Es una camilla donde parecen que tuvieron que llevar alguine muy herido...", true);
-        Nota nota = new Nota("Nota", "Es una nota doblada", true,"el cielo nocturno lleno de estrellas está, pero una sola desbloqueara la magia” busca en la habitación…" );
+        Nota nota = new Nota("Nota", "Es una nota doblada", true,"El cielo nocturno lleno de estrellas está, pero una sola desbloqueara la magia. Busca en la habitación…" );
         LlaveEspecial llaveKitsune = new LlaveEspecial("Llave Kitsune", "Es una llave que tiene forma de zorro de 9 colas", true);
         Contenedor c3 = new Contenedor("Cajón", "Es una cajón que tiene una cerradura con forma de estrella", true, "Llave Estrella", llaveKitsune, false);
         centroMedico.añadirObjetosHabitacion(nota);
@@ -157,7 +157,7 @@ public class Juego {
             System.out.println(aux.getDescripcion());
             if (aux instanceof Leible l) {
                 System.out.println("Contenido: \n");
-                l.leer();
+                System.out.println(l.leer());
             }
         }
     }
@@ -293,7 +293,7 @@ public class Juego {
     private  void verInventario() {
         String inventario = jugador.verInventario();
         if(inventario.isBlank()){
-            System.out.println("No tienes nada en el inventario");
+            System.err.println("No tienes nada en el inventario");
         }else {
             System.out.println(inventario);
         }
@@ -308,7 +308,7 @@ public class Juego {
             mostrarObjetosInventariables();
             String objeto = MiEntradaSalida.leerLinea("¿Que objeto quieres guardar? ");
             guardarEnInventario(objeto);
-        } else System.out.println("No queda ningún objeto en la sala de importancia.\n");
+        } else System.err.println("No queda ningún objeto en la sala de importancia.\n");
     }
 
     /**
@@ -367,37 +367,36 @@ public class Juego {
      * Metodo para abrir los contenedores
      */
     public void abrirContenedor(){
-        mostrarContenedores();
-        String contenedor = MiEntradaSalida.leerLinea("¿Que contenedor quieres abrir? \n");
-        Objeto aux = getHabitacionActual().buscarObjetoHabitacion(contenedor);
-        if (aux instanceof Contenedor c){
-            Llave l = jugador.buscarLlaveInventario(c.getCODIGO_SECRETO());
-            RespuestaAccion respuesta = c.abrir(l);
-            if (respuesta.esExito()){
-                System.out.println(respuesta.mensaje());
-                jugador.consumirObjetosInventario(l);
-                if (c.getElemento() != null) {
-                    System.out.println("Dentro encuentras: "+c.getElemento().getNombre());
-                    if (jugador.guardarInventario(c.getElemento())){
-                        c.eliminarObjeto();
-                        System.out.println("El objeto se ha guardado en el inventario");
-                    }
-                    else {
-                        System.err.println("No se ha podido guardar en el inventario");
-                        getHabitacionActual().añadirObjetosHabitacion(c.getElemento());
-                        c.eliminarObjeto();
-                    }
+        if (getHabitacionActual().contarContenedoresHabitacion() > 0) {
+            mostrarContenedores();
+            String contenedor = MiEntradaSalida.leerLinea("¿Que contenedor quieres abrir? \n");
+            Objeto aux = getHabitacionActual().buscarObjetoHabitacion(contenedor);
+            if (aux instanceof Contenedor c) {
+                Llave l = jugador.buscarLlaveInventario(c.getCODIGO_SECRETO());
+                RespuestaAccion respuesta = c.abrir(l);
+                if (respuesta.esExito()) {
+                    System.out.println(respuesta.mensaje());
+                    jugador.consumirObjetosInventario(l);
+                    if (c.getElemento() != null) {
+                        System.out.println("Dentro encuentras: " + c.getElemento().getNombre());
+                        if (jugador.guardarInventario(c.getElemento())) {
+                            c.eliminarObjeto();
+                            System.out.println("El objeto se ha guardado en el inventario");
+                        } else {
+                            System.err.println("No se ha podido guardar en el inventario");
+                            getHabitacionActual().añadirObjetosHabitacion(c.getElemento());
+                            c.eliminarObjeto();
+                        }
+                    } else
+                        System.out.println("No encuentras nada");
+                } else {
+                    System.out.println(respuesta.mensaje());
                 }
-                else
-                    System.out.println("No encuentras nada");
+            } else {
+                System.err.println("No se ha encontrado el contenedor");
             }
-            else {
-                System.out.println(respuesta.mensaje());
-            }
-        }
-        else {
-            System.err.println("No se ha encontrado el contenedor");
-        }
+        }else
+            System.err.println("No hay contenedores en la habitación.");
     }
 
     /**

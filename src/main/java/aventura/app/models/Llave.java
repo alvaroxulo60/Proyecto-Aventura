@@ -2,7 +2,7 @@ package aventura.app.models;
 
 import aventura.app.interfaces.Inventariable;
 
-public class Llave extends Objeto implements Inventariable {
+public class Llave extends Item {
 
     private final String CODIGO_SEGURIDAD;
 
