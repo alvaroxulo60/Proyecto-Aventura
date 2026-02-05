@@ -1,6 +1,5 @@
 package aventura.app.models;
 
-// Importaciones necesarias para la interfaz Abrible y el registro de respuesta
 import aventura.app.interfaces.Abrible;
 import aventura.app.records.RespuestaAccion;
 
@@ -68,7 +67,7 @@ public class Contenedor extends Objeto implements Abrible {
     }
 
     /**
-     * Método que indica si el contenedor está abierto.
+     * Metodo que indica si el contenedor está abierto.
      *
      * @return true si está abierto, false en caso contrario
      */
