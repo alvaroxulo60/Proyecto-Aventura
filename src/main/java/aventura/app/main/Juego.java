@@ -18,12 +18,20 @@ public class Juego {
     private final static int NUM_HABITACIONES = 6;
 
     private Habitacion[] habitaciones;
-    Jugador jugador;
+    private Jugador jugador;
+    private String descripcionJuego;
 
     public Juego() {
         jugador = new Jugador();
         preparacionJuego();
+        this.descripcionJuego = "Empiezas en una aldea tranquila, Kael el Comerciante, el cual conoces muy bien, muy amablemente te ofrece sin coste una poción misteriosa, según él esa poción te volverá el mejor alumno de la academia de la luz y la sombra, te llevas la poción con gusto y mientras das un paseo te la tomas para volverte el mejor de todos.\n" +
+                "A los segundos después de tomarla te empiezas a sentir mareado y se te nubla la vista hasta que finalmente te desplomas en el suelo.\n" +
+                "Te despiertas en un lugar familiar, no sabes como llegaste a ahí, ni cuánto tiempo llevas ahí.\n";
 
+    }
+
+    public String getDescripcionJuego() {
+        return descripcionJuego;
     }
 
     private void preparacionJuego(){
@@ -99,13 +107,6 @@ public class Juego {
 
     // --- NÚCLEO: Definición de Datos (FASE 1) ---
     // Esta parte os la damos HECHA. Es el "contrato" del núcleo.
-
-    //Creo un String para darle una introducción al usuario de la historia del juego
-
-    private static String descripcionJuego = "Empiezas en una aldea tranquila, Kael el Comerciante, el cual conoces muy bien, muy amablemente te ofrece sin coste una poción misteriosa, según él esa poción te volverá el mejor alumno de la academia de la luz y la sombra, te llevas la poción con gusto y mientras das un paseo te la tomas para volverte el mejor de todos.\n" +
-            "A los segundos después de tomarla te empiezas a sentir mareado y se te nubla la vista hasta que finalmente te desplomas en el suelo.\n" +
-            "Te despiertas en un lugar familiar, no sabes como llegaste a ahí, ni cuánto tiempo llevas ahí.\n";
-
 
     // --- FIN DE LA DEFINICIÓN DE DATOS ---
 
@@ -207,7 +208,7 @@ public class Juego {
         System.out.println("------------------------------------------");
 
         //Muestra la descripción general del juego
-        System.out.println(descripcionJuego);
+        System.out.println(getDescripcionJuego());
         mirar();
 
 
