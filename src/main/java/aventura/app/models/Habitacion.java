@@ -146,7 +146,7 @@ public class Habitacion {
         StringBuilder contenido = new StringBuilder();
         for (int i = 0; i < objetos.length; i++) {
             if (objetos[i] != null) {
-                contenido.append(contador++).append(objetos[i].getNombre()).append(System.lineSeparator());
+                contenido.append(contador++).append(". ").append(objetos[i].getNombre()).append(System.lineSeparator());
             }
         }
         return contenido.toString();
@@ -161,7 +161,7 @@ public class Habitacion {
         StringBuilder contenido = new StringBuilder();
         for (int i = 0; i <objetos.length ; i++) {
             if (objetos[i]!=null && objetos[i] instanceof Inventariable){
-                contenido.append(contador++).append(objetos[i].getNombre()).append(System.lineSeparator());
+                contenido.append(contador++).append(". ").append(objetos[i].getNombre()).append(System.lineSeparator());
             }
         }
         return contenido.toString();
@@ -176,7 +176,7 @@ public class Habitacion {
         StringBuilder contenido = new StringBuilder();
         for (int i = 0; i <objetos.length ; i++) {
             if (objetos[i]!=null && objetos[i] instanceof Contenedor){
-                contenido.append(contador++).append(objetos[i].getNombre()).append(System.lineSeparator());
+                contenido.append(contador++).append(". ").append(objetos[i].getNombre()).append(System.lineSeparator());
             }
         }
         return contenido.toString();

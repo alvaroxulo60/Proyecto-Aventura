@@ -215,7 +215,7 @@ public class Juego {
         while (jugando) {
             //Leer el comando del usuario por teclado
             System.out.print("\n> ");
-            String comando = MiEntradaSalida.leerLinea("¿Qué quieres hacer a continuación? (Escribe 'ayuda' para ver los comandos posibles): ");
+            String comando = MiEntradaSalida.leerLinea("¿Qué quieres hacer a continuación? (Escribe 'ayuda' para ver los comandos posibles): \n");
 
             /*
             Crear un 'switch' o una estructura 'if-else if'

@@ -162,7 +162,7 @@ public class Jugador extends Personaje {
         StringBuilder contenido = new StringBuilder();
         for (int i = 0; i < inventario.length; i++) {
             if (inventario[i] != null) {
-                contenido.append(contador++).append(inventario[i].getNombre()).append(System.lineSeparator());
+                contenido.append(contador++).append(". ").append(inventario[i].getNombre()).append(System.lineSeparator());
             }
         }
         return contenido.toString();
