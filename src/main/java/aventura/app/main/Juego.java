@@ -355,7 +355,7 @@ public class Juego {
                 RespuestaAccion respuesta = c.abrir(l); // Guardamos el resultado del RespuestaAccion
 
                 if (respuesta.esExito()) {
-                    // Si tiene exito imprime el mensaje y consume la llave usada
+                    // Si tiene éxito imprime el mensaje y consume la llave usada
                     System.out.println(respuesta.mensaje());
                     jugador.consumirObjetosInventario(l);
 
@@ -396,13 +396,19 @@ public class Juego {
      */
     public void combinar(){
         mostrarObjetos();
+
+        //Pedimos los dos objetos para combinarlos
         String objeto1 = MiEntradaSalida.leerLinea("¿Qué objeto quieres combinar?\n");
         Objeto aux1 = buscar(objeto1);
         String objeto2 = MiEntradaSalida.leerLinea("¿Con qué objeto lo quieres combinar?\n");
         Objeto aux2 = buscar(objeto2);
         if (aux1!=null && aux2!=null){
             if(!aux1.equals(aux2)){
+
+                //Comprobamos si el primer objeto es combinable
                 if(aux1 instanceof Combinable c1){
+                    //Si podemos combinar los objetos sin ningún problema borramos los otros dos del inventario
+                    //o habitación y guardamos el resultante en el inventario
                     try {
                         Objeto resultante = c1.combinar(aux2);
                         borrarObjetos(aux1);
