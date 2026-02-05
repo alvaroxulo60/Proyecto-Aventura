@@ -190,29 +190,13 @@ public class Juego {
      * Mostrar los objetos tanto en tu inventario como en la habitación
      */
     public void mostrarObjetos(){
-        int contador = 1;
         if (getHabitacionActual().contarObjetosHabitacion()!= 0) {
             System.out.println("Objetos en la habitación: ");
-            for (int i = 0; i < getHabitacionActual().getObjetos().length; i++) {
-                if (getHabitacionActual().contarObjetosHabitacion() == contador - 1) {
-                    break;
-                }
-                if (getHabitacionActual().getObjetos()[i] != null) {
-                    System.out.println(contador++ + ". " + getHabitacionActual().getObjetos()[i].getNombre());
-                }
-            }
+            System.out.println(getHabitacionActual().mostrarObjetosHabitacion());
         }
         if (jugador.contarObjetosInventario() != 0){
-        contador = 1;
         System.out.println("Objetos en tu inventario: ");
-        for (int i = 0; i <jugador.getInventario().length ; i++) {
-            if (jugador.contarObjetosInventario()==contador-1){
-                break;
-            }
-            if (jugador.getInventario()[i]!= null){
-                System.out.println(contador++ +". "+ jugador.getInventario()[i].getNombre());
-            }
-        }
+        System.out.println(jugador.mostrarObjetosInventario());
         }
     }
 
@@ -314,18 +298,9 @@ public class Juego {
     /**
      *Metodo para mostrar los objetos inventariables
      */
-    public void mostrarObjetosInventariables(){
-        int contador = 1;
-        System.out.println("Objetos en la habitación: ");
-        for (int i = 0; i <getHabitacionActual().getObjetos().length ; i++) {
-            if (getHabitacionActual().contarObjetosHabitacion()==contador-1){
-                break;
-            }
-            if (getHabitacionActual().getObjetos()[i]!=null && getHabitacionActual().getObjetos()[i] instanceof Inventariable){
-                System.out.println(contador++ +". "+ getHabitacionActual().getObjetos()[i].getNombre());
-            }
-        }
-    }
+      public void mostrarObjetosInventariables(){
+          System.out.println(getHabitacionActual().mostrarObjetosInventariables());
+      }
 
     /**
      * Busca el objeto y llama al metodo del jugador para guardarlo en su inventario
@@ -403,16 +378,7 @@ public class Juego {
      * Mostrar los contenedores de la habitación
      */
     public void mostrarContenedores(){
-        int contador = 1;
-        System.out.println("Objetos en la habitación: ");
-        for (int i = 0; i <getHabitacionActual().getObjetos().length ; i++) {
-            if (getHabitacionActual().contarObjetosHabitacion()==contador-1){
-                break;
-            }
-            if (getHabitacionActual().getObjetos()[i]!=null && getHabitacionActual().getObjetos()[i] instanceof Contenedor){
-                System.out.println(contador++ +". "+ getHabitacionActual().getObjetos()[i].getNombre());
-            }
-        }
+        System.out.println(getHabitacionActual().mostrarContenedores());
     }
 
     /**
