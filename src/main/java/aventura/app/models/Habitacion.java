@@ -3,7 +3,7 @@ package aventura.app.models;
 import aventura.app.interfaces.Inventariable;
 
 /**
- * Clase Habitacion que representa un espacio donde pueden colocarse objetos.
+ * Clase Habitación que representa un espacio donde pueden colocarse objetos.
  * Gestiona un array fijo de objetos, permite añadir, buscar, eliminar y contar objetos.
  */
 public class Habitacion {
@@ -85,7 +85,7 @@ public class Habitacion {
         for (int i = 0; i < objetos.length; i++) {
             if (objetos[i] != null && objetos[i].equals(o)){
                 objetos[i] = null; // Elimina el objeto asignando null
-                return; // Sale del método después de eliminar
+                return; // Sale del metodo después de eliminar
             }
         }
     }
@@ -139,7 +139,7 @@ public class Habitacion {
 
     /**
      * Muestra los objetos en la habitación
-     * @return el string con tosos lod objetos
+     * @return el string con todos los objetos
      */
     public String mostrarObjetosHabitacion(){
         int contador = 1;
