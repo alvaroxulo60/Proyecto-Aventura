@@ -4,7 +4,7 @@ import aventura.app.exceptions.CombinarException;
 import aventura.app.interfaces.Combinable;
 import aventura.app.interfaces.Inventariable;
 
-public class LlaveEspecial extends Objeto implements Inventariable, Combinable {
+public class LlaveEspecial extends Item implements Combinable {
 
     public LlaveEspecial(String nombre, String descripcion, boolean visible) {
         super(nombre, descripcion, visible);

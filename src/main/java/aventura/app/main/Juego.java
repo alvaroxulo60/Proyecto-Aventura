@@ -54,7 +54,7 @@ public class Juego {
         Habitacion centroMedico = new Habitacion("Al cruzar la puerta apareces en una zona médica, entonces caes en que estás en el centró médico de tu aldea. Alrededor tuya ves muchos muebles con muchos frascos y varios muebles cerrados, en particular te fijas en un cajón de una mesa que tiene una cerradura con forma de estrella. No hay más puertas, solo por la que viniste.");
         Mueble m6 = new Mueble("Muebles", "Ves varios muebles por toda la zona, todos están en mal estado y no parecen tener nada", true);
         Mueble m7 = new Mueble("Camilla", "Es una camilla donde parecen que tuvieron que llevar alguine muy herido...", true);
-        Nota nota = new Nota("Nota", "Es una nota doblada", true,"el cielo nocturno lleno de estrellas está, pero una sola desbloqueara la magia” busca en la habitación…" );
+        Nota nota = new Nota("Nota", "Es una nota doblada", true,"El cielo nocturno lleno de estrellas está, pero una sola desbloqueara la magia. Busca en la habitación…" );
         LlaveEspecial llaveKitsune = new LlaveEspecial("Llave Kitsune", "Es una llave que tiene forma de zorro de 9 colas", true);
         Contenedor c3 = new Contenedor("Cajón", "Es una cajón que tiene una cerradura con forma de estrella", true, "Llave Estrella", llaveKitsune, false);
         centroMedico.añadirObjetosHabitacion(nota);
@@ -157,7 +157,7 @@ public class Juego {
             System.out.println(aux.getDescripcion());
             if (aux instanceof Leible l) {
                 System.out.println("Contenido: \n");
-                l.leer();
+                System.out.println(l.leer());
             }
         }
     }

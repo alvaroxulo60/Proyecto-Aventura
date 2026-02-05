@@ -2,7 +2,7 @@ package aventura.app.models;
 
 import aventura.app.interfaces.Leible;
 
-public class Nota extends Objeto implements Leible {
+public class Nota extends Item implements Leible {
 
     private String contenido;
 
