@@ -343,17 +343,27 @@ public class Juego {
      */
     public void abrirContenedor(){
         if (getHabitacionActual().contarContenedoresHabitacion() > 0) {
-            mostrarContenedores();
+
+            mostrarContenedores(); // Mostramos los contenedores disponibles en la habitación
+
             String contenedor = MiEntradaSalida.leerLinea("¿Que contenedor quieres abrir? \n");
             Objeto aux = getHabitacionActual().buscarObjetoHabitacion(contenedor);
             if (aux instanceof Contenedor c) {
+                // Si el objeto es una instancia de contenedor busca en el inventario del jugador la llave con el mismo código
                 Llave l = jugador.buscarLlaveInventario(c.getCODIGO_SECRETO());
-                RespuestaAccion respuesta = c.abrir(l);
+
+                RespuestaAccion respuesta = c.abrir(l); // Guardamos el resultado del RespuestaAccion
+
                 if (respuesta.esExito()) {
+                    // Si tiene éxito imprime el mensaje y consume la llave usada
                     System.out.println(respuesta.mensaje());
                     jugador.consumirObjetosInventario(l);
+
+                    // Comprueba si hay un objeto dentro del cofre
                     if (c.getElemento() != null) {
                         System.out.println("Dentro encuentras: " + c.getElemento().getNombre());
+
+                        // intenta guardar el elemento y si no es capaz lo deja en la habitación
                         if (jugador.guardarInventario(c.getElemento())) {
                             c.eliminarObjeto();
                             System.out.println("El objeto se ha guardado en el inventario");
@@ -386,13 +396,19 @@ public class Juego {
      */
     public void combinar(){
         mostrarObjetos();
+
+        //Pedimos los dos objetos para combinarlos
         String objeto1 = MiEntradaSalida.leerLinea("¿Qué objeto quieres combinar?\n");
         Objeto aux1 = buscar(objeto1);
         String objeto2 = MiEntradaSalida.leerLinea("¿Con qué objeto lo quieres combinar?\n");
         Objeto aux2 = buscar(objeto2);
         if (aux1!=null && aux2!=null){
             if(!aux1.equals(aux2)){
+
+                //Comprobamos si el primer objeto es combinable
                 if(aux1 instanceof Combinable c1){
+                    //Si podemos combinar los objetos sin ningún problema borramos los otros dos del inventario
+                    //o habitación y guardamos el resultante en el inventario
                     try {
                         Objeto resultante = c1.combinar(aux2);
                         borrarObjetos(aux1);
