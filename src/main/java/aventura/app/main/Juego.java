@@ -368,17 +368,27 @@ public class Juego {
      */
     public void abrirContenedor(){
         if (getHabitacionActual().contarContenedoresHabitacion() > 0) {
-            mostrarContenedores();
+
+            mostrarContenedores(); // Mostramos los contenedores disponibles en la habitación
+
             String contenedor = MiEntradaSalida.leerLinea("¿Que contenedor quieres abrir? \n");
             Objeto aux = getHabitacionActual().buscarObjetoHabitacion(contenedor);
             if (aux instanceof Contenedor c) {
+                // Si el objeto es una instancia de contenedor busca en el inventario del jugador la llave con el mismo código
                 Llave l = jugador.buscarLlaveInventario(c.getCODIGO_SECRETO());
-                RespuestaAccion respuesta = c.abrir(l);
+
+                RespuestaAccion respuesta = c.abrir(l); // Guardamos el resultado del RespuestaAccion
+
                 if (respuesta.esExito()) {
+                    // Si tiene exito imprime el mensaje y consume la llave usada
                     System.out.println(respuesta.mensaje());
                     jugador.consumirObjetosInventario(l);
+
+                    // Comprueba si hay un objeto dentro del cofre
                     if (c.getElemento() != null) {
                         System.out.println("Dentro encuentras: " + c.getElemento().getNombre());
+
+                        // intenta guardar el elemento y si no es capaz lo deja en la habitación
                         if (jugador.guardarInventario(c.getElemento())) {
                             c.eliminarObjeto();
                             System.out.println("El objeto se ha guardado en el inventario");
