@@ -1,5 +1,7 @@
 package aventura.app.models;
 
+import aventura.app.interfaces.Inventariable;
+
 public class Habitacion {
 
     private final String DESCRIPCION;
@@ -69,6 +71,20 @@ public class Habitacion {
         int contador = 0;
         for (int i = 0; i < objetos.length; i++) {
             if (objetos[i]!= null){
+                contador++;
+            }
+        }
+        return contador;
+    }
+
+    /**
+     * Contar objetos en la habitación
+     * @return El número de objetos
+     */
+    public int contarObjetosInventariablesHabitacion(){
+        int contador = 0;
+        for (int i = 0; i < objetos.length; i++) {
+            if (objetos[i]!= null && objetos[i] instanceof Inventariable){
                 contador++;
             }
         }
