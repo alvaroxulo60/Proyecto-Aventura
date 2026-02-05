@@ -304,7 +304,7 @@ public class Juego {
      * Metodo para recoger objetos de la habitación en la que estas.
      */
     private  void cogerObjeto() {
-        if (getHabitacionActual().contarObjetosHabitacion() > 0) {
+        if (getHabitacionActual().contarObjetosInventariablesHabitacion() > 0) {
             mostrarObjetosInventariables();
             String objeto = MiEntradaSalida.leerLinea("¿Que objeto quieres guardar? ");
             guardarEnInventario(objeto);
