@@ -118,7 +118,7 @@ public class Juego {
             System.out.println("Te has movido a la derecha...\n");
             mostrarInfo();
         } else
-            System.out.println("No es posible ir a la derecha");
+            System.err.println("No es posible ir a la derecha");
     }
 
     /**
@@ -130,7 +130,7 @@ public class Juego {
             System.out.println("Te has movido a la izquierda...\n");
             mostrarInfo();
         } else
-            System.out.println("No es posible ir a la izquierda");
+            System.err.println("No es posible ir a la izquierda");
     }
 
     public void mostrarInfo(){
