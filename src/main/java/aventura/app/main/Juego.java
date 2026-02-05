@@ -362,11 +362,16 @@ public class Juego {
     private  void guardarEnInventario(String o) {
         Objeto aux = getHabitacionActual().buscarObjetoHabitacion(o);
         if (aux != null){
-            if (jugador.guardarInventario(aux)){
-                getHabitacionActual().quitarObjetoHabitacion(aux);
-                System.out.println("¡Objeto guardado con éxito!");
-            }else {
-                System.err.println("No ha sido posible guardar el objeto...El inventario esta lleno");
+            if (aux instanceof Inventariable inv) {
+                if (jugador.guardarInventario((Objeto) inv)) {
+                    getHabitacionActual().quitarObjetoHabitacion((Objeto) inv);
+                    System.out.println("¡Objeto guardado con éxito!");
+                } else {
+                    System.err.println("No ha sido posible guardar el objeto...El inventario esta lleno");
+                }
+            }
+            else {
+                System.err.println("No ha sido posible guardar el objeto...");
             }
         }
         else{
