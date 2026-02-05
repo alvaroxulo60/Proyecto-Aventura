@@ -104,4 +104,49 @@ public class Habitacion {
         }
         return contador;
     }
+
+    /**
+     * Muestra los objetos en la habitación
+     * @return el string con tosos lod objetos
+     */
+    public String mostrarObjetosHabitacion(){
+        int contador = 1;
+        StringBuilder contenido = new StringBuilder();
+        for (int i = 0; i < objetos.length; i++) {
+            if (objetos[i] != null) {
+                contenido.append(contador++).append(objetos[i].getNombre()).append(System.lineSeparator());
+            }
+        }
+        return contenido.toString();
+    }
+
+    /**
+     *Metodo para mostrar los objetos inventariables
+     * @return los objetos inventariables
+     */
+    public String  mostrarObjetosInventariables(){
+        int contador = 1;
+        StringBuilder contenido = new StringBuilder();
+        for (int i = 0; i <objetos.length ; i++) {
+            if (objetos[i]!=null && objetos[i] instanceof Inventariable){
+                contenido.append(contador++).append(objetos[i].getNombre()).append(System.lineSeparator());
+            }
+        }
+        return contenido.toString();
+    }
+
+    /**
+     *Metodo para mostrar los contenedores
+     * @return los contenedores
+     */
+    public String  mostrarContenedores(){
+        int contador = 1;
+        StringBuilder contenido = new StringBuilder();
+        for (int i = 0; i <objetos.length ; i++) {
+            if (objetos[i]!=null && objetos[i] instanceof Contenedor){
+                contenido.append(contador++).append(objetos[i].getNombre()).append(System.lineSeparator());
+            }
+        }
+        return contenido.toString();
+    }
 }

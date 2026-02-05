@@ -103,7 +103,10 @@ public class Jugador extends Personaje{
         return contador;
     }
 
-
+    /**
+     * Metodo para eliminar un objeto del inventario
+     * @param o Objeto a eliminar
+     */
     public void consumirObjetosInventario(Objeto o){
         for (int i = 0; i < inventario.length; i++) {
             if (inventario[i]!= null){
@@ -113,5 +116,20 @@ public class Jugador extends Personaje{
                 }
             }
         }
+    }
+
+    /**
+     * Metodo para mostrar todos los objetos en la habitación
+     * @return un string con todos los objetos
+     */
+    public String mostrarObjetosInventario(){
+        int contador = 1;
+        StringBuilder contenido = new StringBuilder();
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i] != null) {
+                contenido.append(contador++).append(inventario[i].getNombre()).append(System.lineSeparator());
+            }
+        }
+        return contenido.toString();
     }
 }
