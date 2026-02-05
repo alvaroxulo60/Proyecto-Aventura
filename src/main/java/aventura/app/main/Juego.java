@@ -316,7 +316,7 @@ public class Juego {
      */
     public void mostrarObjetosInventariables(){
         int contador = 1;
-        System.out.println("Objetos en la habitacion: ");
+        System.out.println("Objetos en la habitación: ");
         for (int i = 0; i <getHabitacionActual().getObjetos().length ; i++) {
             if (getHabitacionActual().contarObjetosHabitacion()==contador-1){
                 break;
@@ -338,11 +338,11 @@ public class Juego {
                 getHabitacionActual().quitarObjetoHabitacion(aux);
                 System.out.println("¡Objeto guardado con éxito!");
             }else {
-                System.out.println("No ha sido posible guardar el objeto...El inventario esta lleno");
+                System.err.println("No ha sido posible guardar el objeto...El inventario esta lleno");
             }
         }
         else{
-            System.out.println("No se ha encontrado el objeto");
+            System.err.println("No se ha encontrado el objeto");
         }
     }
 
@@ -396,7 +396,7 @@ public class Juego {
             }
         }
         else {
-            System.out.println("No se ha encontrado el contenedor");
+            System.err.println("No se ha encontrado el contenedor");
         }
     }
 
@@ -416,11 +416,14 @@ public class Juego {
         }
     }
 
+    /**
+     * Metodo para combinar objetos, primero pide los dos objetos a combinar y luego intenta combinarlos
+     */
     public void combinar(){
         mostrarObjetos();
         String objeto1 = MiEntradaSalida.leerLinea("¿Qué objeto quieres combinar?\n");
         Objeto aux1 = buscar(objeto1);
-        String objeto2 = MiEntradaSalida.leerLinea("¿ Con qué objeto lo quieres combinar?\n");
+        String objeto2 = MiEntradaSalida.leerLinea("¿Con qué objeto lo quieres combinar?\n");
         Objeto aux2 = buscar(objeto2);
         if (aux1!=null && aux2!=null){
             if(!aux1.equals(aux2)){
@@ -435,16 +438,20 @@ public class Juego {
                         System.out.println(e.getMessage());
                     }
                 }else  {
-                    System.out.println("No se puede combinar el objeto.");
+                    System.err.println("No se puede combinar el objeto.");
                 }
             }else {
-                System.out.println("No se puede combinar el objeto consigo mismo.");
+                System.err.println("No se puede combinar el objeto consigo mismo.");
             }
         }else  {
-            System.out.println("Uno de los dos objetos no se ha encontrado.");
+            System.err.println("Uno de los dos objetos no se ha encontrado.");
         }
     }
 
+    /**
+     * Metodo para borrar objetos del inventario o la habitación
+     * @param aux objeto a borrar
+     */
     public void borrarObjetos(Objeto aux){
         jugador.consumirObjetosInventario(aux);
         getHabitacionActual().quitarObjetoHabitacion(aux);
