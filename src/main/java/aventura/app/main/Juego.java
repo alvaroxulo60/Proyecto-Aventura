@@ -293,7 +293,7 @@ public class Juego {
     private  void verInventario() {
         String inventario = jugador.verInventario();
         if(inventario.isBlank()){
-            System.out.println("No tienes nada en el inventario");
+            System.err.println("No tienes nada en el inventario");
         }else {
             System.out.println(inventario);
         }
@@ -308,7 +308,7 @@ public class Juego {
             mostrarObjetosInventariables();
             String objeto = MiEntradaSalida.leerLinea("¿Que objeto quieres guardar? ");
             guardarEnInventario(objeto);
-        } else System.out.println("No queda ningún objeto en la sala de importancia.\n");
+        } else System.err.println("No queda ningún objeto en la sala de importancia.\n");
     }
 
     /**
@@ -367,37 +367,36 @@ public class Juego {
      * Metodo para abrir los contenedores
      */
     public void abrirContenedor(){
-        mostrarContenedores();
-        String contenedor = MiEntradaSalida.leerLinea("¿Que contenedor quieres abrir? \n");
-        Objeto aux = getHabitacionActual().buscarObjetoHabitacion(contenedor);
-        if (aux instanceof Contenedor c){
-            Llave l = jugador.buscarLlaveInventario(c.getCODIGO_SECRETO());
-            RespuestaAccion respuesta = c.abrir(l);
-            if (respuesta.esExito()){
-                System.out.println(respuesta.mensaje());
-                jugador.consumirObjetosInventario(l);
-                if (c.getElemento() != null) {
-                    System.out.println("Dentro encuentras: "+c.getElemento().getNombre());
-                    if (jugador.guardarInventario(c.getElemento())){
-                        c.eliminarObjeto();
-                        System.out.println("El objeto se ha guardado en el inventario");
-                    }
-                    else {
-                        System.err.println("No se ha podido guardar en el inventario");
-                        getHabitacionActual().añadirObjetosHabitacion(c.getElemento());
-                        c.eliminarObjeto();
-                    }
+        if (getHabitacionActual().contarContenedoresHabitacion() > 0) {
+            mostrarContenedores();
+            String contenedor = MiEntradaSalida.leerLinea("¿Que contenedor quieres abrir? \n");
+            Objeto aux = getHabitacionActual().buscarObjetoHabitacion(contenedor);
+            if (aux instanceof Contenedor c) {
+                Llave l = jugador.buscarLlaveInventario(c.getCODIGO_SECRETO());
+                RespuestaAccion respuesta = c.abrir(l);
+                if (respuesta.esExito()) {
+                    System.out.println(respuesta.mensaje());
+                    jugador.consumirObjetosInventario(l);
+                    if (c.getElemento() != null) {
+                        System.out.println("Dentro encuentras: " + c.getElemento().getNombre());
+                        if (jugador.guardarInventario(c.getElemento())) {
+                            c.eliminarObjeto();
+                            System.out.println("El objeto se ha guardado en el inventario");
+                        } else {
+                            System.err.println("No se ha podido guardar en el inventario");
+                            getHabitacionActual().añadirObjetosHabitacion(c.getElemento());
+                            c.eliminarObjeto();
+                        }
+                    } else
+                        System.out.println("No encuentras nada");
+                } else {
+                    System.out.println(respuesta.mensaje());
                 }
-                else
-                    System.out.println("No encuentras nada");
+            } else {
+                System.err.println("No se ha encontrado el contenedor");
             }
-            else {
-                System.out.println(respuesta.mensaje());
-            }
-        }
-        else {
-            System.err.println("No se ha encontrado el contenedor");
-        }
+        }else
+            System.err.println("No hay contenedores en la habitación.");
     }
 
     /**

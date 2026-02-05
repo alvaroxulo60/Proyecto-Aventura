@@ -78,13 +78,27 @@ public class Habitacion {
     }
 
     /**
-     * Contar objetos en la habitación
+     * Contar objetos inventariables en la habitación
      * @return El número de objetos
      */
     public int contarObjetosInventariablesHabitacion(){
         int contador = 0;
         for (int i = 0; i < objetos.length; i++) {
             if (objetos[i]!= null && objetos[i] instanceof Inventariable){
+                contador++;
+            }
+        }
+        return contador;
+    }
+
+    /**
+     * Contar objetos inventariables en la habitación
+     * @return El número de objetos
+     */
+    public int contarContenedoresHabitacion(){
+        int contador = 0;
+        for (int i = 0; i < objetos.length; i++) {
+            if (objetos[i]!= null && objetos[i] instanceof Contenedor){
                 contador++;
             }
         }
