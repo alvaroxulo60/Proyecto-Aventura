@@ -65,6 +65,8 @@ public class Juego {
 
         // Contenedor que guarda la nota rota
         Contenedor c2 = new Contenedor("Cajón del profesor", "Es el cajón donde los maestros suelen guardar el borrador, papeles, etc...", true,null, notaRota1,false);
+
+        //Se añaden todos los objetos a la habitación
         aula1ºB.añadirObjetosHabitacion(m4);
         aula1ºB.añadirObjetosHabitacion(m5);
         aula1ºB.añadirObjetosHabitacion(c2);
