@@ -4,6 +4,7 @@ import aventura.app.interfaces.Inventariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Clase Habitación que representa un espacio donde pueden colocarse objetos.
@@ -11,11 +12,14 @@ import java.util.List;
  */
 public class Habitacion {
 
+    // Nombre de cada habitación
+    private String nombreHabitacion;
+
     // Descripción de la habitación
     private final String DESCRIPCION;
 
-    // Tamaño máximo del array de objetos en la habitación
-    private final static int TAMAÑO_ARRAY_OBJETOS = 8;
+    // Lista de salidas de cada habitación
+    private Map<String,String> mapa;
 
     // Array que almacena los objetos de la habitación
     private List<Objeto> objetos;
