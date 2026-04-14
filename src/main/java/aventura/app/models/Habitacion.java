@@ -2,6 +2,9 @@ package aventura.app.models;
 
 import aventura.app.interfaces.Inventariable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Clase Habitación que representa un espacio donde pueden colocarse objetos.
  * Gestiona un array fijo de objetos, permite añadir, buscar, eliminar y contar objetos.
@@ -15,7 +18,7 @@ public class Habitacion {
     private final static int TAMAÑO_ARRAY_OBJETOS = 8;
 
     // Array que almacena los objetos de la habitación
-    private Objeto[] objetos;
+    private List<Objeto> objetos;
 
     /**
      * Constructor de la clase Habitacion.
@@ -24,7 +27,7 @@ public class Habitacion {
      */
     public Habitacion(String DESCRIPCION) {
         this.DESCRIPCION = DESCRIPCION;
-        this.objetos = new Objeto[TAMAÑO_ARRAY_OBJETOS]; // Inicializa el array de objetos
+        this.objetos = new ArrayList<>(); // Inicializa el array de objetos
     }
 
     /**
@@ -41,7 +44,7 @@ public class Habitacion {
      *
      * @return array de objetos
      */
-    public Objeto[] getObjetos() {
+    public List<Objeto> getObjetos() {
         return objetos;
     }
 
@@ -51,12 +54,7 @@ public class Habitacion {
      * @param objeto Objeto a añadir
      */
     public void añadirObjetosHabitacion(Objeto objeto){
-        for (int i = 0; i < objetos.length; i++) {
-            if (objetos[i] == null){
-                objetos[i] = objeto; // Inserta el objeto en la primera posición vacía
-                break; // Sale del bucle después de añadirlo
-            }
-        }
+        objetos.add(objeto);
     }
 
     /**
@@ -66,14 +64,10 @@ public class Habitacion {
      * @return El objeto si se encuentra, o null si no existe
      */
     public Objeto buscarObjetoHabitacion(String o){
-        for (int i = 0; i < objetos.length; i++) {
-            if (objetos[i] != null){
-                if (objetos[i].getNombre().equalsIgnoreCase(o)){ // Comparación ignorando mayúsculas/minúsculas
-                    return objetos[i];
-                }
-            }
-        }
-        return null; // No se encontró el objeto
+
+        return objetos.stream()
+                .filter(objeto -> objeto.getNombre().equalsIgnoreCase(o))
+                .findFirst().orElse(null); // No se encontró el objeto
     }
 
     /**
@@ -82,12 +76,7 @@ public class Habitacion {
      * @param o Objeto a eliminar
      */
     public void quitarObjetoHabitacion(Objeto o){
-        for (int i = 0; i < objetos.length; i++) {
-            if (objetos[i] != null && objetos[i].equals(o)){
-                objetos[i] = null; // Elimina el objeto asignando null
-                return; // Sale del metodo después de eliminar
-            }
-        }
+        objetos.remove(o);
     }
 
     /**
@@ -96,13 +85,8 @@ public class Habitacion {
      * @return número de objetos no nulos
      */
     public int contarObjetosHabitacion(){
-        int contador = 0;
-        for (int i = 0; i < objetos.length; i++) {
-            if (objetos[i] != null){
-                contador++; // Incrementa por cada objeto presente
-            }
-        }
-        return contador;
+
+        return objetos.size();
     }
 
     /**
@@ -110,15 +94,10 @@ public class Habitacion {
      *
      * @return número de objetos inventariables
      */
-    public int contarObjetosInventariablesHabitacion(){
-        int contador = 0;
-        for (int i = 0; i < objetos.length; i++) {
-            // Solo cuenta objetos no nulos que implementen la interfaz Inventariable
-            if (objetos[i] != null && objetos[i] instanceof Inventariable){
-                contador++;
-            }
-        }
-        return contador;
+    public long contarObjetosInventariablesHabitacion(){
+
+        return objetos.stream()
+                .filter(objeto -> objeto instanceof Inventariable).count();
     }
 
     /**
@@ -126,15 +105,10 @@ public class Habitacion {
      *
      * @return número de objetos que son instancias de Contenedor
      */
-    public int contarContenedoresHabitacion(){
-        int contador = 0;
-        for (int i = 0; i < objetos.length; i++) {
-            // Solo cuenta objetos no nulos que sean de la clase Contenedor
-            if (objetos[i] != null && objetos[i] instanceof Contenedor){
-                contador++;
-            }
-        }
-        return contador;
+    public long contarContenedoresHabitacion(){
+
+        return objetos.stream()
+                .filter(objeto -> objeto instanceof  Contenedor).count();
     }
 
     /**
@@ -144,9 +118,9 @@ public class Habitacion {
     public String mostrarObjetosHabitacion(){
         int contador = 1;
         StringBuilder contenido = new StringBuilder();
-        for (int i = 0; i < objetos.length; i++) {
-            if (objetos[i] != null) {
-                contenido.append(contador++).append(". ").append(objetos[i].getNombre()).append(System.lineSeparator());
+        for (Objeto o: objetos) {
+            if (o != null) {
+                contenido.append(contador++).append(". ").append(o.getNombre()).append(System.lineSeparator());
             }
         }
         return contenido.toString();
@@ -159,9 +133,9 @@ public class Habitacion {
     public String  mostrarObjetosInventariables(){
         int contador = 1;
         StringBuilder contenido = new StringBuilder();
-        for (int i = 0; i <objetos.length ; i++) {
-            if (objetos[i]!=null && objetos[i] instanceof Inventariable){
-                contenido.append(contador++).append(". ").append(objetos[i].getNombre()).append(System.lineSeparator());
+        for (Objeto o: objetos) {
+            if (o instanceof Inventariable){
+                contenido.append(contador++).append(". ").append(o.getNombre()).append(System.lineSeparator());
             }
         }
         return contenido.toString();
@@ -174,9 +148,9 @@ public class Habitacion {
     public String  mostrarContenedores(){
         int contador = 1;
         StringBuilder contenido = new StringBuilder();
-        for (int i = 0; i <objetos.length ; i++) {
-            if (objetos[i]!=null && objetos[i] instanceof Contenedor){
-                contenido.append(contador++).append(". ").append(objetos[i].getNombre()).append(System.lineSeparator());
+        for (Objeto o: objetos) {
+            if (o instanceof Contenedor){
+                contenido.append(contador++).append(". ").append(o.getNombre()).append(System.lineSeparator());
             }
         }
         return contenido.toString();
