@@ -1,9 +1,15 @@
 package aventura.app.io;
 
+import aventura.app.exceptions.CargadorException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.Properties;
+import java.util.PropertyPermission;
 
 public class CargadorAventura {
     private Gson gson;
@@ -12,7 +18,23 @@ public class CargadorAventura {
 
     private Path informacionJuego;
 
-    public CargadorAventura() {
-        gson = new GsonBuilder().setPrettyPrinting().create();
+    public CargadorAventura() throws CargadorException {
+        gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Object.class, new ObjetoAdapter()).create();
+        conseguirRutas();
+    }
+
+    public void conseguirRutas() throws CargadorException {
+        Properties pop = new Properties();
+
+        try(InputStream in = new FileInputStream("config.properties")){
+
+            pop.load(in);
+
+            this.ubicacionJuego = Path.of(pop.getProperty("directorio.base.juego"));
+            this.informacionJuego = Path.of(pop.getProperty("juego.archivo.base"));
+
+        }catch (IOException e){
+            throw new CargadorException("No se ha podido completar el proceso de cargado");
+        }
     }
 }
