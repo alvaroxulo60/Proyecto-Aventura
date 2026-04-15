@@ -34,7 +34,7 @@ public class Juego {
                 "Te despiertas en un lugar familiar, no sabes como llegaste a ahí, ni cuánto tiempo llevas ahí.\n";
         Migrador m = new Migrador();
         try {
-            m.migrarContenido(this.descripcionJuego,habitaciones);
+            m.migrarContenido(this.descripcionJuego, habitaciones);
         } catch (MigradorException e) {
             System.out.println(e.getMessage());
         }
@@ -49,19 +49,19 @@ public class Juego {
      * sus muebles, contenedores y objetos interactivos.
      * Este metodo se ejecuta al inicio de la partida.
      */
-    private void preparacionJuego(){
+    private void preparacionJuego() {
         //* primera habitación
-        Map<String,String> salidasHabitacion = new HashMap<>();
+        Map<String, String> salidasHabitacion = new HashMap<>();
         salidasHabitacion.put("Puerta de madera", "Pasillo");
         Habitacion tuHabitacion = new Habitacion("Miras alrededor y te das cuenta de que es tu habitación pero a la vez que vas mirando más a detalle te das cuenta que hay cosas que no deberían estar ahí como un libro, algo desgastado en la estantería, tiene cerradura muy extraña, como  si fuera para introducir una llave… ¿Con forma de zorro? no recuerdas haber comprado algo así antes. Hay una puerta a la derecha.", "Tu habitación", salidasHabitacion);
 
         //Muebles básicos de la habitación
-        Mueble m1 = new Mueble("Cama","Es tú cama, no parece que tenga algo importante", true);
-        Mueble m2 = new Mueble("Escritorio","Aquí es donde sueles leer y estudiar", true);
+        Mueble m1 = new Mueble("Cama", "Es tú cama, no parece que tenga algo importante", true);
+        Mueble m2 = new Mueble("Escritorio", "Aquí es donde sueles leer y estudiar", true);
         Mueble m3 = new Mueble("Estantería", "Una estantería llena de libros, pero te llama la atención uno en concreto", true);
 
         //Contenedor sin objeto de la habitación
-        Contenedor c1 = new Contenedor("Mesa de noche", "Es tu mesita de noche", true, null, null,false);
+        Contenedor c1 = new Contenedor("Mesa de noche", "Es tu mesita de noche", true, null, null, false);
 
         //Objeto especial que será clave más adelante
         LibroHechizos libroHechizos = new LibroHechizos("Libro de hechizos", "Parece importante, pero esta desgastado... Además parece que para abrirlo se necesita una llave", true);
@@ -74,8 +74,8 @@ public class Juego {
         tuHabitacion.añadirObjetosHabitacion(c1);
 
         //*segunda habitación
-        Map<String,String> salidasAula1B = new HashMap<>();
-        salidasAula1B.put("Puerta Roja","Pasillo");
+        Map<String, String> salidasAula1B = new HashMap<>();
+        salidasAula1B.put("Puerta Roja", "Pasillo");
         Habitacion aula1ºB = new Habitacion("También te resulta familiar, es el aula donde los alumnos de mayor grado dan sus clases de hechizos, pero lo extraño es que el aula esta del revés. En la mesa del profesor hay un cajón. En esta sala hay una puerta a la derecha y otra a la izquierda.\n", "Aula 1ºB", salidasAula1B);
 
         //Muebles de Aula 1ºB
@@ -86,7 +86,7 @@ public class Juego {
         NotaRota notaRota1 = new NotaRota("Nota rota 1", "Es una nota a la que le falta una mitad...", true);
 
         // Contenedor que guarda la nota rota
-        Contenedor c2 = new Contenedor("Cajón del profesor", "Es el cajón donde los maestros suelen guardar el borrador, papeles, etc...", true,null, notaRota1,false);
+        Contenedor c2 = new Contenedor("Cajón del profesor", "Es el cajón donde los maestros suelen guardar el borrador, papeles, etc...", true, null, notaRota1, false);
 
         //Se añaden todos los objetos a la habitación
         aula1ºB.añadirObjetosHabitacion(m4);
@@ -94,8 +94,8 @@ public class Juego {
         aula1ºB.añadirObjetosHabitacion(c2);
 
         //*tercera habitación
-        Map<String,String> salidasCentroMedico = new HashMap<>();
-        salidasCentroMedico.put("Puerta con una cruz","Pasillo");
+        Map<String, String> salidasCentroMedico = new HashMap<>();
+        salidasCentroMedico.put("Puerta con una cruz", "Pasillo");
         Habitacion centroMedico = new Habitacion("Al cruzar la puerta apareces en una zona médica, entonces caes en que estás en el centró médico de tu aldea. Alrededor tuya ves muchos muebles con muchos frascos y varios muebles cerrados, en particular te fijas en un cajón de una mesa que tiene una cerradura con forma de estrella. No hay más puertas, solo por la que viniste.", "Centro Médico", salidasCentroMedico);
 
         //Muebles del centro médico
@@ -103,7 +103,7 @@ public class Juego {
         Mueble m7 = new Mueble("Camilla", "Es una camilla donde parecen que tuvieron que llevar alguine muy herido...", true);
 
         //Nota pista para encontrar llave estrella
-        Nota nota = new Nota("Nota", "Es una nota doblada", true,"El cielo nocturno lleno de estrellas está, pero una sola desbloqueara la magia. Busca en la habitación…" );
+        Nota nota = new Nota("Nota", "Es una nota doblada", true, "El cielo nocturno lleno de estrellas está, pero una sola desbloqueara la magia. Busca en la habitación…");
 
         //Llave necesaria para pasarte el juego
         LlaveEspecial llaveKitsune = new LlaveEspecial("Llave Kitsune", "Es una llave que tiene forma de zorro de 9 colas", true);
@@ -118,20 +118,20 @@ public class Juego {
         centroMedico.añadirObjetosHabitacion(c3);
 
         //*cuarta habitación
-        Map<String,String> salidasSotano = new HashMap<>();
+        Map<String, String> salidasSotano = new HashMap<>();
         salidasSotano.put("Trampilla", "Biblioteca");
         salidasSotano.put("Puerta de madera derruida", "Mercado");
         Habitacion sotano = new Habitacion("Llegas a un sótano donde apenas hay luz, no te suena de nada este sitio. Al mirar alrededor no ves nada de importancia pero a tu derecha ves unas escaleras que supones que es la salida de esta sala. Hay una puerta a la izquierda y las escaleras a la derecha.\n", "Sotano", salidasSotano);
 
         //Muebles del sotano
-        Mueble m8 = new Mueble("Caldera", "Es la caldera que permite que salga agua caliente en casa, etc...",true);
-        Mueble m9 = new Mueble("Armario","Es un armario de madera antiguo que esta vacío", true);
+        Mueble m8 = new Mueble("Caldera", "Es la caldera que permite que salga agua caliente en casa, etc...", true);
+        Mueble m9 = new Mueble("Armario", "Es un armario de madera antiguo que esta vacío", true);
 
         //Llave para desbloquear el cajón del centro médico
         Llave llaveEstrella = new Llave("Llave Estrella", "Es una llave que tiene forma de estrella", true, "Llave Estrella");
 
         //Contenedor que contiene la llave estrella
-        Contenedor c4 = new Contenedor("Caja de Herramientas", "Es una caja de herramientas que contiene algo en su interior", true, null,llaveEstrella,false);
+        Contenedor c4 = new Contenedor("Caja de Herramientas", "Es una caja de herramientas que contiene algo en su interior", true, null, llaveEstrella, false);
 
         //Se añaden todos los objetos a la habitación
         sotano.añadirObjetosHabitacion(m8);
@@ -139,7 +139,7 @@ public class Juego {
         sotano.añadirObjetosHabitacion(c4);
 
         //*quinta habitación
-        Map<String,String> salidasBiblioteca = new HashMap<>();
+        Map<String, String> salidasBiblioteca = new HashMap<>();
         salidasBiblioteca.put("Puerta con un libro", "Pasillo");
         salidasBiblioteca.put("Trampilla", "Sotano");
         Habitacion biblioteca = new Habitacion("Al subir las escaleras ahora apareces en la biblioteca de la aldea, todas las escaleras están vacías, pero investigando en la biblioteca te fijas que hay una escalera que te podría servir.", "Biblioteca", salidasBiblioteca);
@@ -161,7 +161,7 @@ public class Juego {
         biblioteca.añadirObjetosHabitacion(c5);
 
         //*sexta y última habitación
-        Map<String,String> salidasMercado = new HashMap<>();
+        Map<String, String> salidasMercado = new HashMap<>();
         salidasMercado.put("Puerta de madera derruida", "Sotano");
         Habitacion mercado = new Habitacion("Al cruzar la puerta te das cuenta de un detalle importante, todo este tiempo lo que has ido viendo han sido ilusiones creadas por un hechizo, pero quién podría hacerte esto a tí… Bueno, al mirar alrededor ves que estás en una calle y es la del mercado, al final de calle ves una gran puerta que parece que necesita un conjuro para abrirse.", "Mercado", salidasMercado);
 
@@ -170,7 +170,7 @@ public class Juego {
         Mueble m15 = new Mueble("Mesa", "Una mesa que contiene una nota", true);
 
         // Nota necesaria para avanzar en el lore
-        NotaRota notaRota2 = new NotaRota("Nota rota 2", "Es una nota a la que le falta una mitad...",true);
+        NotaRota notaRota2 = new NotaRota("Nota rota 2", "Es una nota a la que le falta una mitad...", true);
 
         //Se añaden todos los objetos a la habitación
         mercado.añadirObjetosHabitacion(notaRota2);
@@ -178,7 +178,7 @@ public class Juego {
         mercado.añadirObjetosHabitacion(m15);
 
         //Pasillo
-        Map<String,String> salidasPasillo = new HashMap<>();
+        Map<String, String> salidasPasillo = new HashMap<>();
         salidasPasillo.put("Puerta roja", "Aula 1ºB");
         salidasPasillo.put("Puerta con una cruz", "Centro Médico");
         salidasPasillo.put("Puerta con un libro", "Biblioteca");
@@ -186,7 +186,7 @@ public class Juego {
         Habitacion pasillo = new Habitacion("Un pasillo vacío y tenebroso... Parece tener varias entradas", "Pasillo", salidasPasillo);
 
         //Añadimos las habitaciones al array
-        habitaciones = List.of(tuHabitacion, aula1ºB, centroMedico, sotano, biblioteca, mercado);
+        habitaciones = List.of(tuHabitacion, aula1ºB, centroMedico, sotano, biblioteca, mercado, pasillo);
     }
 
     // --- NÚCLEO: Definición de Datos (FASE 1) ---
@@ -194,14 +194,14 @@ public class Juego {
 
     // --- FIN DE LA DEFINICIÓN DE DATOS ---
 
-    public void mostrarInfo(){
+    public void mostrarInfo() {
         mirar();
     }
 
-    public void mirar(){
+    public void mirar() {
         System.out.println(getHabitacionActual().getDESCRIPCION());
         System.out.println("En esta Habitación encuentras los siguientes objetos");
-        for (Objeto o: getHabitacionActual().getObjetos()){
+        for (Objeto o : getHabitacionActual().getObjetos()) {
             System.out.println(o.getNombre());
         }
     }
@@ -209,14 +209,13 @@ public class Juego {
     /**
      * Examinar algún objeto tanto de la habitacion como de tu inventario
      */
-    public void examinar(){
+    public void examinar() {
         mostrarObjetos();
         String objeto = MiEntradaSalida.leerLinea("Introduce el nombre del objeto que quieras examinar:  \n");
         Objeto aux = buscar(objeto);
-        if (aux == null){
+        if (aux == null) {
             System.out.println("Ese objeto no se encuentra en el inventario o habitación");
-        }
-        else {
+        } else {
             System.out.println("Descripción:");
             System.out.println(aux.getDescripcion());
             if (aux instanceof Leible l) {
@@ -228,13 +227,14 @@ public class Juego {
 
     /**
      * Buscar los objetos en la habitación o en el inventario llamando a sus respectivos metodos
+     *
      * @param o Nombre del objeto a buscar
      * @return devuelve el objeto si lo ha encontrado o en su contrario nulo
      */
-    public Objeto buscar(String o){
+    public Objeto buscar(String o) {
         //Buscamos primero si está el objeto en la habitación
         Objeto aux = getHabitacionActual().buscarObjetoHabitacion(o);
-        if (aux != null){
+        if (aux != null) {
             return aux;
         }
         //Si no lo está buscamos en el inventario
@@ -244,27 +244,28 @@ public class Juego {
 
     /**
      * Coger la habitación actual del jugador
+     *
      * @return la habitación actual
      */
-    public Habitacion getHabitacionActual(){
+    public Habitacion getHabitacionActual() {
         return habitaciones.get(0);
     }
 
     /**
      * Mostrar los objetos tanto en tu inventario como en la habitación
      */
-    public void mostrarObjetos(){
-        if (getHabitacionActual().contarObjetosHabitacion()!= 0) {
+    public void mostrarObjetos() {
+        if (getHabitacionActual().contarObjetosHabitacion() != 0) {
             System.out.println("Objetos en la habitación: ");
             System.out.println(getHabitacionActual().mostrarObjetosHabitacion());
         }
-        if (jugador.contarObjetosInventario() != 0){
-        System.out.println("Objetos en tu inventario: ");
-        System.out.println(jugador.mostrarObjetosInventario());
+        if (jugador.contarObjetosInventario() != 0) {
+            System.out.println("Objetos en tu inventario: ");
+            System.out.println(jugador.mostrarObjetosInventario());
         }
     }
 
-    public void iniciarJuego(){
+    public void iniciarJuego() {
         boolean jugando = true;
 
         System.out.println("¡Bienvenido a 'TU PROPIA AVENTURA'!");
@@ -338,11 +339,11 @@ public class Juego {
     /**
      * Ver tus objetos numerados en el inventario.
      */
-    private  void verInventario() {
+    private void verInventario() {
         String inventario = jugador.mostrarObjetosInventario();
-        if(inventario.isBlank()){
+        if (inventario.isBlank()) {
             System.err.println("No tienes nada en el inventario");
-        }else {
+        } else {
             System.out.println(inventario);
         }
 
@@ -351,7 +352,7 @@ public class Juego {
     /**
      * Metodo para recoger objetos de la habitación en la que estas.
      */
-    private  void cogerObjeto() {
+    private void cogerObjeto() {
         if (getHabitacionActual().contarObjetosInventariablesHabitacion() > 0) {
             mostrarObjetosInventariables();
             String objeto = MiEntradaSalida.leerLinea("¿Que objeto quieres guardar? ");
@@ -360,19 +361,20 @@ public class Juego {
     }
 
     /**
-     *Metodo para mostrar los objetos inventariables
+     * Metodo para mostrar los objetos inventariables
      */
-      public void mostrarObjetosInventariables(){
-          System.out.println(getHabitacionActual().mostrarObjetosInventariables());
-      }
+    public void mostrarObjetosInventariables() {
+        System.out.println(getHabitacionActual().mostrarObjetosInventariables());
+    }
 
     /**
      * Busca el objeto y llama al metodo del jugador para guardarlo en su inventario
+     *
      * @param o Un String con el nombre del objeto a buscar
      */
-    private  void guardarEnInventario(String o) {
+    private void guardarEnInventario(String o) {
         Objeto aux = getHabitacionActual().buscarObjetoHabitacion(o);
-        if (aux != null){
+        if (aux != null) {
             if (aux instanceof Inventariable inv) {
                 if (jugador.guardarInventario((Objeto) inv)) {
                     getHabitacionActual().quitarObjetoHabitacion((Objeto) inv);
@@ -380,12 +382,10 @@ public class Juego {
                 } else {
                     System.err.println("No ha sido posible guardar el objeto...El inventario esta lleno");
                 }
-            }
-            else {
+            } else {
                 System.err.println("No ha sido posible guardar el objeto...");
             }
-        }
-        else{
+        } else {
             System.err.println("No se ha encontrado el objeto");
         }
     }
@@ -410,7 +410,7 @@ public class Juego {
     /**
      * Metodo para abrir los contenedores
      */
-    public void abrirContenedor(){
+    public void abrirContenedor() {
         if (getHabitacionActual().contarContenedoresHabitacion() > 0) {
 
             mostrarContenedores(); // Mostramos los contenedores disponibles en la habitación
@@ -449,21 +449,21 @@ public class Juego {
             } else {
                 System.err.println("No se ha encontrado el contenedor");
             }
-        }else
+        } else
             System.err.println("No hay contenedores en la habitación.");
     }
 
     /**
      * Mostrar los contenedores de la habitación
      */
-    public void mostrarContenedores(){
+    public void mostrarContenedores() {
         System.out.println(getHabitacionActual().mostrarContenedores());
     }
 
     /**
      * Metodo para combinar objetos, primero pide los dos objetos a combinar y luego intenta combinarlos
      */
-    public void combinar(){
+    public void combinar() {
         mostrarObjetos();
 
         //Pedimos los dos objetos para combinarlos
@@ -471,11 +471,11 @@ public class Juego {
         Objeto aux1 = buscar(objeto1);
         String objeto2 = MiEntradaSalida.leerLinea("¿Con qué objeto lo quieres combinar?\n");
         Objeto aux2 = buscar(objeto2);
-        if (aux1!=null && aux2!=null){
-            if(!aux1.equals(aux2)){
+        if (aux1 != null && aux2 != null) {
+            if (!aux1.equals(aux2)) {
 
                 //Comprobamos si el primer objeto es combinable
-                if(aux1 instanceof Combinable c1){
+                if (aux1 instanceof Combinable c1) {
                     //Si podemos combinar los objetos sin ningún problema borramos los otros dos del inventario
                     //o habitación y guardamos el resultante en el inventario
                     try {
@@ -484,25 +484,26 @@ public class Juego {
                         borrarObjetos(aux2);
                         jugador.guardarInventario(resultante);
                         System.out.println("Los objetos se han combinado y guardado en el inventario");
-                    }catch (CombinarException e){
+                    } catch (CombinarException e) {
                         System.out.println(e.getMessage());
                     }
-                }else  {
+                } else {
                     System.err.println("No se puede combinar el objeto.");
                 }
-            }else {
+            } else {
                 System.err.println("No se puede combinar el objeto consigo mismo.");
             }
-        }else  {
+        } else {
             System.err.println("Uno de los dos objetos no se ha encontrado.");
         }
     }
 
     /**
      * Metodo para borrar objetos del inventario o la habitación
+     *
      * @param aux objeto a borrar
      */
-    public void borrarObjetos(Objeto aux){
+    public void borrarObjetos(Objeto aux) {
         jugador.consumirObjetosInventario(aux);
         getHabitacionActual().quitarObjetoHabitacion(aux);
     }
