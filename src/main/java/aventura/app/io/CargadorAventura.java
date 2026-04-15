@@ -36,6 +36,14 @@ public class CargadorAventura {
             this.ubicacionJuego = Path.of(pop.getProperty("directorio.base.juego"));
             this.informacionJuego = Path.of(pop.getProperty("juego.archivo.base"));
 
+            if (!Files.exists(ubicacionJuego) || !Files.isDirectory(ubicacionJuego)) {
+                Files.createDirectories(ubicacionJuego);
+            }
+
+            if (!Files.exists(informacionJuego) || !Files.isRegularFile(informacionJuego)) {
+                throw new CargadorException("El archivo de configuración del juego no existe: " + informacionJuego);
+            }
+
         }catch (IOException e){
             throw new CargadorException("No se ha podido completar el proceso de cargado");
         }

@@ -1,5 +1,6 @@
 package aventura.app.models;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,9 @@ public class AventuraConfig {
     }
 
     public void setHabitaciones(List<Habitacion> habitaciones) {
+        this.habitaciones = new HashMap<>();
         for (Habitacion h: habitaciones) {
-            this.habitaciones.put(h.getNOMBRE_HABITACION,h);
+            this.habitaciones.put(h.getNOMBRE_HABITACION(),h);
         }
     }
 }
