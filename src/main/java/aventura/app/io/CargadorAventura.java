@@ -43,8 +43,7 @@ public class CargadorAventura {
 
     public AventuraConfig CargarMundoBase() throws CargadorException {
         try {
-            AventuraConfig av = gson.fromJson(Files.newBufferedReader(informacionJuego),AventuraConfig.class);
-            return av;
+            return gson.fromJson(Files.newBufferedReader(informacionJuego),AventuraConfig.class);
         } catch (IOException e) {
             throw new CargadorException("No ha sido posible cargar el juego");
         }

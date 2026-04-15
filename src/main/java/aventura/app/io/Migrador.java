@@ -5,8 +5,11 @@ import aventura.app.models.AventuraConfig;
 import aventura.app.models.Habitacion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -28,9 +31,9 @@ public class Migrador {
 
         Properties pop = new Properties();
 
-        try(FileReader fr = new FileReader("Config.properties")){
+        try(InputStream in = new FileInputStream("Config.properties")){
 
-            pop.load(fr);
+            pop.load(in);
 
             Path ruta = Path.of(pop.getProperty("juego.archivo.base"));
 
