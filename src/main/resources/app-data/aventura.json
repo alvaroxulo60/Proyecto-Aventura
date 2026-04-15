@@ -76,6 +76,17 @@
         }
       ]
     },
+    "Pasillo": {
+      "NOMBRE_HABITACION": "Pasillo",
+      "DESCRIPCION": "Un pasillo vacío y tenebroso... Parece tener varias entradas",
+      "mapa": {
+        "Puerta con un libro": "Biblioteca",
+        "Puerta de madera": "Habitación",
+        "Puerta con una cruz": "Centro Médico",
+        "Puerta roja": "Aula 1ºB"
+      },
+      "objetos": []
+    },
     "Mercado": {
       "NOMBRE_HABITACION": "Mercado",
       "DESCRIPCION": "Al cruzar la puerta te das cuenta de un detalle importante, todo este tiempo lo que has ido viendo han sido ilusiones creadas por un hechizo, pero quién podría hacerte esto a tí… Bueno, al mirar alrededor ves que estás en una calle y es la del mercado, al final de calle ves una gran puerta que parece que necesita un conjuro para abrirse.",
@@ -202,7 +213,7 @@
         {
           "visible": true,
           "nombre": "Camilla",
-          "descripcion": "Es una camilla donde parecen que tuvieron que llevar alguien muy herido...",
+          "descripcion": "Es una camilla donde parecen que tuvieron que llevar alguine muy herido...",
           "tipo": "aventura.app.models.Mueble"
         },
         {
