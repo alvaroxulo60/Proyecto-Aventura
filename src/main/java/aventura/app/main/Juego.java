@@ -1,6 +1,7 @@
 package aventura.app.main;
 
 import aventura.app.exceptions.CombinarException;
+import aventura.app.exceptions.MigradorException;
 import aventura.app.interfaces.Combinable;
 import aventura.app.interfaces.Inventariable;
 import aventura.app.interfaces.Leible;
@@ -31,7 +32,12 @@ public class Juego {
         this.descripcionJuego = "Empiezas en una aldea tranquila, Kael el Comerciante, el cual conoces muy bien, muy amablemente te ofrece sin coste una poción misteriosa, según él esa poción te volverá el mejor alumno de la academia de la luz y la sombra, te llevas la poción con gusto y mientras das un paseo te la tomas para volverte el mejor de todos.\n" +
                 "A los segundos después de tomarla te empiezas a sentir mareado y se te nubla la vista hasta que finalmente te desplomas en el suelo.\n" +
                 "Te despiertas en un lugar familiar, no sabes como llegaste a ahí, ni cuánto tiempo llevas ahí.\n";
-
+        Migrador m = new Migrador();
+        try {
+            m.migrarContenido(this.descripcionJuego,habitaciones);
+        } catch (MigradorException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public String getDescripcionJuego() {

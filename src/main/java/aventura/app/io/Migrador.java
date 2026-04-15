@@ -3,6 +3,7 @@ package aventura.app.io;
 import aventura.app.exceptions.MigradorException;
 import aventura.app.models.AventuraConfig;
 import aventura.app.models.Habitacion;
+import aventura.app.models.Objeto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -25,7 +26,7 @@ public class Migrador {
         av.setHabitaciones(habitaciones);
         av.setDescripcionDelJuego(descripcion);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Object.class, new ObjetoAdapter()).create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Objeto.class, new ObjetoAdapter()).create();
 
         String json = gson.toJson(av);
 
