@@ -188,37 +188,16 @@ public class Juego {
 
     // --- FIN DE LA DEFINICIÓN DE DATOS ---
 
-    /**
-     * Métod0 para ir a la habitación de la derecha
-     */
-    private void irDerecha() {
-        if (jugador.getPosicionJugador() + 1 != habitaciones.length) {
-            jugador.setPosicionJugador(jugador.getPosicionJugador() + 1);
-            System.out.println("Te has movido a la derecha...\n");
-            mostrarInfo();
-        } else
-            System.err.println("No es posible ir a la derecha");
-    }
-
-    /**
-     * Métod0 para ir a la habitación de la izquierda
-     */
-    private void irIzquierda() {
-        if (jugador.getPosicionJugador() - 1 >= 0) {
-            jugador.setPosicionJugador(jugador.getPosicionJugador() - 1);
-            System.out.println("Te has movido a la izquierda...\n");
-            mostrarInfo();
-        } else
-            System.err.println("No es posible ir a la izquierda");
-    }
-
     public void mostrarInfo(){
         mirar();
     }
 
     public void mirar(){
         System.out.println(getHabitacionActual().getDESCRIPCION());
-        MiEntradaSalida.mostrarOpcionesSinNulos("En la habitación encuentras los siguientes objetos: ", getHabitacionActual().getObjetos());
+        System.out.println("En esta Habitación encuentras los siguientes objetos");
+        for (Objeto o: getHabitacionActual().getObjetos()){
+            System.out.println(o.getNombre());
+        }
     }
 
     /**
@@ -262,7 +241,7 @@ public class Juego {
      * @return la habitación actual
      */
     public Habitacion getHabitacionActual(){
-        return habitaciones[jugador.getPosicionJugador()];
+        return habitaciones.get(0);
     }
 
     /**
@@ -305,10 +284,10 @@ public class Juego {
 
             switch (comando.toLowerCase().trim()) {
                 case "ir derecha":
-                    irDerecha();
+
                     break;
                 case "ir izquierda":
-                    irIzquierda();
+
                     break;
                 case "inventario":
                     verInventario();
@@ -354,7 +333,7 @@ public class Juego {
      * Ver tus objetos numerados en el inventario.
      */
     private  void verInventario() {
-        String inventario = jugador.verInventario();
+        String inventario = jugador.mostrarObjetosInventario();
         if(inventario.isBlank()){
             System.err.println("No tienes nada en el inventario");
         }else {

@@ -1,9 +1,12 @@
 package aventura.app.io;
 
 import aventura.app.exceptions.MiEntrdadaSalidaException;
+import aventura.app.models.Objeto;
 
+import java.text.CollationElementIterator;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Scanner;
 
 //Version2.0
@@ -244,7 +247,7 @@ public class MiEntradaSalida {
     }
 
     /**
-     * Mostrar opciones
+     * Mostrar opciones con un array
      *
      * @param mensaje mensaje a mostrar
      * @param array   lista a recorrer
@@ -255,6 +258,23 @@ public class MiEntradaSalida {
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
                 System.out.println(posicion++ + "." + " " + array[i]);
+            }
+        }
+        System.out.println();
+    }
+
+    /**
+     * Mostrar opciones con una colección
+     *
+     * @param mensaje mensaje a mostrar
+     * @param coleccion   coleccion a recorrer
+     */
+    public static void mostrarOpcionesSinNulos(String mensaje, Collection<Object> coleccion) {
+        System.out.println(mensaje);
+        int posicion = 1;
+        for (Object o: coleccion) {
+            if (o != null) {
+                System.out.println(posicion++ + "." + " " + o);
             }
         }
         System.out.println();
