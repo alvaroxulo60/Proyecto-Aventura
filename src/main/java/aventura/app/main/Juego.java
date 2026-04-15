@@ -8,6 +8,10 @@ import aventura.app.io.*;
 import aventura.app.models.*;
 import aventura.app.records.RespuestaAccion;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /*
  * Clase principal del juego "Tu Propia Aventura".
  * Esqueleto para la Misión 1 (UD1-UD3).
@@ -17,7 +21,7 @@ public class Juego {
 
     private final static int NUM_HABITACIONES = 6;
 
-    private Habitacion[] habitaciones;
+    private List<Habitacion> habitaciones;
     private Jugador jugador;
     private String descripcionJuego;
 
@@ -41,7 +45,9 @@ public class Juego {
      */
     private void preparacionJuego(){
         //* primera habitación
-        Habitacion tuHabitacion = new Habitacion("Miras alrededor y te das cuenta de que es tu habitación pero a la vez que vas mirando más a detalle te das cuenta que hay cosas que no deberían estar ahí como un libro, algo desgastado en la estantería, tiene cerradura muy extraña, como  si fuera para introducir una llave… ¿Con forma de zorro? no recuerdas haber comprado algo así antes. Hay una puerta a la derecha.");
+        Map<String,String> salidasHabitacion = new HashMap<>();
+        salidasHabitacion.put("Puerta de madera", "Pasillo");
+        Habitacion tuHabitacion = new Habitacion("Miras alrededor y te das cuenta de que es tu habitación pero a la vez que vas mirando más a detalle te das cuenta que hay cosas que no deberían estar ahí como un libro, algo desgastado en la estantería, tiene cerradura muy extraña, como  si fuera para introducir una llave… ¿Con forma de zorro? no recuerdas haber comprado algo así antes. Hay una puerta a la derecha.", "Tu habitación", salidasHabitacion);
 
         //Muebles básicos de la habitación
         Mueble m1 = new Mueble("Cama","Es tú cama, no parece que tenga algo importante", true);
@@ -62,7 +68,9 @@ public class Juego {
         tuHabitacion.añadirObjetosHabitacion(c1);
 
         //*segunda habitación
-        Habitacion aula1ºB = new Habitacion("También te resulta familiar, es el aula donde los alumnos de mayor grado dan sus clases de hechizos, pero lo extraño es que el aula esta del revés. En la mesa del profesor hay un cajón. En esta sala hay una puerta a la derecha y otra a la izquierda.\n");
+        Map<String,String> salidasAula1B = new HashMap<>();
+        salidasAula1B.put("Puerta Roja","Pasillo");
+        Habitacion aula1ºB = new Habitacion("También te resulta familiar, es el aula donde los alumnos de mayor grado dan sus clases de hechizos, pero lo extraño es que el aula esta del revés. En la mesa del profesor hay un cajón. En esta sala hay una puerta a la derecha y otra a la izquierda.\n", "Aula 1ºB", salidasAula1B);
 
         //Muebles de Aula 1ºB
         Mueble m4 = new Mueble("Mesa de estudiantes", "Son las mesas que usan los alumnos de mayor grado", true);
@@ -80,7 +88,9 @@ public class Juego {
         aula1ºB.añadirObjetosHabitacion(c2);
 
         //*tercera habitación
-        Habitacion centroMedico = new Habitacion("Al cruzar la puerta apareces en una zona médica, entonces caes en que estás en el centró médico de tu aldea. Alrededor tuya ves muchos muebles con muchos frascos y varios muebles cerrados, en particular te fijas en un cajón de una mesa que tiene una cerradura con forma de estrella. No hay más puertas, solo por la que viniste.");
+        Map<String,String> salidasCentroMedico = new HashMap<>();
+        salidasCentroMedico.put("Puerta con una cruz","Pasillo");
+        Habitacion centroMedico = new Habitacion("Al cruzar la puerta apareces en una zona médica, entonces caes en que estás en el centró médico de tu aldea. Alrededor tuya ves muchos muebles con muchos frascos y varios muebles cerrados, en particular te fijas en un cajón de una mesa que tiene una cerradura con forma de estrella. No hay más puertas, solo por la que viniste.", "Centro Médico", salidasCentroMedico);
 
         //Muebles del centro médico
         Mueble m6 = new Mueble("Muebles", "Ves varios muebles por toda la zona, todos están en mal estado y no parecen tener nada", true);
@@ -102,7 +112,10 @@ public class Juego {
         centroMedico.añadirObjetosHabitacion(c3);
 
         //*cuarta habitación
-        Habitacion sotano = new Habitacion("Llegas a un sótano donde apenas hay luz, no te suena de nada este sitio. Al mirar alrededor no ves nada de importancia pero a tu derecha ves unas escaleras que supones que es la salida de esta sala. Hay una puerta a la izquierda y las escaleras a la derecha.\n");
+        Map<String,String> salidasSotano = new HashMap<>();
+        salidasSotano.put("Trampilla", "Biblioteca");
+        salidasSotano.put("Puerta de madera derruida", "Mercado");
+        Habitacion sotano = new Habitacion("Llegas a un sótano donde apenas hay luz, no te suena de nada este sitio. Al mirar alrededor no ves nada de importancia pero a tu derecha ves unas escaleras que supones que es la salida de esta sala. Hay una puerta a la izquierda y las escaleras a la derecha.\n", "Sotano", salidasSotano);
 
         //Muebles del sotano
         Mueble m8 = new Mueble("Caldera", "Es la caldera que permite que salga agua caliente en casa, etc...",true);
@@ -120,7 +133,10 @@ public class Juego {
         sotano.añadirObjetosHabitacion(c4);
 
         //*quinta habitación
-        Habitacion biblioteca = new Habitacion("Al subir las escaleras ahora apareces en la biblioteca de la aldea, todas las escaleras están vacías, pero investigando en la biblioteca te fijas que hay una escalera que te podría servir.");
+        Map<String,String> salidasBiblioteca = new HashMap<>();
+        salidasBiblioteca.put("Puerta con un libro", "Pasillo");
+        salidasBiblioteca.put("Trampilla", "Sotano");
+        Habitacion biblioteca = new Habitacion("Al subir las escaleras ahora apareces en la biblioteca de la aldea, todas las escaleras están vacías, pero investigando en la biblioteca te fijas que hay una escalera que te podría servir.", "Biblioteca", salidasBiblioteca);
 
         //Mubles de la biblioteca
         Mueble m10 = new Mueble("Estantería", "Estanterías llenas y llenas de libros de brujería", true);
@@ -139,7 +155,9 @@ public class Juego {
         biblioteca.añadirObjetosHabitacion(c5);
 
         //*sexta y última habitación
-        Habitacion mercado = new Habitacion("Al cruzar la puerta te das cuenta de un detalle importante, todo este tiempo lo que has ido viendo han sido ilusiones creadas por un hechizo, pero quién podría hacerte esto a tí… Bueno, al mirar alrededor ves que estás en una calle y es la del mercado, al final de calle ves una gran puerta que parece que necesita un conjuro para abrirse.");
+        Map<String,String> salidasMercado = new HashMap<>();
+        salidasMercado.put("Puerta de madera derruida", "Sotano");
+        Habitacion mercado = new Habitacion("Al cruzar la puerta te das cuenta de un detalle importante, todo este tiempo lo que has ido viendo han sido ilusiones creadas por un hechizo, pero quién podría hacerte esto a tí… Bueno, al mirar alrededor ves que estás en una calle y es la del mercado, al final de calle ves una gran puerta que parece que necesita un conjuro para abrirse.", "Mercado", salidasMercado);
 
         //Muebles del mercado
         Mueble m14 = new Mueble("Puesto", "Varios puestos del mercado que venden frutas, verduras, escobas voladoras, etc...", true);
@@ -153,8 +171,16 @@ public class Juego {
         mercado.añadirObjetosHabitacion(m14);
         mercado.añadirObjetosHabitacion(m15);
 
+        //Pasillo
+        Map<String,String> salidasPasillo = new HashMap<>();
+        salidasPasillo.put("Puerta roja", "Aula 1ºB");
+        salidasPasillo.put("Puerta con una cruz", "Centro Médico");
+        salidasPasillo.put("Puerta con un libro", "Biblioteca");
+        salidasPasillo.put("Puerta de madera", "Habitación");
+        Habitacion pasillo = new Habitacion("Un pasillo vacío y tenebroso... Parece tener varias entradas", "Pasillo", salidasPasillo);
+
         //Añadimos las habitaciones al array
-        habitaciones = new Habitacion[]{tuHabitacion, aula1ºB, centroMedico, sotano, biblioteca, mercado};
+        habitaciones = List.of(tuHabitacion, aula1ºB, centroMedico, sotano, biblioteca, mercado);
     }
 
     // --- NÚCLEO: Definición de Datos (FASE 1) ---

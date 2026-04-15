@@ -13,7 +13,7 @@ import java.util.Map;
 public class Habitacion {
 
     // Nombre de cada habitación
-    private String nombreHabitacion;
+    private final String NOMBRE_HABITACION;
 
     // Descripción de la habitación
     private final String DESCRIPCION;
@@ -29,9 +29,11 @@ public class Habitacion {
      *
      * @param DESCRIPCION Descripción de la habitación
      */
-    public Habitacion(String DESCRIPCION) {
+    public Habitacion(String DESCRIPCION, String nombreHabitacion, Map<String,String> salidas ) {
+        this.NOMBRE_HABITACION = nombreHabitacion;
         this.DESCRIPCION = DESCRIPCION;
         this.objetos = new ArrayList<>(); // Inicializa el array de objetos
+        this.mapa = salidas;
     }
 
     /**
@@ -52,11 +54,17 @@ public class Habitacion {
         return objetos;
     }
 
+    public String getNOMBRE_HABITACION() {
+        return NOMBRE_HABITACION;
+    }
+
     /**
      * Añade un objeto al primer espacio disponible del array de objetos.
      *
      * @param objeto Objeto a añadir
      */
+
+
     public void añadirObjetosHabitacion(Objeto objeto){
         objetos.add(objeto);
     }
