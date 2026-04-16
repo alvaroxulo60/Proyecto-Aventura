@@ -2,6 +2,7 @@ package aventura.app.io;
 
 import aventura.app.exceptions.CargadorException;
 import aventura.app.models.AventuraConfig;
+import aventura.app.models.Objeto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -21,7 +22,7 @@ public class CargadorAventura {
     private Path informacionJuego;
 
     public CargadorAventura() throws CargadorException {
-        gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Object.class, new ObjetoAdapter()).create();
+        gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Objeto.class, new ObjetoAdapter()).create();
         conseguirRutas();
 
     }
@@ -56,4 +57,6 @@ public class CargadorAventura {
             throw new CargadorException("No ha sido posible cargar el juego");
         }
     }
+
+
 }

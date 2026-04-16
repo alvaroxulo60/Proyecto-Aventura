@@ -167,4 +167,16 @@ public class Habitacion {
         }
         return contenido.toString();
     }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Habitacion that)) return false;
+
+        return NOMBRE_HABITACION.equals(that.NOMBRE_HABITACION);
+    }
+
+    @Override
+    public int hashCode() {
+        return NOMBRE_HABITACION.hashCode();
+    }
 }

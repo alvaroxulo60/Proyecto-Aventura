@@ -20,4 +20,12 @@ public class AventuraConfig {
             this.habitaciones.put(h.getNOMBRE_HABITACION(),h);
         }
     }
+
+    public String getDescripcionDelJuego() {
+        return descripcionDelJuego;
+    }
+
+    public Map<String, Habitacion> getHabitaciones() {
+        return habitaciones;
+    }
 }
