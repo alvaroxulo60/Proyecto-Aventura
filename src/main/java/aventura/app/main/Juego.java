@@ -443,35 +443,42 @@ public class Juego {
     public void cargarPartida() throws CargadorException {
         Path saves = rutaADirectorioDePartidasGuardadas();
 
-        if (saves == null){
-            throw new CargadorException("No se ha podido cargar la partida");
+        if (saves == null || !Files.exists(saves)) {
+            throw new CargadorException("El directorio de guardado no existe.");
         }
 
-        try (Stream<Path> archivos = Files.walk(saves,1)) {
-            if (archivos.findAny().isEmpty()){
-                System.out.println("No hay ninguna partida guardada");
+        try (Stream<Path> stream = Files.list(saves)) {
+            List<Path> partidas = stream.filter(Files::isRegularFile).toList();
+
+            if (partidas.isEmpty()) {
+                System.out.println("No hay ninguna partida guardada.");
                 return;
             }
-            try (Stream<Path> archivos2 = Files.walk(saves,1)){
-                archivos2.forEach(System.out::println);
-                String nombreArchivo = MiEntradaSalida.leerLinea("Introduce el nombre del archivo de guardado");
 
-                Path archivo = saves.resolve(nombreArchivo);
+            // Mostrar partidas disponibles
+            System.out.println("Partidas encontradas:");
+            partidas.forEach(p -> System.out.println("- " + p.getFileName()));
 
-                CargadorAventura ca = new CargadorAventura();
+            String nombreArchivo = MiEntradaSalida.leerLinea("Introduce el nombre del archivo:");
+            Path archivoSeleccionado = saves.resolve(nombreArchivo);
 
-                AventuraConfig ac = ca.CargarPartidaGuardada(archivo);
-
-                this.descripcionJuego = ac.getDescripcionDelJuego();
-                this.habitaciones = ac.getHabitaciones();
-                this.jugador = ac.getJugador();
-
-            } catch (CargadorException e) {
-                System.out.println(e.getMessage());
+            if (!Files.exists(archivoSeleccionado)) {
+                System.out.println("El archivo especificado no existe.");
+                return;
             }
 
-        }catch (IOException e){
-            System.out.println(e.getMessage());
+            // Carga de datos
+            CargadorAventura ca = new CargadorAventura();
+            AventuraConfig ac = ca.CargarPartidaGuardada(archivoSeleccionado);
+
+            this.descripcionJuego = ac.getDescripcionDelJuego();
+            this.habitaciones = ac.getHabitaciones();
+            this.jugador = ac.getJugador();
+
+            System.out.println("¡Partida cargada con éxito!");
+
+        } catch (IOException | CargadorException e) {
+            throw new CargadorException("Error al procesar la carga: " + e.getMessage());
         }
     }
 
