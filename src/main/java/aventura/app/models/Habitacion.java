@@ -58,6 +58,10 @@ public class Habitacion {
         return NOMBRE_HABITACION;
     }
 
+    public Map<String, String> getMapa() {
+        return mapa;
+    }
+
     /**
      * Añade un objeto al primer espacio disponible del array de objetos.
      *
