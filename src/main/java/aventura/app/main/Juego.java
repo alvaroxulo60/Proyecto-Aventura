@@ -1,5 +1,6 @@
 package aventura.app.main;
 
+import aventura.app.exceptions.CargadorException;
 import aventura.app.exceptions.CombinarException;
 import aventura.app.exceptions.MigradorException;
 import aventura.app.interfaces.Combinable;
@@ -22,22 +23,19 @@ public class Juego {
 
     private final static int NUM_HABITACIONES = 6;
 
-    private List<Habitacion> habitaciones;
+    private Map<String,Habitacion> habitaciones;
     private Jugador jugador;
     private String descripcionJuego;
 
     public Juego() {
         jugador = new Jugador();
         preparacionJuego();
-        this.descripcionJuego = "Empiezas en una aldea tranquila, Kael el Comerciante, el cual conoces muy bien, muy amablemente te ofrece sin coste una poción misteriosa, según él esa poción te volverá el mejor alumno de la academia de la luz y la sombra, te llevas la poción con gusto y mientras das un paseo te la tomas para volverte el mejor de todos.\n" +
-                "A los segundos después de tomarla te empiezas a sentir mareado y se te nubla la vista hasta que finalmente te desplomas en el suelo.\n" +
-                "Te despiertas en un lugar familiar, no sabes como llegaste a ahí, ni cuánto tiempo llevas ahí.\n";
-        Migrador m = new Migrador();
-        try {
-            m.migrarContenido(this.descripcionJuego, habitaciones);
-        } catch (MigradorException e) {
-            System.out.println(e.getMessage());
-        }
+//        Migrador m = new Migrador();
+//        try {
+//            m.migrarContenido(this.descripcionJuego, habitaciones);
+//        } catch (MigradorException e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 
     public String getDescripcionJuego() {
@@ -50,143 +48,19 @@ public class Juego {
      * Este metodo se ejecuta al inicio de la partida.
      */
     private void preparacionJuego() {
-        //* primera habitación
-        Map<String, String> salidasHabitacion = new HashMap<>();
-        salidasHabitacion.put("Puerta de madera", "Pasillo");
-        Habitacion tuHabitacion = new Habitacion("Miras alrededor y te das cuenta de que es tu habitación pero a la vez que vas mirando más a detalle te das cuenta que hay cosas que no deberían estar ahí como un libro, algo desgastado en la estantería, tiene cerradura muy extraña, como  si fuera para introducir una llave… ¿Con forma de zorro? no recuerdas haber comprado algo así antes. Hay una puerta a la derecha.", "Tu habitación", salidasHabitacion);
 
-        //Muebles básicos de la habitación
-        Mueble m1 = new Mueble("Cama", "Es tú cama, no parece que tenga algo importante", true);
-        Mueble m2 = new Mueble("Escritorio", "Aquí es donde sueles leer y estudiar", true);
-        Mueble m3 = new Mueble("Estantería", "Una estantería llena de libros, pero te llama la atención uno en concreto", true);
+        CargadorAventura infoAventura;
+        try {
+            infoAventura = new CargadorAventura();
 
-        //Contenedor sin objeto de la habitación
-        Contenedor c1 = new Contenedor("Mesa de noche", "Es tu mesita de noche", true, null, null, false);
+            AventuraConfig aventura = infoAventura.CargarMundoBase();
 
-        //Objeto especial que será clave más adelante
-        LibroHechizos libroHechizos = new LibroHechizos("Libro de hechizos", "Parece importante, pero esta desgastado... Además parece que para abrirlo se necesita una llave", true);
+            this.descripcionJuego = aventura.getDescripcionDelJuego();
+            this.habitaciones = aventura.getHabitaciones();
 
-        //Se añaden todos los objetos a la habitación
-        tuHabitacion.añadirObjetosHabitacion(libroHechizos);
-        tuHabitacion.añadirObjetosHabitacion(m1);
-        tuHabitacion.añadirObjetosHabitacion(m2);
-        tuHabitacion.añadirObjetosHabitacion(m3);
-        tuHabitacion.añadirObjetosHabitacion(c1);
-
-        //*segunda habitación
-        Map<String, String> salidasAula1B = new HashMap<>();
-        salidasAula1B.put("Puerta Roja", "Pasillo");
-        Habitacion aula1ºB = new Habitacion("También te resulta familiar, es el aula donde los alumnos de mayor grado dan sus clases de hechizos, pero lo extraño es que el aula esta del revés. En la mesa del profesor hay un cajón. En esta sala hay una puerta a la derecha y otra a la izquierda.\n", "Aula 1ºB", salidasAula1B);
-
-        //Muebles de Aula 1ºB
-        Mueble m4 = new Mueble("Mesa de estudiantes", "Son las mesas que usan los alumnos de mayor grado", true);
-        Mueble m5 = new Mueble("Mesa del profesor", "Es la mesa del profesor, ves que el cajón esta abierto", true);
-
-        // Nota necesaria para avanzar en el lore
-        NotaRota notaRota1 = new NotaRota("Nota rota 1", "Es una nota a la que le falta una mitad...", true);
-
-        // Contenedor que guarda la nota rota
-        Contenedor c2 = new Contenedor("Cajón del profesor", "Es el cajón donde los maestros suelen guardar el borrador, papeles, etc...", true, null, notaRota1, false);
-
-        //Se añaden todos los objetos a la habitación
-        aula1ºB.añadirObjetosHabitacion(m4);
-        aula1ºB.añadirObjetosHabitacion(m5);
-        aula1ºB.añadirObjetosHabitacion(c2);
-
-        //*tercera habitación
-        Map<String, String> salidasCentroMedico = new HashMap<>();
-        salidasCentroMedico.put("Puerta con una cruz", "Pasillo");
-        Habitacion centroMedico = new Habitacion("Al cruzar la puerta apareces en una zona médica, entonces caes en que estás en el centró médico de tu aldea. Alrededor tuya ves muchos muebles con muchos frascos y varios muebles cerrados, en particular te fijas en un cajón de una mesa que tiene una cerradura con forma de estrella. No hay más puertas, solo por la que viniste.", "Centro Médico", salidasCentroMedico);
-
-        //Muebles del centro médico
-        Mueble m6 = new Mueble("Muebles", "Ves varios muebles por toda la zona, todos están en mal estado y no parecen tener nada", true);
-        Mueble m7 = new Mueble("Camilla", "Es una camilla donde parecen que tuvieron que llevar alguine muy herido...", true);
-
-        //Nota pista para encontrar llave estrella
-        Nota nota = new Nota("Nota", "Es una nota doblada", true, "El cielo nocturno lleno de estrellas está, pero una sola desbloqueara la magia. Busca en la habitación…");
-
-        //Llave necesaria para pasarte el juego
-        LlaveEspecial llaveKitsune = new LlaveEspecial("Llave Kitsune", "Es una llave que tiene forma de zorro de 9 colas", true);
-
-        //Cajón bloqueado que contiene la llave especial
-        Contenedor c3 = new Contenedor("Cajón", "Es una cajón que tiene una cerradura con forma de estrella", true, "Llave Estrella", llaveKitsune, false);
-
-        //Se añaden todos los objetos a la habitación
-        centroMedico.añadirObjetosHabitacion(nota);
-        centroMedico.añadirObjetosHabitacion(m6);
-        centroMedico.añadirObjetosHabitacion(m7);
-        centroMedico.añadirObjetosHabitacion(c3);
-
-        //*cuarta habitación
-        Map<String, String> salidasSotano = new HashMap<>();
-        salidasSotano.put("Trampilla", "Biblioteca");
-        salidasSotano.put("Puerta de madera derruida", "Mercado");
-        Habitacion sotano = new Habitacion("Llegas a un sótano donde apenas hay luz, no te suena de nada este sitio. Al mirar alrededor no ves nada de importancia pero a tu derecha ves unas escaleras que supones que es la salida de esta sala. Hay una puerta a la izquierda y las escaleras a la derecha.\n", "Sotano", salidasSotano);
-
-        //Muebles del sotano
-        Mueble m8 = new Mueble("Caldera", "Es la caldera que permite que salga agua caliente en casa, etc...", true);
-        Mueble m9 = new Mueble("Armario", "Es un armario de madera antiguo que esta vacío", true);
-
-        //Llave para desbloquear el cajón del centro médico
-        Llave llaveEstrella = new Llave("Llave Estrella", "Es una llave que tiene forma de estrella", true, "Llave Estrella");
-
-        //Contenedor que contiene la llave estrella
-        Contenedor c4 = new Contenedor("Caja de Herramientas", "Es una caja de herramientas que contiene algo en su interior", true, null, llaveEstrella, false);
-
-        //Se añaden todos los objetos a la habitación
-        sotano.añadirObjetosHabitacion(m8);
-        sotano.añadirObjetosHabitacion(m9);
-        sotano.añadirObjetosHabitacion(c4);
-
-        //*quinta habitación
-        Map<String, String> salidasBiblioteca = new HashMap<>();
-        salidasBiblioteca.put("Puerta con un libro", "Pasillo");
-        salidasBiblioteca.put("Trampilla", "Sotano");
-        Habitacion biblioteca = new Habitacion("Al subir las escaleras ahora apareces en la biblioteca de la aldea, todas las escaleras están vacías, pero investigando en la biblioteca te fijas que hay una escalera que te podría servir.", "Biblioteca", salidasBiblioteca);
-
-        //Mubles de la biblioteca
-        Mueble m10 = new Mueble("Estantería", "Estanterías llenas y llenas de libros de brujería", true);
-        Mueble m11 = new Mueble("Carrito de libros", "Un carrito con libros devueltos esperando a ser puestos en las estanterías", true);
-        Mueble m12 = new Mueble("Mesas y sillas", "Varias mesas y sillas para que puedas sentarte a leer tranquilo", true);
-        Mueble m13 = new Mueble("Mesa de la recepción", "Es la mesa donde vas a que te den el sello y la fecha de devolución de libros", true);
-
-        //Contenedor vacío
-        Contenedor c5 = new Contenedor("Cajón", "El cajón de la mesa de la recepción que parece estar abierto", true, null, null, false);
-
-        //Se añaden todos los objetos a la habitación
-        biblioteca.añadirObjetosHabitacion(m10);
-        biblioteca.añadirObjetosHabitacion(m11);
-        biblioteca.añadirObjetosHabitacion(m12);
-        biblioteca.añadirObjetosHabitacion(m13);
-        biblioteca.añadirObjetosHabitacion(c5);
-
-        //*sexta y última habitación
-        Map<String, String> salidasMercado = new HashMap<>();
-        salidasMercado.put("Puerta de madera derruida", "Sotano");
-        Habitacion mercado = new Habitacion("Al cruzar la puerta te das cuenta de un detalle importante, todo este tiempo lo que has ido viendo han sido ilusiones creadas por un hechizo, pero quién podría hacerte esto a tí… Bueno, al mirar alrededor ves que estás en una calle y es la del mercado, al final de calle ves una gran puerta que parece que necesita un conjuro para abrirse.", "Mercado", salidasMercado);
-
-        //Muebles del mercado
-        Mueble m14 = new Mueble("Puesto", "Varios puestos del mercado que venden frutas, verduras, escobas voladoras, etc...", true);
-        Mueble m15 = new Mueble("Mesa", "Una mesa que contiene una nota", true);
-
-        // Nota necesaria para avanzar en el lore
-        NotaRota notaRota2 = new NotaRota("Nota rota 2", "Es una nota a la que le falta una mitad...", true);
-
-        //Se añaden todos los objetos a la habitación
-        mercado.añadirObjetosHabitacion(notaRota2);
-        mercado.añadirObjetosHabitacion(m14);
-        mercado.añadirObjetosHabitacion(m15);
-
-        //Pasillo
-        Map<String, String> salidasPasillo = new HashMap<>();
-        salidasPasillo.put("Puerta roja", "Aula 1ºB");
-        salidasPasillo.put("Puerta con una cruz", "Centro Médico");
-        salidasPasillo.put("Puerta con un libro", "Biblioteca");
-        salidasPasillo.put("Puerta de madera", "Habitación");
-        Habitacion pasillo = new Habitacion("Un pasillo vacío y tenebroso... Parece tener varias entradas", "Pasillo", salidasPasillo);
-
-        //Añadimos las habitaciones al array
-        habitaciones = List.of(tuHabitacion, aula1ºB, centroMedico, sotano, biblioteca, mercado, pasillo);
+        } catch (CargadorException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     // --- NÚCLEO: Definición de Datos (FASE 1) ---
@@ -248,7 +122,7 @@ public class Juego {
      * @return la habitación actual
      */
     public Habitacion getHabitacionActual() {
-        return habitaciones.get(0);
+        return habitaciones.get(jugador.getPosicionJugador());
     }
 
     /**

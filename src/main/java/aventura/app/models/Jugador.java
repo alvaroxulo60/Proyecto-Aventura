@@ -24,7 +24,8 @@ public class Jugador extends Personaje {
      * Inicializa la posición en 0 y el inventario vacío.
      */
     public Jugador() {
-        posicionIncialJugador = "Tu Habitación";
+        posicionIncialJugador = "Tu habitación";
+        posicionJugador = getPosicionIncialJugador();
         inventario = new ArrayList<>();
     }
 
