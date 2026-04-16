@@ -7,87 +7,94 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Clase Habitación que representa un espacio donde pueden colocarse objetos.
- * Gestiona un array fijo de objetos, permite añadir, buscar, eliminar y contar objetos.
+ *Clase Habitación que representa un espacio del juego donde pueden colocarse objetos.
+ *Gestiona una lista dinámica de objetos y permite añadir, buscar, eliminar y filtrar elementos.
  */
 public class Habitacion {
 
-    // Nombre de cada habitación
+    //Identificador o nombre único de cada habitación
     private final String NOMBRE_HABITACION;
 
-    // Descripción de la habitación
+    //Descripción de la habitación
     private final String DESCRIPCION;
 
-    // Lista de salidas de cada habitación
+    //Mapa que relaciona las direcciones de salida con los nombres de otras habitaciones
     private Map<String,String> mapa;
 
-    // Array que almacena los objetos de la habitación
+    //Lista que almacena los objetos que haya en la habitación
     private List<Objeto> objetos;
 
     /**
-     * Constructor de la clase Habitacion.
+     *Constructor de la clase Habitacion.
      *
-     * @param DESCRIPCION Descripción de la habitación
+     *@param DESCRIPCION Descripción de la habitación
+     *@param nombreHabitacion Nombre identificador de la habitación
+     *@param salidas Mapa con las direcciones y las habitaciones conectadas
      */
     public Habitacion(String DESCRIPCION, String nombreHabitacion, Map<String,String> salidas ) {
         this.NOMBRE_HABITACION = nombreHabitacion;
         this.DESCRIPCION = DESCRIPCION;
-        this.objetos = new ArrayList<>(); // Inicializa el array de objetos
+        this.objetos = new ArrayList<>(); // Inicializa la lista dinámica de objetos
         this.mapa = salidas;
     }
 
     /**
-     * Devuelve la descripción de la habitación.
+     *Devuelve la descripción de la habitación.
      *
-     * @return descripción
+     *@return descripción
      */
     public String getDESCRIPCION() {
         return DESCRIPCION;
     }
 
     /**
-     * Devuelve el array de objetos en la habitación.
+     *Devuelve la lista de objetos de la habitación.
      *
-     * @return array de objetos
+     *@return lista de objetos
      */
     public List<Objeto> getObjetos() {
         return objetos;
     }
 
+    /**
+     *Devuelve el nombre de la habitación.
+     * @return nombre de la habitación
+     */
     public String getNOMBRE_HABITACION() {
         return NOMBRE_HABITACION;
     }
 
+    /**
+     *Devuelve el mapa de salidas disponibles desde esta habitación.
+     *@return mapa de salidas
+     */
     public Map<String, String> getMapa() {
         return mapa;
     }
 
     /**
-     * Añade un objeto al primer espacio disponible del array de objetos.
+     *Añade un nuevo objeto a la lista de la habitación.
      *
-     * @param objeto Objeto a añadir
+     *@param objeto Objeto a añadir
      */
-
-
     public void añadirObjetosHabitacion(Objeto objeto){
         objetos.add(objeto);
     }
 
     /**
-     * Busca un objeto en la habitación por su nombre.
+     *Busca un objeto en la habitación por su nombre, ignorando mayúsculas y minúsculas.
      *
-     * @param o Nombre del objeto a buscar
-     * @return El objeto si se encuentra, o null si no existe
+     *@param o Nombre del objeto a buscar
+     *@return El objeto si se encuentra, o null si no existe en la habitación
      */
     public Objeto buscarObjetoHabitacion(String o){
-
         return objetos.stream()
                 .filter(objeto -> objeto.getNombre().equalsIgnoreCase(o))
-                .findFirst().orElse(null); // No se encontró el objeto
+                .findFirst().orElse(null); // Retorna el primero que coincida o null
     }
 
     /**
-     * Quita un objeto de la habitación.
+     * Elimina un objeto específico de la habitación (ej. cuando el jugador lo recoge).
      *
      * @param o Objeto a eliminar
      */
@@ -96,40 +103,37 @@ public class Habitacion {
     }
 
     /**
-     * Cuenta el número de objetos presentes en la habitación.
+     * Devuelve la cantidad total de objetos presentes en la habitación.
      *
-     * @return número de objetos no nulos
+     * @return número de objetos en la lista
      */
     public int contarObjetosHabitacion(){
-
         return objetos.size();
     }
 
     /**
-     * Cuenta el número de objetos que pueden ser añadidos al inventario.
+     * Cuenta cuántos de los objetos presentes en la habitación pueden ser recogidos por el jugador.
      *
-     * @return número de objetos inventariables
+     * @return número de objetos que implementan la interfaz Inventariable
      */
     public long contarObjetosInventariablesHabitacion(){
-
         return objetos.stream()
                 .filter(objeto -> objeto instanceof Inventariable).count();
     }
 
     /**
-     * Cuenta el número de contenedores presentes en la habitación.
+     * Cuenta cuántos contenedores (objetos que pueden guardar otros objetos) hay en la habitación.
      *
      * @return número de objetos que son instancias de Contenedor
      */
     public long contarContenedoresHabitacion(){
-
         return objetos.stream()
-                .filter(objeto -> objeto instanceof  Contenedor).count();
+                .filter(objeto -> objeto instanceof Contenedor).count();
     }
 
     /**
-     * Muestra los objetos en la habitación
-     * @return el string con todos los objetos
+     * Genera una cadena de texto con la lista numerada de todos los objetos en la habitación.
+     * * @return un string con los nombres de todos los objetos
      */
     public String mostrarObjetosHabitacion(){
         int contador = 1;
@@ -143,10 +147,10 @@ public class Habitacion {
     }
 
     /**
-     *Metodo para mostrar los objetos inventariables
-     * @return los objetos inventariables
+     * Genera una cadena de texto con la lista numerada solo de los objetos que se pueden recoger.
+     * * @return un string con los objetos inventariables
      */
-    public String  mostrarObjetosInventariables(){
+    public String mostrarObjetosInventariables(){
         int contador = 1;
         StringBuilder contenido = new StringBuilder();
         for (Objeto o: objetos) {
@@ -158,10 +162,10 @@ public class Habitacion {
     }
 
     /**
-     *Metodo para mostrar los contenedores
-     * @return los contenedores
+     * Genera una cadena de texto con la lista numerada solo de los contenedores presentes.
+     * * @return un string con los contenedores
      */
-    public String  mostrarContenedores(){
+    public String mostrarContenedores(){
         int contador = 1;
         StringBuilder contenido = new StringBuilder();
         for (Objeto o: objetos) {
