@@ -11,9 +11,13 @@ import aventura.app.io.*;
 import aventura.app.models.*;
 import aventura.app.records.RespuestaAccion;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /*
  * Clase principal del juego "Tu Propia Aventura".
@@ -412,9 +416,90 @@ public class Juego {
         mirar();
     }
 
+    public void menuInicial(){
+        opcionesMenuInicial();
+        String opcion = MiEntradaSalida.leerLinea("¿Que deseas hacer?");
+        switch (opcion.toLowerCase()){
+            case "nueva partida":
+
+                break;
+            case "borrar partida":
+
+                break;
+
+            case "cargar partida":
+                try {
+                    cargarPartida();
+                } catch (CargadorException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+
+            case "salir":
+                return;
+        }
+    }
+
+    public void cargarPartida() throws CargadorException {
+        Path saves = rutaADirectorioDePartidasGuardadas();
+
+        if (saves == null){
+            throw new CargadorException("No se ha podido cargar la partida");
+        }
+
+        try (Stream<Path> archivos = Files.walk(saves,1)) {
+            if (archivos.findAny().isEmpty()){
+                System.out.println("No hay ninguna partida guardada");
+                return;
+            }
+            try (Stream<Path> archivos2 = Files.walk(saves,1)){
+                archivos2.forEach(System.out::println);
+                String nombreArchivo = MiEntradaSalida.leerLinea("Introduce el nombre del archivo de guardado");
+
+                Path archivo = saves.resolve(nombreArchivo);
+
+                CargadorAventura ca = new CargadorAventura();
+
+                AventuraConfig ac = ca.CargarPartidaGuardada(archivo);
+
+                this.descripcionJuego = ac.getDescripcionDelJuego();
+                this.habitaciones = ac.getHabitaciones();
+                this.jugador = ac.getJugador();
+
+            } catch (CargadorException e) {
+                System.out.println(e.getMessage());
+            }
+
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private Path rutaADirectorioDePartidasGuardadas() {
+        try {
+            CargarProperties cp = CargarProperties.getInstance();
+
+            Path dirbase = Path.of(cp.get("directorio.base.juego"));
+            return dirbase.resolve(Path.of("juego.saves.games.dir"));
+        } catch (CargadorException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public void opcionesMenuInicial(){
+        System.out.print("====================Bienvenido====================\n ");
+        System.out.print(">nueva partida \n ");
+        System.out.print(">cargar partida \n ");
+        System.out.print(">borrar partida \n ");
+        System.out.print(">salir \n ");
+        System.out.print("==================================================\n");
+    }
+
     public static void main(String[] args) {
 
         Juego j = new Juego();
+        j.menuInicial();
         j.preparacionJuego();
         j.iniciarJuego();
         System.out.println("¡Gracias por jugar!");
