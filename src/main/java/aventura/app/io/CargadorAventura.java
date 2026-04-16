@@ -12,37 +12,35 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
-import java.util.PropertyPermission;
 
 public class CargadorAventura {
     private Gson gson;
 
-    private Path ubicacionJuego;
+    private Path directorioBase;
 
-    private Path informacionJuego;
+    private Path mundoInicial;
 
     public CargadorAventura() throws CargadorException {
         gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Objeto.class, new ObjetoAdapter()).create();
         conseguirRutas();
-
     }
 
     public void conseguirRutas() throws CargadorException {
-        Properties pop = new Properties();
 
-        try(InputStream in = new FileInputStream("config.properties")){
 
-            pop.load(in);
+        try{
 
-            this.ubicacionJuego = Path.of(pop.getProperty("directorio.base.juego"));
-            this.informacionJuego = Path.of(pop.getProperty("juego.archivo.base"));
+            CargarProperties cp = CargarProperties.getInstance();
 
-            if (!Files.exists(ubicacionJuego) || !Files.isDirectory(ubicacionJuego)) {
-                Files.createDirectories(ubicacionJuego);
+            this.directorioBase = Path.of(cp.get("directorio.base.juego"));
+            this.mundoInicial = directorioBase.resolve(Path.of(cp.get("juego.archivo.base")));
+
+            if (!Files.exists(directorioBase) || !Files.isDirectory(directorioBase)) {
+                Files.createDirectories(directorioBase);
             }
 
-            if (!Files.exists(informacionJuego) || !Files.isRegularFile(informacionJuego)) {
-                throw new CargadorException("El archivo de configuración del juego no existe: " + informacionJuego);
+            if (!Files.exists(mundoInicial) || !Files.isRegularFile(mundoInicial)) {
+                throw new CargadorException("El archivo de configuración del juego no existe: " + mundoInicial);
             }
 
         }catch (IOException e){
@@ -52,7 +50,7 @@ public class CargadorAventura {
 
     public AventuraConfig CargarMundoBase() throws CargadorException {
         try {
-            return gson.fromJson(Files.newBufferedReader(informacionJuego),AventuraConfig.class);
+            return gson.fromJson(Files.newBufferedReader(mundoInicial),AventuraConfig.class);
         } catch (IOException e) {
             throw new CargadorException("No ha sido posible cargar el juego");
         }

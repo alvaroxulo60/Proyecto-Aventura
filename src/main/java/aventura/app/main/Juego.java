@@ -412,6 +412,35 @@ public class Juego {
         mirar();
     }
 
+    public void menuInicial(){
+        opcionesMenuInicial();
+        String opcion = MiEntradaSalida.leerLinea("¿Que deseas hacer?");
+        switch (opcion.toLowerCase()){
+            case "nueva partida":
+
+                break;
+            case "borrar partida":
+
+                break;
+
+            case "cargar partida":
+
+                break;
+
+            case "salir":
+                return;
+        }
+    }
+
+    public void opcionesMenuInicial(){
+        System.out.print("====================Bienvenido====================\n ");
+        System.out.print(">nueva partida \n ");
+        System.out.print(">cargar partida \n ");
+        System.out.print(">borrar partida \n ");
+        System.out.print(">salir \n ");
+        System.out.print("==================================================\n");
+    }
+
     public static void main(String[] args) {
 
         Juego j = new Juego();
