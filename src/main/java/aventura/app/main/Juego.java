@@ -391,7 +391,14 @@ public class Juego {
         jugador.consumirObjetosInventario(aux);
         getHabitacionActual().quitarObjetoHabitacion(aux);
     }
-
+    /**
+     * Permite al jugador desplazarse a una habitación.
+     * Muestra las salidas disponibles en la habitación actual.
+     * Solicita al usuario una dirección y actualiza la posición del jugador si la salida es válida.
+     * Al finalizar el movimiento, ejecuta automáticamente el comando para mirar el nuevo entorno.
+     *
+     * @throws AventuraException si la dirección introducida por el usuario no existe en las salidas actuales
+     */
     public void ir()throws AventuraException{
         System.out.println("Salidas disponibles: ");
         Habitacion actual = getHabitacionActual();

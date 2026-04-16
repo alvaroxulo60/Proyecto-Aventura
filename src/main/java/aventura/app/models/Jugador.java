@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase Jugador que representa al personaje controlado por el usuario.
- * Gestiona la posición del jugador y su inventario de objetos.
+ *Clase Jugador que representa al personaje controlado por el usuario.
+ *Gestiona la posición actual del jugador y su inventario de objetos mediante una lista.
  */
 public class Jugador extends Personaje {
 
-    // Tamaño máximo del inventario del jugador
-
+    //Posición inicial al crear al jugador
     private String posicionIncialJugador;
 
-    // Posición actual del jugador (por ejemplo, en un mapa o array de habitaciones)
+    //Nombre de la posición actual del jugador
     private String posicionJugador;
 
-    // Array que representa el inventario del jugador
+    //Lista que representa el inventario de objetos del jugador
     private List<Objeto> inventario;
 
     /**
-     * Constructor de la clase Jugador.
-     * Inicializa la posición en 0 y el inventario vacío.
+     *Constructor de la clase Jugador.
+     *Inicializa la posición inicial en "Tu habitación", establece la posición actual
+     *y crea un inventario vacío.
      */
     public Jugador() {
         posicionIncialJugador = "Tu habitación";
@@ -29,44 +29,47 @@ public class Jugador extends Personaje {
         inventario = new ArrayList<>();
     }
 
+    /**
+     *Devuelve la posición inicial predeterminada del jugador.
+     *
+     *@return posición inicial del jugador
+     */
     public String getPosicionIncialJugador() {
         return posicionIncialJugador;
     }
 
     /**
-     * Devuelve la posición actual del jugador.
+     *Devuelve la posición actual del jugador.
      *
-     * @return posición del jugador
+     *@return posición actual del jugador
      */
-
-
     public String getPosicionJugador() {
         return posicionJugador;
     }
 
     /**
-     * Devuelve el array de objetos del inventario.
+     *Devuelve la lista de objetos.
      *
-     * @return inventario del jugador
+     *@return lista de objetos
      */
     public List<Objeto> getInventario() {
         return inventario;
     }
 
     /**
-     * Establece la posición del jugador.
+     *Establece la nueva posición para el jugador.
      *
-     * @param posicionJugador nueva posición
+     *@param posicionJugador nueva posición
      */
     public void setPosicionJugador(String posicionJugador) {
         this.posicionJugador = posicionJugador;
     }
 
     /**
-     * Busca un objeto en el inventario por su nombre.
+     *Busca un objeto en el inventario por su nombre.
      *
-     * @param objeto nombre del objeto a buscar
-     * @return el objeto si se encuentra, null si no existe
+     *@param objeto nombre del objeto a buscar
+     *@return el objeto si se encuentra, null si no existe en el inventario
      */
     public Objeto buscarObjetoInventario(String objeto) {
         for (Objeto o : inventario) {
@@ -80,10 +83,10 @@ public class Jugador extends Personaje {
     }
 
     /**
-     * Busca una llave específica en el inventario por su código de seguridad.
+     *Busca una llave específica en el inventario utilizando su código de seguridad.
      *
-     * @param codigo código de la llave
-     * @return la llave encontrada, o null si no existe
+     *@param codigo código de la llave a buscar
+     *@return la llave encontrada, o null si no existe
      */
     public Llave buscarLlaveInventario(String codigo) {
         for (Objeto o : inventario) {
@@ -100,37 +103,37 @@ public class Jugador extends Personaje {
     }
 
     /**
-     * Guarda un objeto en el inventario del jugador.
+     *Añade un objeto al inventario del jugador.
      *
-     * @param o objeto a guardar
-     * @return true si se ha añadido correctamente, false si no hay espacio
+     *@param o objeto a guardar
+     *@return true si se ha añadido correctamente a la lista
      */
     public boolean guardarInventario(Objeto o) {
         return inventario.add(o);
     }
 
     /**
-     * Cuenta el número de objetos presentes en el inventario.
+     *Cuenta el número de objetos actuales en el inventario.
      *
-     * @return cantidad de objetos
+     *@return cantidad total de objetos
      */
     public int contarObjetosInventario() {
         return inventario.size();
     }
 
     /**
-     * Elimina un objeto específico del inventario, por ejemplo si se consume o se usa.
+     *Elimina un objeto específico del inventario.
      *
-     * @param o objeto a eliminar
+     *@param o objeto a eliminar
      */
     public void consumirObjetosInventario(Objeto o) {
         inventario.remove(o);
     }
 
     /**
-     * Metodo para mostrar todos los objetos en la habitación
+     *Genera un String con la lista numerada de todos los objetos del inventario.
      *
-     * @return un string con todos los objetos
+     *@return un string con los nombres de los objetos del inventario
      */
     public String mostrarObjetosInventario() {
         int contador = 1;
