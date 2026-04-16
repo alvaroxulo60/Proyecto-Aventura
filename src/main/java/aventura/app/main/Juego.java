@@ -1,5 +1,6 @@
 package aventura.app.main;
 
+import aventura.app.exceptions.AventuraException;
 import aventura.app.exceptions.CargadorException;
 import aventura.app.exceptions.CombinarException;
 import aventura.app.exceptions.MigradorException;
@@ -57,6 +58,7 @@ public class Juego {
 
             this.descripcionJuego = aventura.getDescripcionDelJuego();
             this.habitaciones = aventura.getHabitaciones();
+            String a;
 
         } catch (CargadorException e) {
             System.out.println(e.getMessage());
@@ -73,6 +75,10 @@ public class Juego {
     }
 
     public void mirar() {
+        if (getHabitacionActual().contarObjetosHabitacion() == 0){
+            System.out.println("En esta habitación no hay nada... ");
+            return;
+        }
         System.out.println(getHabitacionActual().getDESCRIPCION());
         System.out.println("En esta Habitación encuentras los siguientes objetos");
         for (Objeto o : getHabitacionActual().getObjetos()) {
@@ -84,6 +90,10 @@ public class Juego {
      * Examinar algún objeto tanto de la habitacion como de tu inventario
      */
     public void examinar() {
+        if (getHabitacionActual().contarObjetosHabitacion() == 0 && jugador.contarObjetosInventario() == 0){
+            System.out.println("No hay nada que examinar... ");
+            return;
+        }
         mostrarObjetos();
         String objeto = MiEntradaSalida.leerLinea("Introduce el nombre del objeto que quieras examinar:  \n");
         Objeto aux = buscar(objeto);
@@ -164,11 +174,12 @@ public class Juego {
              */
 
             switch (comando.toLowerCase().trim()) {
-                case "ir derecha":
-
-                    break;
-                case "ir izquierda":
-
+                case "ir":
+                    try {
+                        ir();
+                    } catch (AventuraException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case "inventario":
                     verInventario();
@@ -270,8 +281,7 @@ public class Juego {
      */
     private void ayuda() {
         System.out.print("====================AYUDA====================\n ");
-        System.out.print(">ir derecha \n ");
-        System.out.print(">ir izquierda \n ");
+        System.out.print(">ir \n ");
         System.out.print(">examinar \n ");
         System.out.print(">coger objeto \n ");
         System.out.print(">inventario \n ");
@@ -380,6 +390,19 @@ public class Juego {
     public void borrarObjetos(Objeto aux) {
         jugador.consumirObjetosInventario(aux);
         getHabitacionActual().quitarObjetoHabitacion(aux);
+    }
+
+    public void ir()throws AventuraException{
+        System.out.println("Salidas disponibles: ");
+        Habitacion actual = getHabitacionActual();
+        System.out.println(actual.getMapa().keySet());
+        String direccion = MiEntradaSalida.leerLinea("¿Dónde quieres ir? \n").toLowerCase();
+        if (!actual.getMapa().containsKey(direccion)){
+            throw new AventuraException("La dirección no es válida. \n");
+        }
+        jugador.setPosicionJugador(actual.getMapa().get(direccion));
+        System.out.println("Cruzas la " + direccion);
+        mirar();
     }
 
     public static void main(String[] args) {
