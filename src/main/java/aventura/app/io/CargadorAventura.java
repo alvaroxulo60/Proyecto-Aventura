@@ -22,7 +22,6 @@ public class CargadorAventura {
 
     public CargadorAventura() throws CargadorException {
         gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Objeto.class, new ObjetoAdapter()).create();
-        conseguirRutas();
     }
 
     public void conseguirRutas() throws CargadorException {
@@ -49,9 +48,18 @@ public class CargadorAventura {
     }
 
     public AventuraConfig CargarMundoBase() throws CargadorException {
+        conseguirRutas();
         try {
             return gson.fromJson(Files.newBufferedReader(mundoInicial),AventuraConfig.class);
         } catch (IOException e) {
+            throw new CargadorException("No ha sido posible cargar el juego");
+        }
+    }
+
+    public AventuraConfig CargarPartidaGuardada(Path partida) throws CargadorException {
+        try {
+            return gson.fromJson(Files.newBufferedReader(partida), AventuraConfig.class);
+        }catch (IOException e) {
             throw new CargadorException("No ha sido posible cargar el juego");
         }
     }

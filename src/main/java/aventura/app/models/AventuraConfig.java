@@ -18,6 +18,8 @@ public class AventuraConfig {
     //Se registran ordenadamente por su nombre para permitir búsquedas y desplazamientos rápidos.
     private Map<String, Habitacion> habitaciones;
 
+    private Jugador jugador;
+
     /**
      *Establece la descripción general o introducción del juego.
      *
@@ -58,4 +60,9 @@ public class AventuraConfig {
     public Map<String, Habitacion> getHabitaciones() {
         return habitaciones;
     }
+
+    public Jugador getJugador(){
+        return jugador;
+    }
+
 }
