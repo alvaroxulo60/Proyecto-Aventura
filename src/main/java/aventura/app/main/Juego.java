@@ -1,9 +1,6 @@
 package aventura.app.main;
 
-import aventura.app.exceptions.AventuraException;
-import aventura.app.exceptions.CargadorException;
-import aventura.app.exceptions.CombinarException;
-import aventura.app.exceptions.MigradorException;
+import aventura.app.exceptions.*;
 import aventura.app.interfaces.Combinable;
 import aventura.app.interfaces.Inventariable;
 import aventura.app.interfaces.Leible;
@@ -12,12 +9,7 @@ import aventura.app.models.*;
 import aventura.app.records.RespuestaAccion;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 /*
  * Clase principal del juego "Tu Propia Aventura".
@@ -28,19 +20,13 @@ public class Juego {
 
     private final static int NUM_HABITACIONES = 6;
 
-    private Map<String,Habitacion> habitaciones;
+    private Map<String, Habitacion> habitaciones;
     private Jugador jugador;
     private String descripcionJuego;
+    private String nombrePartida;
 
     public Juego() {
         jugador = new Jugador();
-        preparacionJuego();
-//        Migrador m = new Migrador();
-//        try {
-//            m.migrarContenido(this.descripcionJuego, habitaciones);
-//        } catch (MigradorException e) {
-//            System.out.println(e.getMessage());
-//        }
     }
 
     public String getDescripcionJuego() {
@@ -79,7 +65,7 @@ public class Juego {
     }
 
     public void mirar() {
-        if (getHabitacionActual().contarObjetosHabitacion() == 0){
+        if (getHabitacionActual().contarObjetosHabitacion() == 0) {
             System.out.println("En esta habitación no hay nada... ");
             return;
         }
@@ -94,7 +80,7 @@ public class Juego {
      * Examinar algún objeto tanto de la habitacion como de tu inventario
      */
     public void examinar() {
-        if (getHabitacionActual().contarObjetosHabitacion() == 0 && jugador.contarObjetosInventario() == 0){
+        if (getHabitacionActual().contarObjetosHabitacion() == 0 && jugador.contarObjetosInventario() == 0) {
             System.out.println("No hay nada que examinar... ");
             return;
         }
@@ -206,11 +192,22 @@ public class Juego {
                 case "salir":
                     jugando = false;
                     break;
+                case "guardar partida":
+                    String nombre;
+                    do {
+                        nombre = MiEntradaSalida.leerLinea("¿Cómo quieres que se llame la partida guardada?");
+                    }while (!comprobarNombreDePartida(nombre));
+
+                    try {
+                        SavedGames.guardarPartida(nombre, preparacionDeAventuraConfigParaGuardado());
+                    } catch (SaveException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
                 default:
                     ayuda();
                     break;
             }
-
         }
     }
 
@@ -236,6 +233,19 @@ public class Juego {
             System.out.println(inventario);
         }
 
+    }
+
+    public AventuraConfig preparacionDeAventuraConfigParaGuardado() {
+        AventuraConfig av = new AventuraConfig();
+
+        av.setHabitaciones(habitaciones);
+        av.setDescripcionDelJuego(descripcionJuego);
+        av.setJugador(jugador);
+        return av;
+    }
+
+    public boolean comprobarNombreDePartida(String s){
+        return s.matches("[\\p{L}\\d][\\d\\p{L}\\s]+");
     }
 
     /**
@@ -291,6 +301,7 @@ public class Juego {
         System.out.print(">inventario \n ");
         System.out.print(">abrir \n ");
         System.out.print(">combinar \n ");
+        System.out.print(">guardar partida \n ");
         System.out.print(">salir \n ");
         System.out.print("=============================================\n");
     }
@@ -395,6 +406,7 @@ public class Juego {
         jugador.consumirObjetosInventario(aux);
         getHabitacionActual().quitarObjetoHabitacion(aux);
     }
+
     /**
      * Permite al jugador desplazarse a una habitación.
      * Muestra las salidas disponibles en la habitación actual.
@@ -403,12 +415,12 @@ public class Juego {
      *
      * @throws AventuraException si la dirección introducida por el usuario no existe en las salidas actuales
      */
-    public void ir()throws AventuraException{
+    public void ir() throws AventuraException {
         System.out.println("Salidas disponibles: ");
         Habitacion actual = getHabitacionActual();
         System.out.println(actual.getMapa().keySet());
         String direccion = MiEntradaSalida.leerLinea("¿Dónde quieres ir? \n").toLowerCase();
-        if (!actual.getMapa().containsKey(direccion)){
+        if (!actual.getMapa().containsKey(direccion)) {
             throw new AventuraException("La dirección no es válida. \n");
         }
         jugador.setPosicionJugador(actual.getMapa().get(direccion));
@@ -416,85 +428,53 @@ public class Juego {
         mirar();
     }
 
-    public void menuInicial(){
+    public void menuInicial() {
+
         opcionesMenuInicial();
-        String opcion = MiEntradaSalida.leerLinea("¿Que deseas hacer?");
-        switch (opcion.toLowerCase()){
-            case "nueva partida":
-
-                break;
-            case "borrar partida":
-
-                break;
-
-            case "cargar partida":
-                try {
-                    cargarPartida();
-                } catch (CargadorException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case "salir":
-                return;
-        }
-    }
-
-    public void cargarPartida() throws CargadorException {
-        Path saves = rutaADirectorioDePartidasGuardadas();
-
-        if (saves == null || !Files.exists(saves)) {
-            throw new CargadorException("El directorio de guardado no existe.");
-        }
-
-        try (Stream<Path> stream = Files.list(saves)) {
-            List<Path> partidas = stream.filter(Files::isRegularFile).toList();
-
-            if (partidas.isEmpty()) {
-                System.out.println("No hay ninguna partida guardada.");
-                return;
+        boolean juegoCreado = false;
+        while (!juegoCreado) {
+            String opcion = MiEntradaSalida.leerLinea("¿Que deseas hacer? \n");
+            switch (opcion.toLowerCase()) {
+                case "nueva partida":
+                    preparacionJuego();
+                    juegoCreado = true;
+                    break;
+                case "borrar partida":
+                    try {
+                        if (SavedGames.borrarPartida()) {
+                            System.out.println("¡Partida borrada!");
+                        } else {
+                            System.out.println("La partida no se ha podido borrar");
+                        }
+                    } catch (CargadorException | IOException | SaveException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case "cargar partida":
+                    try {
+                        AventuraConfig ac = SavedGames.cargarPartida();
+                        cargarConfiguracion(ac);
+                        juegoCreado = true;
+                    } catch (CargadorException | SaveException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case "salir":
+                    System.exit(0);
+                default:
+                    opcionesMenuInicial();
             }
-
-            // Mostrar partidas disponibles
-            System.out.println("Partidas encontradas:");
-            partidas.forEach(p -> System.out.println("- " + p.getFileName()));
-
-            String nombreArchivo = MiEntradaSalida.leerLinea("Introduce el nombre del archivo:");
-            Path archivoSeleccionado = saves.resolve(nombreArchivo);
-
-            if (!Files.exists(archivoSeleccionado)) {
-                System.out.println("El archivo especificado no existe.");
-                return;
-            }
-
-            // Carga de datos
-            CargadorAventura ca = new CargadorAventura();
-            AventuraConfig ac = ca.CargarPartidaGuardada(archivoSeleccionado);
-
-            this.descripcionJuego = ac.getDescripcionDelJuego();
-            this.habitaciones = ac.getHabitaciones();
-            this.jugador = ac.getJugador();
-
-            System.out.println("¡Partida cargada con éxito!");
-
-        } catch (IOException | CargadorException e) {
-            throw new CargadorException("Error al procesar la carga: " + e.getMessage());
         }
     }
 
-    private Path rutaADirectorioDePartidasGuardadas() {
-        try {
-            CargarProperties cp = CargarProperties.getInstance();
-
-            Path dirbase = Path.of(cp.get("directorio.base.juego"));
-            return dirbase.resolve(Path.of("juego.saves.games.dir"));
-        } catch (CargadorException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
+    public void cargarConfiguracion(AventuraConfig ac) {
+        this.jugador = ac.getJugador();
+        this.descripcionJuego = ac.getDescripcionDelJuego();
+        this.habitaciones = ac.getHabitaciones();
     }
 
-    public void opcionesMenuInicial(){
+
+    public void opcionesMenuInicial() {
         System.out.print("====================Bienvenido====================\n ");
         System.out.print(">nueva partida \n ");
         System.out.print(">cargar partida \n ");
@@ -507,7 +487,6 @@ public class Juego {
 
         Juego j = new Juego();
         j.menuInicial();
-        j.preparacionJuego();
         j.iniciarJuego();
         System.out.println("¡Gracias por jugar!");
 

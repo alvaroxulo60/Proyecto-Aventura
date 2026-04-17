@@ -27,12 +27,13 @@ public class CargadorAventura {
     public void conseguirRutas() throws CargadorException {
 
 
-        try{
+        try {
 
             CargarProperties cp = CargarProperties.getInstance();
 
             this.directorioBase = Path.of(cp.get("directorio.base.juego"));
-            this.mundoInicial = directorioBase.resolve(Path.of(cp.get("juego.archivo.base")));
+            this.mundoInicial = directorioBase.resolve(Path.of(cp.get("juego.app.data"))).resolve(Path.of(cp.get("juego.archivo.base")));
+
 
             if (!Files.exists(directorioBase) || !Files.isDirectory(directorioBase)) {
                 Files.createDirectories(directorioBase);
@@ -42,7 +43,7 @@ public class CargadorAventura {
                 throw new CargadorException("El archivo de configuración del juego no existe: " + mundoInicial);
             }
 
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new CargadorException("No se ha podido completar el proceso de cargado");
         }
     }
@@ -50,7 +51,7 @@ public class CargadorAventura {
     public AventuraConfig CargarMundoBase() throws CargadorException {
         conseguirRutas();
         try {
-            return gson.fromJson(Files.newBufferedReader(mundoInicial),AventuraConfig.class);
+            return gson.fromJson(Files.newBufferedReader(mundoInicial), AventuraConfig.class);
         } catch (IOException e) {
             throw new CargadorException("No ha sido posible cargar el juego");
         }
@@ -59,7 +60,7 @@ public class CargadorAventura {
     public AventuraConfig CargarPartidaGuardada(Path partida) throws CargadorException {
         try {
             return gson.fromJson(Files.newBufferedReader(partida), AventuraConfig.class);
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new CargadorException("No ha sido posible cargar el juego");
         }
     }

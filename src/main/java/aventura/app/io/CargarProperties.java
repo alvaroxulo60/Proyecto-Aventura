@@ -27,11 +27,11 @@ public class CargarProperties {
 
 
     public String get(String propiedad) {
-        return entidad.get(propiedad);
+        return pop.getProperty(propiedad);
     }
 
     public static CargarProperties getInstance() throws CargadorException {
-        if (CargarProperties.entidad == null){
+        if (CargarProperties.entidad == null) {
             try {
                 entidad = new CargarProperties();
             } catch (CargadorException e) {
