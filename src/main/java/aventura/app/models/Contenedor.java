@@ -2,6 +2,9 @@ package aventura.app.models;
 
 import aventura.app.interfaces.Abrible;
 import aventura.app.records.RespuestaAccion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Clase Contenedor que representa un objeto que puede contener otro objeto
@@ -9,6 +12,8 @@ import aventura.app.records.RespuestaAccion;
  * Hereda de Objeto e implementa la interfaz Abrible.
  */
 public class Contenedor extends Objeto implements Abrible {
+
+    private static final Logger logger = LoggerFactory.getLogger(Contenedor.class);
 
     // Objeto contenido dentro del contenedor
     private Objeto elemento;
@@ -34,6 +39,10 @@ public class Contenedor extends Objeto implements Abrible {
         this.CODIGO_SECRETO = CODIGO_SECRETO;
         this.elemento = elemento;
         this.estaAbierto = estaAbierto;
+
+        if (this.CODIGO_SECRETO != null && this.elemento == null){
+            logger.warn("El contenedor '{}' requiere código pero ha sido inicializado sin ningún elemento dentro.", nombre);
+        }
     }
 
     /**
@@ -52,15 +61,20 @@ public class Contenedor extends Objeto implements Abrible {
         // Si no hay código secreto, se puede abrir directamente
         if (CODIGO_SECRETO == null){
             estaAbierto = true;
+            logger.info("El contenedor '{}' se ha abierto.", getNombre());
             return new RespuestaAccion(true,"Se ha abierto");
         }
 
         // Si la llave es válida y coincide con el código secreto
         if(llave != null && llave.getCODIGO_SEGURIDAD().equals(CODIGO_SECRETO)){
             estaAbierto = true;
+            logger.info("El contenedor '{}' ha sido desbloqueado y abierto con éxito", getNombre());
             return new RespuestaAccion(true,"Click, se ha abierto") ;
         }
         else {
+            if (llave != null){
+                logger.info("Intento fallido de abrir el contenedor '{}' con una llave incorrecta.", getNombre());
+            }
             // Si no se puede abrir, indicar que se necesita una llave
             return new RespuestaAccion(false, "Necesitas una llave para abrir esto");
         }
@@ -94,6 +108,10 @@ public class Contenedor extends Objeto implements Abrible {
 
     // Elimina el objeto contenido, dejando el contenedor vacío
     public void eliminarObjeto(){
-        this.elemento = null;
+        if (this.elemento == null){
+            logger.warn("Se ha intentado eliminar el objeto del contenedor '{}', pero ya estaba vacío", getNombre());
+        }else {
+            logger.info("El objeto '{}' ha sido retirado del contenedor '{}'.", this.elemento.getNombre(), getNombre());
+        }
     }
 }

@@ -7,6 +7,8 @@ import aventura.app.interfaces.Leible;
 import aventura.app.io.*;
 import aventura.app.models.*;
 import aventura.app.records.RespuestaAccion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -18,9 +20,8 @@ import java.util.Map;
  */
 public class Juego {
 
-    private final static int NUM_HABITACIONES = 6;
-
-    private Map<String, Habitacion> habitaciones;
+    private static final Logger logger = LoggerFactory.getLogger(Juego.class);
+    private Map<String,Habitacion> habitaciones;
     private Jugador jugador;
     private String descripcionJuego;
     private String nombrePartida;
@@ -48,10 +49,11 @@ public class Juego {
 
             this.descripcionJuego = aventura.getDescripcionDelJuego();
             this.habitaciones = aventura.getHabitaciones();
-            String a;
+
+            logger.info("Aventura cargada correctamente. Habitaciones cargadas: {}", habitaciones.size());
 
         } catch (CargadorException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
@@ -168,7 +170,7 @@ public class Juego {
                     try {
                         ir();
                     } catch (AventuraException e) {
-                        System.out.println(e.getMessage());
+                        logger.error(e.getMessage());
                     }
                     break;
                 case "inventario":
@@ -208,6 +210,7 @@ public class Juego {
                     ayuda();
                     break;
             }
+
         }
     }
 
@@ -228,7 +231,7 @@ public class Juego {
     private void verInventario() {
         String inventario = jugador.mostrarObjetosInventario();
         if (inventario.isBlank()) {
-            System.err.println("No tienes nada en el inventario");
+            System.out.println("No tienes nada en el inventario");
         } else {
             System.out.println(inventario);
         }
@@ -256,7 +259,7 @@ public class Juego {
             mostrarObjetosInventariables();
             String objeto = MiEntradaSalida.leerLinea("¿Que objeto quieres guardar? ");
             guardarEnInventario(objeto);
-        } else System.err.println("No queda ningún objeto en la sala de importancia.\n");
+        } else System.out.println("No queda ningún objeto en la sala de importancia.\n");
     }
 
     /**
@@ -279,13 +282,13 @@ public class Juego {
                     getHabitacionActual().quitarObjetoHabitacion((Objeto) inv);
                     System.out.println("¡Objeto guardado con éxito!");
                 } else {
-                    System.err.println("No ha sido posible guardar el objeto...El inventario esta lleno");
+                    System.out.println("No ha sido posible guardar el objeto...El inventario esta lleno");
                 }
             } else {
-                System.err.println("No ha sido posible guardar el objeto...");
+                System.out.println("No ha sido posible guardar el objeto...");
             }
         } else {
-            System.err.println("No se ha encontrado el objeto");
+            System.out.println("No se ha encontrado el objeto");
         }
     }
 
@@ -336,7 +339,7 @@ public class Juego {
                             c.eliminarObjeto();
                             System.out.println("El objeto se ha guardado en el inventario");
                         } else {
-                            System.err.println("No se ha podido guardar en el inventario");
+                            System.out.println("No se ha podido guardar en el inventario");
                             getHabitacionActual().añadirObjetosHabitacion(c.getElemento());
                             c.eliminarObjeto();
                         }
@@ -346,10 +349,10 @@ public class Juego {
                     System.out.println(respuesta.mensaje());
                 }
             } else {
-                System.err.println("No se ha encontrado el contenedor");
+                System.out.println("No se ha encontrado el contenedor");
             }
         } else
-            System.err.println("No hay contenedores en la habitación.");
+            System.out.println("No hay contenedores en la habitación.");
     }
 
     /**
@@ -384,16 +387,16 @@ public class Juego {
                         jugador.guardarInventario(resultante);
                         System.out.println("Los objetos se han combinado y guardado en el inventario");
                     } catch (CombinarException e) {
-                        System.out.println(e.getMessage());
+                        logger.error(e.getMessage());
                     }
                 } else {
-                    System.err.println("No se puede combinar el objeto.");
+                    System.out.println("No se puede combinar el objeto.");
                 }
             } else {
-                System.err.println("No se puede combinar el objeto consigo mismo.");
+                System.out.println("No se puede combinar el objeto consigo mismo.");
             }
         } else {
-            System.err.println("Uno de los dos objetos no se ha encontrado.");
+            System.out.println("Uno de los dos objetos no se ha encontrado.");
         }
     }
 
@@ -484,11 +487,14 @@ public class Juego {
     }
 
     public static void main(String[] args) {
+        logger.info("Iniciando el motor del juego 'Tu Propia Aventura'...");
 
         Juego j = new Juego();
         j.menuInicial();
+        j.preparacionJuego();
         j.iniciarJuego();
         System.out.println("¡Gracias por jugar!");
+        logger.info("El juego se ha cerrado correctamente");
 
     }
 }
