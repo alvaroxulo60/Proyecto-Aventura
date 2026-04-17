@@ -44,7 +44,7 @@ public class Migrador {
 
         Properties pop = new Properties();
 
-        try(InputStream in = new FileInputStream("Config.properties")){
+        try (InputStream in = new FileInputStream("Config.properties")) {
 
             pop.load(in);
 
@@ -52,7 +52,7 @@ public class Migrador {
 
             Files.writeString(ruta, json, StandardOpenOption.CREATE);
 
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new MigradorException("No se ha podido migrar correctamente");
         }
     }
