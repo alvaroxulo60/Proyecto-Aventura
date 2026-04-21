@@ -4,7 +4,7 @@ package aventura.app.models;
  * Clase Objeto que representa un elemento dentro del juego.
  * Hereda de Entidad y añade la propiedad de visibilidad.
  */
-public class Objeto extends Entidad {
+public abstract class Objeto extends Entidad {
 
     // Indica si el objeto es visible en la habitación o entorno
     private boolean visible;
