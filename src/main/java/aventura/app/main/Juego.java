@@ -52,7 +52,7 @@ public class Juego {
 
 
         } catch (CargadorException e) {
-            logger.error(e.getMessage());
+            logger.error("Error crítico al preparar el mundo base de la aventura", e);
         }
     }
 
@@ -161,7 +161,7 @@ public class Juego {
             Crear un 'switch' o una estructura 'if-else if'
              para procesar el 'comando' del usuario.
              Debe gestionar como mínimo: "ayuda", "mirar", "inventario",
-             "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
+             "ir", "coger [objeto]" y "salir".
              */
 
             switch (comando.toLowerCase().trim()) {
@@ -169,7 +169,7 @@ public class Juego {
                     try {
                         ir();
                     } catch (AventuraException e) {
-                        logger.error(e.getMessage());
+                        logger.warn("El jugador ha intentado ir a una dirección no válida:{}",e.getMessage());
                     }
                     break;
                 case "inventario":
@@ -385,7 +385,7 @@ public class Juego {
                         jugador.guardarInventario(resultante);
                         System.out.println("Los objetos se han combinado y guardado en el inventario");
                     } catch (CombinarException e) {
-                        logger.error(e.getMessage());
+                        logger.warn("Aviso durante la combinación de objetos: {}", e.getMessage());
                     }
                 } else {
                     System.out.println("No se puede combinar el objeto.");
@@ -447,10 +447,12 @@ public class Juego {
                     try {
                         if (SavedGames.borrarPartida()) {
                             System.out.println("¡Partida borrada!");
+                            logger.info("El usuario ha borrado una partida guardada con éxito");
                         } else {
                             System.out.println("La partida no se ha podido borrar");
                         }
                     } catch (CargadorException | IOException | SaveException e) {
+                        logger.error("Error crítico de E/S al intentar borrar la partida");
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -459,11 +461,14 @@ public class Juego {
                         AventuraConfig ac = SavedGames.cargarPartida();
                         cargarConfiguracion(ac);
                         juegoCreado = true;
+                        logger.info("Se ha cargado una partida anterior correctamente");
                     } catch (CargadorException | SaveException e) {
+                        logger.error("Error crítico al intentar cargar el archivo de partida", e);
                         System.out.println(e.getMessage());
                     }
                     break;
                 case "salir":
+                    logger.info("El juego se ha cerrado desde el menú inicial");
                     System.exit(0);
                 default:
                     opcionesMenuInicial();

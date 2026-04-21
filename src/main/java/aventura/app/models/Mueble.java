@@ -20,5 +20,6 @@ public class Mueble extends Objeto {
      */
     public Mueble(String nombre, String descripcion, boolean visible) {
         super(nombre, descripcion, visible); // Llama al constructor de la clase padre Objeto
+        logger.info("Mueble '{}' inicializado en el entorno del juego", nombre);
     }
 }
