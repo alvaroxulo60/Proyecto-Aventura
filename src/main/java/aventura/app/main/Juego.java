@@ -363,7 +363,7 @@ public class Juego {
     /**
      * Metodo para combinar objetos, primero pide los dos objetos a combinar y luego intenta combinarlos
      */
-    public void combinar() {
+    public void combinar(){
         mostrarObjetos();
 
         //Pedimos los dos objetos para combinarlos
@@ -375,11 +375,16 @@ public class Juego {
             if (!aux1.equals(aux2)) {
 
                 //Comprobamos si el primer objeto es combinable
-                if (aux1 instanceof Combinable c1 && aux2 instanceof  Combinable) {
+                if (aux1 instanceof Combinable c1 ) {
                     //Si podemos combinar los objetos sin ningún problema borramos los otros dos del inventario
                     //o habitación y guardamos el resultante en el inventario
                     try {
                         Objeto resultante = c1.combinar(aux2);
+                        if(resultante == null){
+                            logger.warn("Se ha intentado combinar '{}' con '{}', siendo incompatibles",aux1,aux2);
+                            System.out.println("Los objetos seleccionados no son compatibles");
+                            return;
+                        }
                         borrarObjetos(aux1);
                         borrarObjetos(aux2);
                         jugador.guardarInventario(resultante);
