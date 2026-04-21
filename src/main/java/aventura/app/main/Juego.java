@@ -194,7 +194,7 @@ public class Juego {
                     String nombre;
                     do {
                         nombre = MiEntradaSalida.leerLinea("¿Cómo quieres que se llame la partida guardada? \n");
-                    }while (!comprobarNombreDePartida(nombre));
+                    } while (!comprobarNombreDePartida(nombre));
 
                     try {
                         SavedGames.guardarPartida(nombre, preparacionDeAventuraConfigParaGuardado());
@@ -242,7 +242,7 @@ public class Juego {
         return av;
     }
 
-    public boolean comprobarNombreDePartida(String s){
+    public boolean comprobarNombreDePartida(String s) {
         return s.matches("[\\p{L}\\d][\\d\\p{L}\\s]+");
     }
 
@@ -470,6 +470,7 @@ public class Juego {
 
     /**
      * Metodo para cargar la configuración
+     *
      * @param config AventuraConfig con toda la info del juego
      */
     public void cargarConfiguracion(AventuraConfig config) {

@@ -26,6 +26,7 @@ public class CargadorAventura {
 
     /**
      * Conseguir las rutas para la configuración default del juego
+     *
      * @throws CargadorException
      */
     public void conseguirRutas() throws CargadorException {
@@ -54,6 +55,7 @@ public class CargadorAventura {
 
     /**
      * Metodo para devolver la configuración default de la aventura
+     *
      * @return Un AventuraConfig con toda la información del juego
      * @throws CargadorException
      */
@@ -68,6 +70,7 @@ public class CargadorAventura {
 
     /**
      * Cargar la aventura desde un archivo de guardado
+     *
      * @param partida ruta hacia ese archivo de guardado
      * @return toda la información de esa partida guardada en un AventuraConfig
      * @throws CargadorException

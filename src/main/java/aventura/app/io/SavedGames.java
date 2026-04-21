@@ -26,6 +26,7 @@ public class SavedGames {
     /**
      * Guarda el estado actual de la aventura en un archivo JSON.
      * * @param s Nombre del archivo (con o sin extensión).
+     *
      * @param av Objeto de configuración que contiene el estado del juego.
      * @throws SaveException Si ocurre un error al escribir o configurar la ruta.
      */
@@ -45,7 +46,7 @@ public class SavedGames {
                 s = s.concat(".json");
             }
 
-            // Resuelve la ruta completa y normaliza para evitar problemas de redundancia
+            // Resuelve la ruta completa y normaliza para evitar problemas de redundancia y evitar que salga a capas superiores
             Path archivoDestino = saves.resolve(s).normalize();
 
             // Convierte el objeto de la partida a una cadena JSON
@@ -62,8 +63,9 @@ public class SavedGames {
     /**
      * Muestra las partidas disponibles y permite al usuario seleccionar una para cargar.
      * * @return El objeto AventuraConfig con los datos cargados.
+     *
      * @throws CargadorException Si el directorio no existe o hay problemas de configuración.
-     * @throws SaveException Si no hay archivos o el archivo seleccionado es inválido.
+     * @throws SaveException     Si no hay archivos o el archivo seleccionado es inválido.
      */
     public static AventuraConfig cargarPartida() throws CargadorException, SaveException {
         Path saves = SavedGames.rutaADirectorioDePartidasGuardadas();
@@ -154,20 +156,26 @@ public class SavedGames {
     }
 
     /**
-     * Singleton para el objeto Gson.
+     * Patrón +Singleton para el objeto Gson.
      * Configura el formateo visual (Pretty Printing) y adaptadores personalizados.
      */
     private static Gson getGson() {
         if (gson == null) {
             gson = new GsonBuilder()
-                    .setPrettyPrinting() // Hace que el JSON sea legible para humanos
+                    .setPrettyPrinting() // Hace que el JSON sea vea bonito
                     .registerTypeAdapter(Objeto.class, new ObjetoAdapter()) // Adaptador para polimorfismo de Objetos
                     .create();
         }
         return gson;
     }
 
-    private static String nombreDeArchivosSinExtension(String nombre){
-        return "- "+nombre.split("\\.")[0];
+    /**
+     * Metodo para separar el nombre de los archivos y mostrarlos sin extensión
+     *
+     * @param nombre nombre del archivo con extensión
+     * @return nombre sin extensión
+     */
+    private static String nombreDeArchivosSinExtension(String nombre) {
+        return "- " + nombre.split("\\.")[0];
     }
 }

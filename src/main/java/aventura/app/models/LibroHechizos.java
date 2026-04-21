@@ -12,9 +12,9 @@ public class LibroHechizos extends Item implements Combinable {
     /**
      * Constructor de LibroHechizos.
      *
-     * @param nombre Nombre del libro
+     * @param nombre      Nombre del libro
      * @param descripcion Descripción del libro
-     * @param visible Si el libro es visible o no
+     * @param visible     Si el libro es visible o no
      */
     public LibroHechizos(String nombre, String descripcion, boolean visible) {
         super(nombre, descripcion, visible); // Llama al constructor de la clase Item
@@ -32,7 +32,7 @@ public class LibroHechizos extends Item implements Combinable {
         Objeto aux = null; // Variable para almacenar el resultado de la combinación
 
         // Comprueba si el otro objeto es una LlaveEspecial usando pattern matching (Java 16+)
-        if (otro instanceof LlaveEspecial l){
+        if (otro instanceof LlaveEspecial l) {
             aux = l.combinar(this); // Llama al método combinar de LlaveEspecial pasando este libro
         }
 

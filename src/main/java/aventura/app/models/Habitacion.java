@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *Clase Habitación que representa un espacio del juego donde pueden colocarse objetos.
- *Gestiona una lista dinámica de objetos y permite añadir, buscar, eliminar y filtrar elementos.
+ * Clase Habitación que representa un espacio del juego donde pueden colocarse objetos.
+ * Gestiona una lista dinámica de objetos y permite añadir, buscar, eliminar y filtrar elementos.
  */
 public class Habitacion {
 
@@ -19,19 +19,19 @@ public class Habitacion {
     private final String DESCRIPCION;
 
     //Mapa que relaciona las direcciones de salida con los nombres de otras habitaciones
-    private Map<String,String> mapa;
+    private Map<String, String> mapa;
 
     //Lista que almacena los objetos que haya en la habitación
     private List<Objeto> objetos;
 
     /**
-     *Constructor de la clase Habitacion.
+     * Constructor de la clase Habitacion.
      *
-     *@param DESCRIPCION Descripción de la habitación
-     *@param nombreHabitacion Nombre identificador de la habitación
-     *@param salidas Mapa con las direcciones y las habitaciones conectadas
+     * @param DESCRIPCION      Descripción de la habitación
+     * @param nombreHabitacion Nombre identificador de la habitación
+     * @param salidas          Mapa con las direcciones y las habitaciones conectadas
      */
-    public Habitacion(String DESCRIPCION, String nombreHabitacion, Map<String,String> salidas ) {
+    public Habitacion(String DESCRIPCION, String nombreHabitacion, Map<String, String> salidas) {
         this.NOMBRE_HABITACION = nombreHabitacion;
         this.DESCRIPCION = DESCRIPCION;
         this.objetos = new ArrayList<>(); // Inicializa la lista dinámica de objetos
@@ -39,25 +39,26 @@ public class Habitacion {
     }
 
     /**
-     *Devuelve la descripción de la habitación.
+     * Devuelve la descripción de la habitación.
      *
-     *@return descripción
+     * @return descripción
      */
     public String getDESCRIPCION() {
         return DESCRIPCION;
     }
 
     /**
-     *Devuelve la lista de objetos de la habitación.
+     * Devuelve la lista de objetos de la habitación.
      *
-     *@return lista de objetos
+     * @return lista de objetos
      */
     public List<Objeto> getObjetos() {
         return objetos;
     }
 
     /**
-     *Devuelve el nombre de la habitación.
+     * Devuelve el nombre de la habitación.
+     *
      * @return nombre de la habitación
      */
     public String getNOMBRE_HABITACION() {
@@ -65,29 +66,30 @@ public class Habitacion {
     }
 
     /**
-     *Devuelve el mapa de salidas disponibles desde esta habitación.
-     *@return mapa de salidas
+     * Devuelve el mapa de salidas disponibles desde esta habitación.
+     *
+     * @return mapa de salidas
      */
     public Map<String, String> getMapa() {
         return mapa;
     }
 
     /**
-     *Añade un nuevo objeto a la lista de la habitación.
+     * Añade un nuevo objeto a la lista de la habitación.
      *
-     *@param objeto Objeto a añadir
+     * @param objeto Objeto a añadir
      */
-    public void añadirObjetosHabitacion(Objeto objeto){
+    public void añadirObjetosHabitacion(Objeto objeto) {
         objetos.add(objeto);
     }
 
     /**
-     *Busca un objeto en la habitación por su nombre, ignorando mayúsculas y minúsculas.
+     * Busca un objeto en la habitación por su nombre, ignorando mayúsculas y minúsculas.
      *
-     *@param o Nombre del objeto a buscar
-     *@return El objeto si se encuentra, o null si no existe en la habitación
+     * @param o Nombre del objeto a buscar
+     * @return El objeto si se encuentra, o null si no existe en la habitación
      */
-    public Objeto buscarObjetoHabitacion(String o){
+    public Objeto buscarObjetoHabitacion(String o) {
         return objetos.stream()
                 .filter(objeto -> objeto.getNombre().equalsIgnoreCase(o))
                 .findFirst().orElse(null); // Retorna el primero que coincida o null
@@ -98,7 +100,7 @@ public class Habitacion {
      *
      * @param o Objeto a eliminar
      */
-    public void quitarObjetoHabitacion(Objeto o){
+    public void quitarObjetoHabitacion(Objeto o) {
         objetos.remove(o);
     }
 
@@ -107,7 +109,7 @@ public class Habitacion {
      *
      * @return número de objetos en la lista
      */
-    public int contarObjetosHabitacion(){
+    public int contarObjetosHabitacion() {
         return objetos.size();
     }
 
@@ -116,7 +118,7 @@ public class Habitacion {
      *
      * @return número de objetos que implementan la interfaz Inventariable
      */
-    public long contarObjetosInventariablesHabitacion(){
+    public long contarObjetosInventariablesHabitacion() {
         return objetos.stream()
                 .filter(objeto -> objeto instanceof Inventariable).count();
     }
@@ -126,7 +128,7 @@ public class Habitacion {
      *
      * @return número de objetos que son instancias de Contenedor
      */
-    public long contarContenedoresHabitacion(){
+    public long contarContenedoresHabitacion() {
         return objetos.stream()
                 .filter(objeto -> objeto instanceof Contenedor).count();
     }
@@ -135,10 +137,10 @@ public class Habitacion {
      * Genera una cadena de texto con la lista numerada de todos los objetos en la habitación.
      * * @return un string con los nombres de todos los objetos
      */
-    public String mostrarObjetosHabitacion(){
+    public String mostrarObjetosHabitacion() {
         int contador = 1;
         StringBuilder contenido = new StringBuilder();
-        for (Objeto o: objetos) {
+        for (Objeto o : objetos) {
             if (o != null) {
                 contenido.append(contador++).append(". ").append(o.getNombre()).append(System.lineSeparator());
             }
@@ -150,11 +152,11 @@ public class Habitacion {
      * Genera una cadena de texto con la lista numerada solo de los objetos que se pueden recoger.
      * * @return un string con los objetos inventariables
      */
-    public String mostrarObjetosInventariables(){
+    public String mostrarObjetosInventariables() {
         int contador = 1;
         StringBuilder contenido = new StringBuilder();
-        for (Objeto o: objetos) {
-            if (o instanceof Inventariable){
+        for (Objeto o : objetos) {
+            if (o instanceof Inventariable) {
                 contenido.append(contador++).append(". ").append(o.getNombre()).append(System.lineSeparator());
             }
         }
@@ -165,11 +167,11 @@ public class Habitacion {
      * Genera una cadena de texto con la lista numerada solo de los contenedores presentes.
      * * @return un string con los contenedores
      */
-    public String mostrarContenedores(){
+    public String mostrarContenedores() {
         int contador = 1;
         StringBuilder contenido = new StringBuilder();
-        for (Objeto o: objetos) {
-            if (o instanceof Contenedor){
+        for (Objeto o : objetos) {
+            if (o instanceof Contenedor) {
                 contenido.append(contador++).append(". ").append(o.getNombre()).append(System.lineSeparator());
             }
         }

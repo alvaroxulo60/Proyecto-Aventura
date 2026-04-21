@@ -15,6 +15,7 @@ public class CargarProperties {
 
     /**
      * Iniciar la clase Properties para poder utilizarla
+     *
      * @throws CargadorException
      */
     private CargarProperties() throws CargadorException {
@@ -31,6 +32,7 @@ public class CargarProperties {
 
     /**
      * Conseguir una propiedad del archivo config
+     *
      * @param propiedad el nombre de la propiedad
      * @return la propiedad
      */
@@ -40,6 +42,7 @@ public class CargarProperties {
 
     /**
      * Metodo cargador de patrón singleton
+     *
      * @return Un cargarProperties si esta cargado en memoria, si no crea uno nuevo y lo devuelve
      * @throws CargadorException
      */
