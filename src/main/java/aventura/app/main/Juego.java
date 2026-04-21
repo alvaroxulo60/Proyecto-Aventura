@@ -7,6 +7,8 @@ import aventura.app.interfaces.Leible;
 import aventura.app.io.*;
 import aventura.app.models.*;
 import aventura.app.records.RespuestaAccion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -18,9 +20,8 @@ import java.util.Map;
  */
 public class Juego {
 
-    private final static int NUM_HABITACIONES = 6;
-
-    private Map<String, Habitacion> habitaciones;
+    private static final Logger logger = LoggerFactory.getLogger(Juego.class);
+    private Map<String,Habitacion> habitaciones;
     private Jugador jugador;
     private String descripcionJuego;
     private String nombrePartida;
@@ -47,9 +48,11 @@ public class Juego {
             AventuraConfig aventura = infoAventura.CargarMundoBase();
 
             cargarConfiguracion(aventura);
+            logger.info("Aventura cargada correctamente. Habitaciones cargadas: {}", habitaciones.size());
+
 
         } catch (CargadorException e) {
-            System.out.println(e.getMessage());
+            logger.error("Error crítico al preparar el mundo base de la aventura", e);
         }
     }
 
@@ -158,7 +161,7 @@ public class Juego {
             Crear un 'switch' o una estructura 'if-else if'
              para procesar el 'comando' del usuario.
              Debe gestionar como mínimo: "ayuda", "mirar", "inventario",
-             "ir derecha", "ir izquierda", "coger [objeto]" y "salir".
+             "ir", "coger [objeto]" y "salir".
              */
 
             switch (comando.toLowerCase().trim()) {
@@ -166,7 +169,7 @@ public class Juego {
                     try {
                         ir();
                     } catch (AventuraException e) {
-                        System.out.println(e.getMessage());
+                        logger.warn("El jugador ha intentado ir a una dirección no válida:{}",e.getMessage());
                     }
                     break;
                 case "inventario":
@@ -226,7 +229,7 @@ public class Juego {
     private void verInventario() {
         String inventario = jugador.mostrarObjetosInventario();
         if (inventario.isBlank()) {
-            System.err.println("No tienes nada en el inventario");
+            System.out.println("No tienes nada en el inventario");
         } else {
             System.out.println(inventario);
         }
@@ -254,7 +257,7 @@ public class Juego {
             mostrarObjetosInventariables();
             String objeto = MiEntradaSalida.leerLinea("¿Que objeto quieres guardar? ");
             guardarEnInventario(objeto);
-        } else System.err.println("No queda ningún objeto en la sala de importancia.\n");
+        } else System.out.println("No queda ningún objeto en la sala de importancia.\n");
     }
 
     /**
@@ -277,13 +280,13 @@ public class Juego {
                     getHabitacionActual().quitarObjetoHabitacion((Objeto) inv);
                     System.out.println("¡Objeto guardado con éxito!");
                 } else {
-                    System.err.println("No ha sido posible guardar el objeto...El inventario esta lleno");
+                    System.out.println("No ha sido posible guardar el objeto...El inventario esta lleno");
                 }
             } else {
-                System.err.println("No ha sido posible guardar el objeto...");
+                System.out.println("No ha sido posible guardar el objeto...");
             }
         } else {
-            System.err.println("No se ha encontrado el objeto");
+            System.out.println("No se ha encontrado el objeto");
         }
     }
 
@@ -334,7 +337,7 @@ public class Juego {
                             c.eliminarObjeto();
                             System.out.println("El objeto se ha guardado en el inventario");
                         } else {
-                            System.err.println("No se ha podido guardar en el inventario");
+                            System.out.println("No se ha podido guardar en el inventario");
                             getHabitacionActual().añadirObjetosHabitacion(c.getElemento());
                             c.eliminarObjeto();
                         }
@@ -344,10 +347,10 @@ public class Juego {
                     System.out.println(respuesta.mensaje());
                 }
             } else {
-                System.err.println("No se ha encontrado el contenedor");
+                System.out.println("No se ha encontrado el contenedor");
             }
         } else
-            System.err.println("No hay contenedores en la habitación.");
+            System.out.println("No hay contenedores en la habitación.");
     }
 
     /**
@@ -382,16 +385,16 @@ public class Juego {
                         jugador.guardarInventario(resultante);
                         System.out.println("Los objetos se han combinado y guardado en el inventario");
                     } catch (CombinarException e) {
-                        System.out.println(e.getMessage());
+                        logger.warn("Aviso durante la combinación de objetos: {}", e.getMessage());
                     }
                 } else {
-                    System.err.println("No se puede combinar el objeto.");
+                    System.out.println("No se puede combinar el objeto.");
                 }
             } else {
-                System.err.println("No se puede combinar el objeto consigo mismo.");
+                System.out.println("No se puede combinar el objeto consigo mismo.");
             }
         } else {
-            System.err.println("Uno de los dos objetos no se ha encontrado.");
+            System.out.println("Uno de los dos objetos no se ha encontrado.");
         }
     }
 
@@ -444,10 +447,12 @@ public class Juego {
                     try {
                         if (SavedGames.borrarPartida()) {
                             System.out.println("¡Partida borrada!");
+                            logger.info("El usuario ha borrado una partida guardada con éxito");
                         } else {
                             System.out.println("La partida no se ha podido borrar");
                         }
                     } catch (CargadorException | IOException | SaveException e) {
+                        logger.error("Error crítico de E/S al intentar borrar la partida");
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -456,12 +461,15 @@ public class Juego {
                         AventuraConfig ac = SavedGames.cargarPartida();
                         cargarConfiguracion(ac);
                         juegoCreado = true;
+                        logger.info("Se ha cargado una partida anterior correctamente");
                     } catch (CargadorException | SaveException e) {
+                        logger.error("Error crítico al intentar cargar el archivo de partida", e);
                         System.out.println(e.getMessage());
                     }
                     break;
                 case "salir":
-                    System.exit(0);//Llamada para teminar el programa
+                    logger.info("El juego se ha cerrado desde el menú inicial");
+                    System.exit(0);
                 default:
                     opcionesMenuInicial();
             }
@@ -494,11 +502,14 @@ public class Juego {
     }
 
     public static void main(String[] args) {
+        logger.info("Iniciando el motor del juego 'Tu Propia Aventura'...");
 
         Juego j = new Juego();
         j.menuInicial();
+        j.preparacionJuego();
         j.iniciarJuego();
         System.out.println("¡Gracias por jugar!");
+        logger.info("El juego se ha cerrado correctamente");
 
     }
 }

@@ -1,5 +1,8 @@
 package aventura.app.models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +13,8 @@ import java.util.Map;
  * y la colección de todas las habitaciones disponibles.
  */
 public class AventuraConfig {
+
+    private static final Logger logger = LoggerFactory.getLogger(AventuraConfig.class);
 
     //Texto introductorio o descripción general de la partida
     private String descripcionDelJuego;
@@ -27,6 +32,7 @@ public class AventuraConfig {
      */
     public void setDescripcionDelJuego(String descripcionDelJuego) {
         this.descripcionDelJuego = descripcionDelJuego;
+        logger.info("Descripción general del juego cargada en la configuración.");
     }
 
     /**
@@ -37,10 +43,22 @@ public class AventuraConfig {
      * @param habitaciones Lista de objetos Habitacion a registrar en el juego
      */
     public void setHabitaciones(List<Habitacion> habitaciones) {
+        if (habitaciones == null) {
+            logger.error("Error crítico: Se ha intentado cargar una lista de habitaciones nula.");
+            this.habitaciones = new HashMap<>();
+            return;
+        }
+
+        if (habitaciones.isEmpty()) {
+            logger.warn("Advertencia: La lista de habitaciones proporcionada está vacía.");
+        }
+
         this.habitaciones = new HashMap<>();
         for (Habitacion h : habitaciones) {
             this.habitaciones.put(h.getNOMBRE_HABITACION(), h);
         }
+
+        logger.info("Mapa de habitaciones inicializado. Total de habitaciones registradas: {}", this.habitaciones.size());
     }
 
     public void setHabitaciones(Map<String, Habitacion> habitaciones) {

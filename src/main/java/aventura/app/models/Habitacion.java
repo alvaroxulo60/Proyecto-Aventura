@@ -1,16 +1,22 @@
 package aventura.app.models;
 
 import aventura.app.interfaces.Inventariable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Clase Habitación que representa un espacio del juego donde pueden colocarse objetos.
  * Gestiona una lista dinámica de objetos y permite añadir, buscar, eliminar y filtrar elementos.
  */
 public class Habitacion {
+
+    private static final Logger logger = LoggerFactory.getLogger(Habitacion.class);
 
     //Identificador o nombre único de cada habitación
     private final String NOMBRE_HABITACION;
@@ -32,10 +38,19 @@ public class Habitacion {
      * @param salidas          Mapa con las direcciones y las habitaciones conectadas
      */
     public Habitacion(String DESCRIPCION, String nombreHabitacion, Map<String, String> salidas) {
+        if(nombreHabitacion == null || nombreHabitacion.trim().isEmpty()){
+            logger.warn("Se ha inicializado una habitación sin un nombre válido");
+        }
+        if(salidas == null || salidas.isEmpty()){
+            logger.warn("La habitación '{}' se ha creado sin salidas asignadas.", nombreHabitacion);
+        }
+
         this.NOMBRE_HABITACION = nombreHabitacion;
         this.DESCRIPCION = DESCRIPCION;
         this.objetos = new ArrayList<>(); // Inicializa la lista dinámica de objetos
         this.mapa = salidas;
+
+        logger.info("Habitación '{}' creada exitosamente.", nombreHabitacion);
     }
 
     /**
@@ -79,8 +94,13 @@ public class Habitacion {
      *
      * @param objeto Objeto a añadir
      */
-    public void añadirObjetosHabitacion(Objeto objeto) {
+    public void añadirObjetosHabitacion(Objeto objeto){
+        if (objeto == null){
+            logger.warn("Intento de añadir un objeto nulo a la habitación '{}'.", NOMBRE_HABITACION);
+            return;
+        }
         objetos.add(objeto);
+        logger.info("Objeto '{}' añadido a la habitación '{}'.", objeto.getNombre(), NOMBRE_HABITACION);
     }
 
     /**
@@ -89,7 +109,10 @@ public class Habitacion {
      * @param o Nombre del objeto a buscar
      * @return El objeto si se encuentra, o null si no existe en la habitación
      */
-    public Objeto buscarObjetoHabitacion(String o) {
+    public Objeto buscarObjetoHabitacion(String o){
+        if (o == null || o.trim().isEmpty()){
+            logger.warn("Intento de buscar un objeto con nombre nulo o vacío en la habitación '{}'.", NOMBRE_HABITACION);
+        }
         return objetos.stream()
                 .filter(objeto -> objeto.getNombre().equalsIgnoreCase(o))
                 .findFirst().orElse(null); // Retorna el primero que coincida o null
@@ -100,8 +123,16 @@ public class Habitacion {
      *
      * @param o Objeto a eliminar
      */
-    public void quitarObjetoHabitacion(Objeto o) {
-        objetos.remove(o);
+    public void quitarObjetoHabitacion(Objeto o){
+        if (o == null){
+            logger.warn("Intento de eliminar un objeto nulo de la habitación '{}'.", NOMBRE_HABITACION);
+            return;
+        }
+        if (objetos.remove(o)){
+            logger.info("Objeto '{}' retirado de la habitación '{}'.", o.getNombre(), NOMBRE_HABITACION);
+        }else {
+            logger.warn("Se intentó retirar el objeto '{}' de la habitación '{}', pero no se encontraba allí.", o.getNombre() ,NOMBRE_HABITACION);
+        }
     }
 
     /**

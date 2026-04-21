@@ -1,11 +1,17 @@
 package aventura.app.models;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Clase abstracta Entidad que representa cualquier objeto con un nombre
  * y una descripción dentro del juego o la aplicación.
  * Sirve como clase base para otros objetos más específicos.
  */
 public abstract class Entidad {
+
+    private static final Logger logger = LoggerFactory.getLogger(Entidad.class);
 
     // Nombre de la entidad
     private String nombre;
@@ -20,6 +26,12 @@ public abstract class Entidad {
      * @param descripcion Descripción de la entidad
      */
     public Entidad(String nombre, String descripcion) {
+        if(nombre == null || nombre.trim().isEmpty()){
+            logger.warn("Se ha creado una entidad sin un nombre válido. Descripción asociada: {}", descripcion);
+        }
+        if (descripcion == null || descripcion.trim().isEmpty()){
+            logger.warn("La entidad '{}' se ha inicializado sin una descripción.", nombre);
+        }
         this.nombre = nombre; // Inicializa el nombre
         this.descripcion = descripcion; // Inicializa la descripción
     }

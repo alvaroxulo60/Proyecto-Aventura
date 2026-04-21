@@ -1,10 +1,15 @@
 package aventura.app.models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Clase Objeto que representa un elemento dentro del juego.
  * Hereda de Entidad y añade la propiedad de visibilidad.
  */
 public abstract class Objeto extends Entidad {
+
+    private static final Logger logger = LoggerFactory.getLogger(Objeto.class);
 
     // Indica si el objeto es visible en la habitación o entorno
     private boolean visible;
@@ -19,6 +24,10 @@ public abstract class Objeto extends Entidad {
     public Objeto(String nombre, String descripcion, boolean visible) {
         super(nombre, descripcion); // Llama al constructor de la clase padre Entidad
         this.visible = visible; // Inicializa la visibilidad del objeto
+
+        if (!visible){
+            logger.info("El objeto '{}' se ha inicializado en estado oculto", nombre);
+        }
     }
 
     /**
@@ -36,6 +45,11 @@ public abstract class Objeto extends Entidad {
      * @param visible nuevo estado de visibilidad
      */
     public void setVisible(boolean visible) {
-        this.visible = visible;
+        if (this.visible == visible){
+            logger.warn("Se intentó cambiar la visibilidad del objeto'{}' a '{}', pero ya se encontraba en ese estado", getNombre(), visible);
+        }else {
+            logger.info("La visibilidad del objeto '{}' ha cambiado. Nuevo estado visible:{}", getNombre(), visible);
+            this.visible = visible;
+        }
     }
 }

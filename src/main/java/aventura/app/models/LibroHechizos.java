@@ -2,12 +2,16 @@ package aventura.app.models;
 
 import aventura.app.exceptions.CombinarException;
 import aventura.app.interfaces.Combinable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Clase LibroHechizos que representa un item especial que se puede combinar con otros objetos.
  * Hereda de Item e implementa la interfaz Combinable.
  */
 public class LibroHechizos extends Item implements Combinable {
+
+    private static final Logger logger = LoggerFactory.getLogger(LibroHechizos.class);
 
     /**
      * Constructor de LibroHechizos.
@@ -18,6 +22,7 @@ public class LibroHechizos extends Item implements Combinable {
      */
     public LibroHechizos(String nombre, String descripcion, boolean visible) {
         super(nombre, descripcion, visible); // Llama al constructor de la clase Item
+        logger.info("Libro de hechizos '{}' instanciado correctamente.", nombre);
     }
 
     /**
@@ -29,11 +34,19 @@ public class LibroHechizos extends Item implements Combinable {
      */
     @Override
     public Objeto combinar(Objeto otro) throws CombinarException {
+        if (otro == null){
+            logger.warn("Se ha instanciado combinar el libro '{}' con un objeto nulo", getNombre());
+            return  null;
+        }
+
         Objeto aux = null; // Variable para almacenar el resultado de la combinación
 
         // Comprueba si el otro objeto es una LlaveEspecial usando pattern matching (Java 16+)
-        if (otro instanceof LlaveEspecial l) {
+        if (otro instanceof LlaveEspecial l){
+            logger.info("Iniciando combinación del libro '{}' con la llave especial '{}'", getNombre(), otro.getNombre());
             aux = l.combinar(this); // Llama al método combinar de LlaveEspecial pasando este libro
+        }else {
+            logger.warn("El libro '{}' no es compatible para combinarse con el objeto '{}'",getNombre(), otro.getNombre());
         }
 
         return aux; // Devuelve el objeto combinado o null si no se pudo combinar
