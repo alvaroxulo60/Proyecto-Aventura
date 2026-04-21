@@ -46,9 +46,7 @@ public class Juego {
 
             AventuraConfig aventura = infoAventura.CargarMundoBase();
 
-            this.descripcionJuego = aventura.getDescripcionDelJuego();
-            this.habitaciones = aventura.getHabitaciones();
-            String a;
+            cargarConfiguracion(aventura);
 
         } catch (CargadorException e) {
             System.out.println(e.getMessage());
@@ -142,7 +140,7 @@ public class Juego {
     public void iniciarJuego() {
         boolean jugando = true;
 
-        System.out.println("¡Bienvenido a 'TU PROPIA AVENTURA'!");
+        System.out.println("¡Bienvenido a 'Maestria Arcana'!");
         System.out.println("------------------------------------------");
 
         //Muestra la descripción general del juego
@@ -195,8 +193,8 @@ public class Juego {
                 case "guardar partida":
                     String nombre;
                     do {
-                        nombre = MiEntradaSalida.leerLinea("¿Cómo quieres que se llame la partida guardada?");
-                    }while (!comprobarNombreDePartida(nombre));
+                        nombre = MiEntradaSalida.leerLinea("¿Cómo quieres que se llame la partida guardada? \n");
+                    } while (!comprobarNombreDePartida(nombre));
 
                     try {
                         SavedGames.guardarPartida(nombre, preparacionDeAventuraConfigParaGuardado());
@@ -244,7 +242,7 @@ public class Juego {
         return av;
     }
 
-    public boolean comprobarNombreDePartida(String s){
+    public boolean comprobarNombreDePartida(String s) {
         return s.matches("[\\p{L}\\d][\\d\\p{L}\\s]+");
     }
 
@@ -428,10 +426,13 @@ public class Juego {
         mirar();
     }
 
+    /**
+     * Menu inicial para cargar, borrar o empezar nueva partida
+     */
     public void menuInicial() {
 
-        opcionesMenuInicial();
-        boolean juegoCreado = false;
+        opcionesMenuInicial();//Mostramos las opciones del menu
+        boolean juegoCreado = false;// Booleano para comprobar que el juego se ha creado
         while (!juegoCreado) {
             String opcion = MiEntradaSalida.leerLinea("¿Que deseas hacer? \n");
             switch (opcion.toLowerCase()) {
@@ -460,20 +461,29 @@ public class Juego {
                     }
                     break;
                 case "salir":
-                    System.exit(0);
+                    System.exit(0);//Llamada para teminar el programa
                 default:
                     opcionesMenuInicial();
             }
         }
     }
 
-    public void cargarConfiguracion(AventuraConfig ac) {
-        this.jugador = ac.getJugador();
-        this.descripcionJuego = ac.getDescripcionDelJuego();
-        this.habitaciones = ac.getHabitaciones();
+    /**
+     * Metodo para cargar la configuración
+     *
+     * @param config AventuraConfig con toda la info del juego
+     */
+    public void cargarConfiguracion(AventuraConfig config) {
+        if (config.getJugador() != null) {//Si el jugador de aventura config es nulo, es decir es una partida nueva, no hace nada, ya que el constructor crea el jugador
+            this.jugador = config.getJugador();
+        }
+        this.descripcionJuego = config.getDescripcionDelJuego();
+        this.habitaciones = config.getHabitaciones();
     }
 
-
+    /**
+     * Menu inicial
+     */
     public void opcionesMenuInicial() {
         System.out.print("====================Bienvenido====================\n ");
         System.out.print(">nueva partida \n ");

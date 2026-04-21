@@ -12,9 +12,9 @@ public class Llave extends Item {
     /**
      * Constructor de la clase Llave.
      *
-     * @param nombre Nombre de la llave
-     * @param descripcion Descripción de la llave
-     * @param visible Si la llave es visible o no
+     * @param nombre           Nombre de la llave
+     * @param descripcion      Descripción de la llave
+     * @param visible          Si la llave es visible o no
      * @param CODIGO_SEGURIDAD Código de seguridad único de la llave
      */
     public Llave(String nombre, String descripcion, boolean visible, String CODIGO_SEGURIDAD) {
