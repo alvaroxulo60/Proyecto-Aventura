@@ -1,67 +1,99 @@
 package aventura.app.models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Clase Jugador que representa al personaje controlado por el usuario.
- * Gestiona la posición del jugador y su inventario de objetos.
+ *Clase Jugador que representa al personaje controlado por el usuario.
+ *Gestiona la posición actual del jugador y su inventario de objetos mediante una lista.
  */
 public class Jugador extends Personaje {
 
-    // Tamaño máximo del inventario del jugador
-    private static final int TAM_INV = 10;
+    private static final Logger logger = LoggerFactory.getLogger(Jugador.class);
 
-    // Posición actual del jugador (por ejemplo, en un mapa o array de habitaciones)
-    private int posicionJugador;
+    //Posición inicial al crear al jugador
+    private String posicionIncialJugador;
 
-    // Array que representa el inventario del jugador
-    private Objeto[] inventario;
+    //Nombre de la posición actual del jugador
+    private String posicionJugador;
+
+    //Lista que representa el inventario de objetos del jugador
+    private List<Objeto> inventario;
 
     /**
-     * Constructor de la clase Jugador.
-     * Inicializa la posición en 0 y el inventario vacío.
+     *Constructor de la clase Jugador.
+     *Inicializa la posición inicial en "Tu habitación", establece la posición actual
+     *y crea un inventario vacío.
      */
     public Jugador() {
-        posicionJugador = 0;
-        inventario = new Objeto[TAM_INV]; // Inicializa el inventario con tamaño fijo
+        posicionIncialJugador = "Tu habitación";
+        posicionJugador = getPosicionIncialJugador();
+        inventario = new ArrayList<>();
+
+        logger.info("Jugador instanciado correctamente. Posición inicial: '{}'", posicionJugador);
     }
 
     /**
-     * Devuelve la posición actual del jugador.
+     *Devuelve la posición inicial predeterminada del jugador.
      *
-     * @return posición del jugador
+     *@return posición inicial del jugador
      */
-    public int getPosicionJugador() {
+    public String getPosicionIncialJugador() {
+        return posicionIncialJugador;
+    }
+
+    /**
+     *Devuelve la posición actual del jugador.
+     *
+     *@return posición actual del jugador
+     */
+    public String getPosicionJugador() {
         return posicionJugador;
     }
 
     /**
-     * Devuelve el array de objetos del inventario.
+     *Devuelve la lista de objetos.
      *
-     * @return inventario del jugador
+     *@return lista de objetos
      */
-    public Objeto[] getInventario() {
+    public List<Objeto> getInventario() {
         return inventario;
     }
 
     /**
-     * Establece la posición del jugador.
+     *Establece la nueva posición para el jugador.
      *
-     * @param posicionJugador nueva posición
+     *@param posicionJugador nueva posición
      */
-    public void setPosicionJugador(int posicionJugador) {
+    public void setPosicionJugador(String posicionJugador) {
+        if (posicionJugador == null || posicionJugador.trim().isEmpty()){
+            logger.warn("Se ha intentado mover al jugador a una posición nula o vacía");
+        }else {
+            logger.info("El jugador se ha desplazado a: '{}'", posicionJugador);
+        }
+
         this.posicionJugador = posicionJugador;
     }
 
     /**
-     * Busca un objeto en el inventario por su nombre.
+     *Busca un objeto en el inventario por su nombre.
      *
-     * @param objeto nombre del objeto a buscar
-     * @return el objeto si se encuentra, null si no existe
+     *@param objeto nombre del objeto a buscar
+     *@return el objeto si se encuentra, null si no existe en el inventario
      */
-    public Objeto buscarObjetoInventario(String objeto){
-        for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i] != null){
-                if (inventario[i].getNombre().equalsIgnoreCase(objeto)){ // Comparación ignorando mayúsculas
-                    return inventario[i];
+    public Objeto buscarObjetoInventario(String objeto) {
+        if (objeto == null || objeto.trim().isEmpty()){
+            logger.warn("Se ha intentado buscar un objeto en el inventario con un nombre nulo o vacío");
+            return null;
+        }
+
+        for (Objeto o : inventario) {
+            if (o != null) {
+                if (o.getNombre().equalsIgnoreCase(objeto)) { // Comparación ignorando mayúsculas
+                    return o;
                 }
             }
         }
@@ -69,17 +101,22 @@ public class Jugador extends Personaje {
     }
 
     /**
-     * Busca una llave específica en el inventario por su código de seguridad.
+     *Busca una llave específica en el inventario utilizando su código de seguridad.
      *
-     * @param codigo código de la llave
-     * @return la llave encontrada, o null si no existe
+     *@param codigo código de la llave a buscar
+     *@return la llave encontrada, o null si no existe
      */
-    public Llave buscarLlaveInventario(String codigo){
-        for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i] != null){
+    public Llave buscarLlaveInventario(String codigo) {
+        if (codigo == null || codigo.trim().isEmpty()){
+            logger.warn("Se ha intentado buscar una llave en el inventario con un código nulo o vacío");
+            return null;
+        }
+
+        for (Objeto o : inventario) {
+            if (o != null) {
                 // Comprueba si el objeto es una llave usando pattern matching (Java 16+)
-                if (inventario[i] instanceof Llave l){
-                    if (l.getCODIGO_SEGURIDAD().equals(codigo)){ // Comparación de códigos
+                if (o instanceof Llave l) {
+                    if (l.getCODIGO_SEGURIDAD().equals(codigo)) { // Comparación de códigos
                         return l; // Retorna la llave encontrada
                     }
                 }
@@ -89,80 +126,60 @@ public class Jugador extends Personaje {
     }
 
     /**
-     * Guarda un objeto en el inventario del jugador.
+     *Añade un objeto al inventario del jugador.
      *
-     * @param o objeto a guardar
-     * @return true si se ha añadido correctamente, false si no hay espacio
+     *@param o objeto a guardar
+     *@return true si se ha añadido correctamente a la lista
      */
-    public boolean guardarInventario(Objeto o){
-        for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i] == null){
-                inventario[i] = o; // Guarda el objeto en la primera posición libre
-                return true; // Acción completada
-            }
+    public boolean guardarInventario(Objeto o) {
+        if(o == null){
+            logger.warn("Se ha intentado añadir un objeto nulo al invetario del jugador");
+            return  false;
         }
-        return false; // No hay espacio en el inventario
+        boolean anadido = inventario.add(o);
+        if (anadido){
+            logger.info("El objeto '{}' se ha añadido al invetario",o.getNombre());
+        }
+        return true;
     }
 
     /**
-     * Devuelve un String con la lista de objetos en el inventario.
+     *Cuenta el número de objetos actuales en el inventario.
      *
-     * @return String con todos los nombres de los objetos
+     *@return cantidad total de objetos
      */
-    public String verInventario(){
-        StringBuilder inv = new StringBuilder();
-        int contador = 1;
-        for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i] != null){
-                // Agrega un número consecutivo y el nombre del objeto
-                inv.append(contador++).append(".").append(inventario[i].getNombre())
-                        .append(System.lineSeparator());
-            }
-        }
-        return inv.toString();
+    public int contarObjetosInventario() {
+        return inventario.size();
     }
 
     /**
-     * Cuenta el número de objetos presentes en el inventario.
+     *Elimina un objeto específico del inventario.
      *
-     * @return cantidad de objetos
+     *@param o objeto a eliminar
      */
-    public int contarObjetosInventario(){
-        int contador = 0;
-        for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i] != null){
-                contador++;
-            }
+    public void consumirObjetosInventario(Objeto o) {
+        if (o == null){
+            logger.warn("Se ha intentando eliminar un objeto nulo del inventario del jugador");
+            return;
         }
-        return contador;
-    }
-
-    /**
-     * Elimina un objeto específico del inventario, por ejemplo si se consume o se usa.
-     *
-     * @param o objeto a eliminar
-     */
-    public void consumirObjetosInventario(Objeto o){
-        for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i] != null){
-                if (inventario[i].equals(o)){
-                    inventario[i] = null; // Elimina el objeto
-                    return; // Sale del método una vez consumido
-                }
-            }
+        if (inventario.remove(o)){
+            logger.info("El objeto '{}' ha sido consumido del inventario", o.getNombre());
+        }else {
+            logger.info("Se intentó consumir el objeto '{}', pero no se encontraba en el inventario.", o.getNombre());
         }
     }
 
     /**
-     * Metodo para mostrar todos los objetos en la habitación
-     * @return un string con todos los objetos
+     *Genera un String con la lista numerada de todos los objetos del inventario.
+     *
+     *@return un string con los nombres de los objetos del inventario
      */
-    public String mostrarObjetosInventario(){
+    public String mostrarObjetosInventario() {
         int contador = 1;
         StringBuilder contenido = new StringBuilder();
-        for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i] != null) {
-                contenido.append(contador++).append(". ").append(inventario[i].getNombre()).append(System.lineSeparator());
+        for (Objeto o: inventario) {
+            if (o != null) {
+                contenido.append(contador++).append(". ").append(o.getNombre()).append(System.lineSeparator());
             }
         }
         return contenido.toString();

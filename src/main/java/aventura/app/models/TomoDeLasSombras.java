@@ -1,6 +1,8 @@
 package aventura.app.models;
 
 import aventura.app.interfaces.Inventariable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Clase TomoDeLasSombras que representa un libro especial que se puede recoger.
@@ -8,6 +10,8 @@ import aventura.app.interfaces.Inventariable;
  * por lo que puede añadirse al inventario del jugador.
  */
 public class TomoDeLasSombras extends Objeto implements Inventariable {
+
+    private static final Logger logger = LoggerFactory.getLogger(TomoDeLasSombras.class);
 
     /**
      * Constructor de la clase TomoDeLasSombras.
@@ -18,5 +22,6 @@ public class TomoDeLasSombras extends Objeto implements Inventariable {
      */
     public TomoDeLasSombras(String nombre, String descripcion, boolean visible) {
         super(nombre, descripcion, visible); // Llama al constructor de la clase padre Objeto
+        logger.info("Tomo de las sombras '{}' instanciado correctamente", nombre);
     }
 }
