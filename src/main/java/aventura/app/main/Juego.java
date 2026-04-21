@@ -39,7 +39,7 @@ public class Juego {
      * sus muebles, contenedores y objetos interactivos.
      * Este metodo se ejecuta al inicio de la partida.
      */
-    private void preparacionJuego() {
+    void preparacionJuego() {
 
         CargadorAventura infoAventura;
         try {
