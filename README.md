@@ -15,31 +15,36 @@
 A los segundos después de tomarla te empiezas a sentir mareado y se te nubla la vista hasta que finalmente te desplomas en el suelo.
 Te despiertas en un lugar familiar, no sabes como llegaste a ahí, ni cuánto tiempo llevas ahí.
 
-
 **Objetivo:**
-Descubrir la manera de salir de ese extraño lugar y descubir quien te ha hecho esto.
+Descubrir la manera de salir de ese extraño lugar y descubrir quién te ha hecho esto.
 
 ---
 
-## ⚙️ Estado del Proyecto (Fase 1: Motor Básico)
+## ⚙️ Estado del Proyecto (Versión Actual)
 
-Esta primera versión del proyecto (Misión 1 / UD1-UD3) implementa el "núcleo" del motor de juego usando **programación procedural** (métodos estáticos) y **arrays**.
+El proyecto ha evolucionado de su versión procedural básica a un sistema robusto utilizando **Programación Orientada a Objetos (POO)**, **Colecciones** y **Persistencia de Datos**.
 
 **Funcionalidad del Núcleo:**
-* Bucle de juego principal (`while`).
-* Mapa de habitaciones (Array `habitaciones[]`).
-* Gestión de inventario (Array `inventario[]`).
-* Gestión de objetos por sala (Matriz `objetosMapa[][]`).
-* **Comandos implementados:** `ir derecha`, `ir izquierda`, `mirar`, `inventario`, `coger`, `ayuda` y `salir`.
+* Arquitectura basada en POO con herencia e interfaces (`Inventariable`, `Combinable`, `Abrible`, `Leible`).
+* Navegación y mapeo de habitaciones dinámico mediante `Map` y `List`.
+* Sistema de inventario avanzado para el jugador y gestión de objetos dinámicos.
+* Mecánicas complejas: abrir contenedores con llaves, leer notas, y combinación de objetos (ej. Llave Especial + Libro de Hechizos).
+* Menú principal interactivo y persistencia de datos (Guardar, Cargar y Borrar Partidas).
+* Sistema de trazabilidad profesional de errores y eventos mediante logs (`SLF4J/Logback`).
+* **Comandos implementados:** `ir`, `mirar`, `examinar`, `coger objeto`, `inventario`, `abrir`, `combinar`, `ayuda`, `guardar partida` y `salir`.
 
-**Tecnologías (Fase 1):**
-* Java (JDK)
-* Programación Procedural
-* Arrays
+**Tecnologías:**
+* Java 16+ (Uso de *Pattern Matching*)
+* Programación Orientada a Objetos (POO)
+* Estructuras de datos (HashMap, ArrayList)
+* Excepciones personalizadas
+* Gestión de Ficheros (I/O)
+* SLF4J / Logback (Logging)
 * Git
+
+---
 
 ## 🔜 Próximas Fases
 
-* **Fase 2 (POO):** Refactorizar este código a Programación Orientada a Objetos (Clases `Habitacion`, `Jugador`, `Objeto`).
-* **Fase 3 (Colecciones/Ficheros):** Cambiar los arrays del inventario por `ArrayLists` y añadir un sistema de **Guardar/Cargar Partida**.
-* **Fase 4 (GUI/BBDD):** Crear una interfaz gráfica (GUI) y conectar a una base de datos para guardar progresos o logros.
+* **Fase GUI/BBDD:** Crear una interfaz gráfica de usuario para sustituir la consola y conectar a una base de datos para guardar progresos globales, perfiles o logros.
+* **Expansión de Historia:** Añadir nuevos puzles, NPCs y mecánicas de combate o magia.
