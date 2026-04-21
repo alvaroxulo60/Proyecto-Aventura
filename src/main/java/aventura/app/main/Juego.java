@@ -375,7 +375,7 @@ public class Juego {
             if (!aux1.equals(aux2)) {
 
                 //Comprobamos si el primer objeto es combinable
-                if (aux1 instanceof Combinable c1) {
+                if (aux1 instanceof Combinable c1 && aux2 instanceof  Combinable) {
                     //Si podemos combinar los objetos sin ningún problema borramos los otros dos del inventario
                     //o habitación y guardamos el resultante en el inventario
                     try {
