@@ -13,6 +13,11 @@ public class CargarProperties {
     private Properties pop;
     private String nombreArchivo;
 
+    /**
+     * Iniciar la clase Properties para poder utilizarla
+     *
+     * @throws CargadorException
+     */
     private CargarProperties() throws CargadorException {
         pop = new Properties();
         nombreArchivo = "config.properties";
@@ -25,11 +30,22 @@ public class CargarProperties {
         }
     }
 
-
+    /**
+     * Conseguir una propiedad del archivo config
+     *
+     * @param propiedad el nombre de la propiedad
+     * @return la propiedad
+     */
     public String get(String propiedad) {
         return pop.getProperty(propiedad);
     }
 
+    /**
+     * Metodo cargador de patrón singleton
+     *
+     * @return Un cargarProperties si esta cargado en memoria, si no crea uno nuevo y lo devuelve
+     * @throws CargadorException
+     */
     public static CargarProperties getInstance() throws CargadorException {
         if (CargarProperties.entidad == null) {
             try {

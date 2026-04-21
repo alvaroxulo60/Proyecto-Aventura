@@ -112,6 +112,7 @@ public class Contenedor extends Objeto implements Abrible {
             logger.warn("Se ha intentado eliminar el objeto del contenedor '{}', pero ya estaba vacío", getNombre());
         }else {
             logger.info("El objeto '{}' ha sido retirado del contenedor '{}'.", this.elemento.getNombre(), getNombre());
+            this.elemento = null;
         }
     }
 }
