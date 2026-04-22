@@ -380,17 +380,13 @@ public class Juego {
                     //o habitación y guardamos el resultante en el inventario
                     try {
                         Objeto resultante = c1.combinar(aux2);
-                        if(resultante == null){
-                            logger.warn("Se ha intentado combinar '{}' con '{}', siendo incompatibles",aux1,aux2);
-                            System.out.println("Los objetos seleccionados no son compatibles");
-                            return;
-                        }
                         borrarObjetos(aux1);
                         borrarObjetos(aux2);
                         jugador.guardarInventario(resultante);
                         System.out.println("Los objetos se han combinado y guardado en el inventario");
                     } catch (CombinarException e) {
                         logger.warn("Aviso durante la combinación de objetos: {}", e.getMessage());
+                        System.out.println(e.getMessage());
                     }
                 } else {
                     System.out.println("No se puede combinar el objeto.");
