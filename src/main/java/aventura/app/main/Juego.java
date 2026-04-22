@@ -391,6 +391,7 @@ public class Juego {
                         System.out.println("Los objetos se han combinado y guardado en el inventario");
                     } catch (CombinarException e) {
                         logger.warn("Aviso durante la combinación de objetos: {}", e.getMessage());
+                        System.out.println(e.getMessage());
                     }
                 } else {
                     System.out.println("No se puede combinar el objeto.");
