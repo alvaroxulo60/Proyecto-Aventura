@@ -39,16 +39,11 @@ public class LibroHechizos extends Item implements Combinable {
             return  null;
         }
 
-        Objeto aux = null; // Variable para almacenar el resultado de la combinación
-
         // Comprueba si el otro objeto es una LlaveEspecial usando pattern matching (Java 16+)
         if (otro instanceof LlaveEspecial l){
             logger.info("Iniciando combinación del libro '{}' con la llave especial '{}'", getNombre(), otro.getNombre());
-            aux = l.combinar(this); // Llama al método combinar de LlaveEspecial pasando este libro
-        }else {
-            logger.warn("El libro '{}' no es compatible para combinarse con el objeto '{}'",getNombre(), otro.getNombre());
+            return l.combinar(this); // Llama al método combinar de LlaveEspecial pasando este libro
         }
-
-        return aux; // Devuelve el objeto combinado o null si no se pudo combinar
-    }
+        logger.warn("El libro '{}' no es compatible para combinarse con el objeto '{}'",getNombre(), otro.getNombre());
+        throw new CombinarException("Estos objetos no son combinables...");    }
 }
