@@ -11,7 +11,14 @@ import java.util.Scanner;
 
 //Version2.0
 public class MiEntradaSalida {
-    private static Scanner sc = new Scanner(System.in);
+    private static Scanner sc;
+
+    private static Scanner getScanner() {
+        if (sc == null) {
+            sc = new Scanner(System.in);
+        }
+        return sc;
+    }
 
     /**
      * Lee un entero mostrando el mensaje pasado como parámetro
@@ -29,7 +36,7 @@ public class MiEntradaSalida {
             System.out.println(mensaje);
             // Comprobamos si el usuario está introduciendo algo correcto usando la excepción del método parseInt.
             try {
-                integer = Integer.parseInt(sc.nextLine());
+                integer = Integer.parseInt(getScanner().nextLine());
                 // Si llegamos hasta aquí, es porque el usuario ha introducido un dato correcto.
                 flag = false;
             }
@@ -79,7 +86,7 @@ public class MiEntradaSalida {
             System.out.println(mensaje);
             // Comprobamos si el usuario está introduciendo algo correcto usando la excepción del método parseInt.
             try {
-                integer = Double.parseDouble(sc.nextLine());
+                integer = Double.parseDouble(getScanner().nextLine());
                 // Si llegamos hasta aquí, es porque el usuario ha introducido un dato correcto.
                 flag = false;
             }
@@ -110,7 +117,7 @@ public class MiEntradaSalida {
             System.out.println(mensaje);
             // Comprobamos si el usuario está introduciendo algo correcto usando la excepción del método parseInt.
             try {
-                integer = Float.parseFloat(sc.nextLine());
+                integer = Float.parseFloat(getScanner().nextLine());
                 // Si llegamos hasta aquí, es porque el usuario ha introducido un dato correcto.
                 flag = false;
             }
@@ -163,7 +170,7 @@ public class MiEntradaSalida {
      */
     public static String leerTexto(String mensaje) {
         System.out.print(mensaje);
-        return sc.next();
+        return getScanner().next();
     }
 
     /**
@@ -243,7 +250,7 @@ public class MiEntradaSalida {
      */
     public static String leerLinea(String mensaje) {
         System.out.print(mensaje);
-        return sc.nextLine();
+        return getScanner().nextLine();
     }
 
     /**
